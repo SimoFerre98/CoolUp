@@ -15,15 +15,21 @@ Nel progetto è presente anche un sensore (GM65) che collegato ad un arduino leg
 /**************************************************************************/
 <br><b>SERVER COOL-UP</b>
 
-Server creato su altervsta
-
-Link della home page: 
+Come server, l'applicaione cool-up sfrutto una piattaforma chiamata firebase. Attraverso questa piattaforma ( resa disponibile dalla google),
+l'app potra memorizzare i dati su un cloud, e fare registrazione e accesso di un utente. 
 
 /**************************************************************************/
 <br><b>PROGETTO LETTORE BARCODE</b>
 
+Hardware per effettuare il progetto:
+<ul>
+  <li>Arduino</li>
+  <li>Sensore GMS65</li>
+  <li>Sensore HC-05</li>
+  <li>Sensore lcd</li>
+</ul>
 
 /**************************************************************************/
 <br><b>CONTATTI</b>
 
-Per contattarci scrivere alla mail di supporto Coolup.app@gmail.com
+Per contattarci scrivere alla mail di supporto <a href= "mailto:Coolup.app@gmail.com">Cool-Up support</a>
