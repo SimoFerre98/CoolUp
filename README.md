@@ -31,5 +31,5 @@ Hardware per effettuare il progetto:
 
 /**************************************************************************/
 <br><b>CONTATTI</b>
-
+<br>Visitate il sito <a href = "http://coolup.educationhost.cloud">Cool Up</a> <br>
 Per contattarci scrivere alla mail di supporto <a href= "mailto:Coolup.app@gmail.com">Cool-Up support</a>
