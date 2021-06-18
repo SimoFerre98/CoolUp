@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/MyFridge"
+        android:title="My Fridge"
+        android:icon="@drawable/fridge_blue_filled"/>
+    <item android:id="@+id/MyShoppingList"
+        android:title="Shop List"
+        android:icon="@drawable/shoplist_blue_filled"/>
+    <item
+        android:title=""/>
+
+    <item android:id="@+id/Search"
+        android:title="Search"
+        android:icon="@drawable/search_blue_filled"/>
+    <item android:id="@+id/Settings"
+        android:title="Settings"
+        android:icon="@drawable/settings_blue_filled"/>
+
+
+
+
+</menu>
