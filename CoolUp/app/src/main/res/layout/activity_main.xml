@@ -24,15 +24,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/profile_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@mipmap/ic_blue_on_white_round"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#FFF"/>
-
+                    app:civ_border_color="#FFF"
+                    app:civ_border_width="2dp" />
 
 
             </RelativeLayout>
@@ -65,9 +63,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/emptyspace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/teal_200"
             android:text=""
             android:textSize="69sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -75,9 +74,6 @@
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:layout_width="match_parent"
