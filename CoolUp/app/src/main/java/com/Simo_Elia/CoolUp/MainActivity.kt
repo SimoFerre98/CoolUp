@@ -19,8 +19,7 @@ class MainActivity : AppCompatActivity()  {
     // Toolbar variable
     private lateinit var myToolbar: androidx.appcompat.widget.Toolbar
 
-    // Bluetooth constant
-    val mUUID : UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+    var Toggle : Switch ?=null
 
 
     // Settings when launching the application
@@ -30,28 +29,7 @@ class MainActivity : AppCompatActivity()  {
 
         //*------------------------------------------------
 
-        // BlueTooth Connections
-        var btAdapter : BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        println(btAdapter.bondedDevices)
-        var hc05 : BluetoothDevice  = btAdapter.getRemoteDevice("0020:12:08C2EB")
-        println(hc05.name)
 
-        // Try to connect with 3 attempts
-        var btSocket:BluetoothSocket?= null
-        var counter = 0;
-        do{
-            btSocket = hc05.createRfcommSocketToServiceRecord(mUUID);
-            println(btSocket);
-            btSocket.connect()
-            println(btSocket.isConnected)
-
-            counter++
-        } while (!btSocket!!.isConnected && counter < 3)
-
-        // Ricevere la Stringa
-
-        var outputStream: OutputStream =btSocket.outputStream
-        var inputStream :InputStream = btSocket.inputStream;
 
 
         /*
@@ -68,9 +46,6 @@ class MainActivity : AppCompatActivity()  {
             var b : Byte=  inputStream.read().toByte()
             println(b.toChar())
         }*/
-
-        btSocket.close()
-        println(btSocket.isConnected)
 
 
         //*------------------------------------------------
