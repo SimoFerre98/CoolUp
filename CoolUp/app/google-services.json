@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "976843467356",
+    "project_id": "coolup-3bcae",
+    "storage_bucket": "coolup-3bcae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:976843467356:android:70d1cdee13db6a94189499",
+        "android_client_info": {
+          "package_name": "com.Simo_Elia.CoolUp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "976843467356-u5vdkeiulkcm92nakluonpmbac7hu25c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd9X2xDlG9DB6b1QNq2LxzN0E9nlPMwaI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "976843467356-u5vdkeiulkcm92nakluonpmbac7hu25c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

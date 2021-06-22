@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        //Ricerca del fab
         fab = findViewById(R.id.fab)
         // Toolbar association
         myToolbar = findViewById(R.id.myToolbar)
