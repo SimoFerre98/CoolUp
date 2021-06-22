@@ -15,21 +15,29 @@ private const val ARG_PARAM2 = "param2"
  * Use the [fridge.newInstance] factory method to
  * create an instance of this fragment.
  */
-class fridge : Fragment(R.layout.fragment_fridge) {
-    lateinit var recyclerView : RecyclerView
-    lateinit var floatingActionButton: FloatingActionButton
-    lateinit var Manual_Fab: FloatingActionButton
-    lateinit var Bluetooth_Fab: FloatingActionButton
+class fridge : Fragment() {
+    var recyclerView : RecyclerView ?=null
+    var fab: FloatingActionButton ?=null
+    var Manual_Fab: FloatingActionButton ?=null
+    var Bluetooth_Fab: FloatingActionButton ?=null
+    val v:View?= getView()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+
         val view:View = inflater.inflate(R.layout.fragment_fridge,container,false)
-        view.findViewById<RecyclerView>(R.id.FrigoRecycleView)
-        view.findViewById<FloatingActionButton>(R.id.fab)
-        view.findViewById<FloatingActionButton>(R.id.Manual_fab)
-        view.findViewById<FloatingActionButton>(R.id.Bluetooth_Scan)
-        floatingActionButton.setOnClickListener(View.OnClickListener {
-            Manual_Fab!!.setVisibility(View.VISIBLE)
-            Bluetooth_Fab!!.setVisibility(View.VISIBLE)
+        recyclerView=view.findViewById<RecyclerView>(R.id.FrigoRecycleView)
+        fab= v?.findViewById(R.id.fab)
+
+
+        Manual_Fab= view.findViewById<FloatingActionButton>(R.id.Manual_fab)
+        Bluetooth_Fab= view.findViewById<FloatingActionButton>(R.id.Bluetooth_Scan)
+        fab!!.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(view:View?){
+                Manual_Fab!!.setVisibility(View.VISIBLE)
+                Bluetooth_Fab!!.setVisibility(View.VISIBLE)
+            }
         })
         return view
     }
 }
+
+

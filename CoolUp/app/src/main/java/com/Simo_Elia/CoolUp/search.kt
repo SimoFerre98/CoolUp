@@ -72,7 +72,7 @@ class search : Fragment()  {
             try {
                 Class.forName("net.sourceforge.jtds.jdbc.Driver")
                 ConnectionURL =
-                    "jdbc:jtds:sqlserver://coolup.database.windows.net:1433;DatabaseName=CoolUp;user=CoolUp_Admin@coolup;password=EliaFerre21;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;\n"
+                    "jdbc:jtds:sqlserver://coolapp.database.windows.net:1433;DatabaseName=CoolUp;user=coolup_admin@coolapp;password=Eliaferre21;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;\n"
                 connection = DriverManager.getConnection(ConnectionURL)
 
 
