@@ -1,31 +1,40 @@
 package com.Simo_Elia.CoolUp
 
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothSocket
-import android.content.Intent
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
-import android.transition.Visibility.MODE_OUT
-import android.view.*
-import android.widget.*
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.util.Log
+import android.view.MenuItem
+import android.view.View
+import android.widget.Switch
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isInvisible
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.InputStream
-import java.io.OutputStream
-import java.util.*
+import java.sql.Connection
+import java.sql.ResultSet
+import java.sql.SQLException
+import java.sql.Statement
+
+var con:Connection?=null
 
 class MainActivity : AppCompatActivity()  {
+    // Connection SQL
+
+
     // Toolbar variable
     private lateinit var myToolbar: androidx.appcompat.widget.Toolbar
 
     var Toggle : Switch ?=null
+
     private var fab : FloatingActionButton ?= null
+
 
     // Settings when launching the application
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,6 +118,9 @@ class MainActivity : AppCompatActivity()  {
                 return true
             }
         }
+
+
+
 
 
 }

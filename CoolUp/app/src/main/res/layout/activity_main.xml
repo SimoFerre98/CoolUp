@@ -6,11 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/myToolbar"
             android:layout_width="match_parent"
@@ -19,11 +17,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/profile_image"
                     android:layout_width="60dp"
@@ -32,12 +28,9 @@
                     app:civ_border_color="#FFF"
                     app:civ_border_width="2dp" />
 
-
             </RelativeLayout>
 
-
         </androidx.appcompat.widget.Toolbar>
-
         <FrameLayout
             android:id="@+id/flFragment"
             android:name="com.Simo_Elia.CoolUp.fridge"
@@ -46,11 +39,7 @@
             app:layout_constraintBottom_toTopOf="@+id/emptyspace"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/myToolbar">
-
-
-        </FrameLayout>
-
+            app:layout_constraintTop_toBottomOf="@+id/myToolbar"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +50,26 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/myToolbar"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Manual_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="130dp"
+            android:clickable="true"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/flFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/Bluetooth_Scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="130dp"
+            android:clickable="true"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/flFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
         <TextView
             android:id="@+id/emptyspace"
             android:layout_width="wrap_content"
@@ -72,9 +80,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     <com.google.android.material.bottomappbar.BottomAppBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,7 +94,6 @@
         app:itemBackground="@android:color/holo_blue_bright"
         app:backgroundTint="@color/CoolUpBlue"
         >
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
@@ -99,9 +104,7 @@
             app:itemIconTint="@color/white"
             app:itemTextColor="@color/white"
             />
-
     </com.google.android.material.bottomappbar.BottomAppBar>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,9 +113,6 @@
         android:id="@+id/fab"
         app:layout_anchor="@id/bottomAppBar"
         app:backgroundTint="@color/CoolUpBlue"
-
         />
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
