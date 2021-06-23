@@ -30,26 +30,27 @@ private const val ARG_PARAM2 = "param2"
 
 class search : Fragment()  {
 
-    var Toggle: Switch?= null;
+    var Toggle: Switch?=null
     var progressBar: ProgressBar?=null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View?
     {
-        val view:View = inflater.inflate(R.layout.fragment_settings,container,false)
+        val view:View = inflater.inflate(R.layout.fragment_search,container,false)
 
-        Toggle = view.findViewById<Switch>(R.id.ToggleDB)
+       Toggle = view.findViewById(R.id.ToggleDB)
 
-        Toggle!!.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener{
-                buttonView, isChecked ->
-            if(isChecked)
-            {
-                Toast.makeText(context,"DB Launching",Toast.LENGTH_LONG).show()
-                val checkLogin = CheckLogin(view,requireContext())
-                checkLogin.execute("")
-            }
-            else
-            {
-                Toast.makeText(context,"DB Disabled",Toast.LENGTH_LONG).show()
+        Toggle!!.setOnCheckedChangeListener(object: CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                if(isChecked)
+                {
+                    Toast.makeText(context,"DB Launching",Toast.LENGTH_LONG).show()
+                    val checkLogin = CheckLogin(view,requireContext())
+                    checkLogin.execute("")
+                }
+                else
+                {
+                    Toast.makeText(context,"DB Disabled",Toast.LENGTH_LONG).show()
+                }
             }
         })
         return  view
@@ -105,7 +106,7 @@ class search : Fragment()  {
                 if (con == null) {
                     z = "Check Your Internet Access!"
                 } else {
-                    val query = "select * from Product"
+                    val query = "select * from Products"
                     val stmt: Statement = con!!.createStatement()
                     val rs: ResultSet = stmt.executeQuery(query)
                     if (rs.next()) {

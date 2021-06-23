@@ -20,17 +20,17 @@ class fridge : Fragment() {
     var fab: FloatingActionButton ?=null
     var Manual_Fab: FloatingActionButton ?=null
     var Bluetooth_Fab: FloatingActionButton ?=null
-    val v:View?= getView()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
 
         val view:View = inflater.inflate(R.layout.fragment_fridge,container,false)
         recyclerView=view.findViewById<RecyclerView>(R.id.FrigoRecycleView)
-        fab= v?.findViewById(R.id.fab)
+        fab= view.findViewById(R.id.fab)
 
 
         Manual_Fab= view.findViewById<FloatingActionButton>(R.id.Manual_fab)
         Bluetooth_Fab= view.findViewById<FloatingActionButton>(R.id.Bluetooth_Scan)
-        fab!!.setOnClickListener(object : View.OnClickListener{
+        view.setOnClickListener(object : View.OnClickListener{
             override fun onClick(view:View?){
                 Manual_Fab!!.setVisibility(View.VISIBLE)
                 Bluetooth_Fab!!.setVisibility(View.VISIBLE)
