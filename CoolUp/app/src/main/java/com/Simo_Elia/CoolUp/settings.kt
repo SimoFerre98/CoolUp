@@ -44,7 +44,7 @@ class settings : Fragment(R.layout.fragment_settings)  {
         buttonBlue = view.findViewById(R.id.btnBlue)
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter()
         if (bluetoothAdapter == null) {
-            Toast.makeText(context,"This device doesn't support Bluetooth",Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Questo dispositivo non supporta il Bluetooth",Toast.LENGTH_SHORT).show()
         }
 
         if (!bluetoothAdapter!!.isEnabled) {

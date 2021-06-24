@@ -179,6 +179,20 @@ class dbhandler(context: Context?) {
         return task
     }
 
+    fun GetDownload(EAN: String): dbdownload? {
+        val where = DOWNLOAD_EAN + "= ?"
+        val whereArgs = arrayOf(EAN)
+        openReadableDB()
+        val cursor = db!!.query(DOWNLOAD_TABLE,null, where, whereArgs, null, null, null)
+        cursor.moveToFirst()
+        val download: dbdownload? = getDownloadFromCursor(cursor)
+        CloseCursor(cursor)
+        closeDB()
+        return download
+    }
+    
+
+
     //  Metodo che inserisce un oggetto nel db
     fun InsertFridge(fridge: dbfridge): Long {
         val cv = ContentValues()
@@ -197,6 +211,38 @@ class dbhandler(context: Context?) {
         closeDB()
         return rowID
     }
+
+    //  Metodo che inserisce dentro il database download una tupla
+    fun InsertDownload(fridge: dbfridge): Long {
+        val cv = ContentValues()
+        cv.put(FRIDGE_EAN, fridge.GetEAN())
+        cv.put(FRIDGE_NAME, fridge.GetName())
+        cv.put(FRIDGE_CATEGORY, fridge.GetCategory())
+        cv.put(FRIDGE_DESCRIPTION, fridge.GetDescription())
+        cv.put(FRIDGE_ALLERGENS, fridge.GetAllergens())
+        cv.put(FRIDGE_UNIT, fridge.GetUnit())
+        cv.put(FRIDGE_RECYCLABLE, fridge.GetRecyclable())
+        cv.put(FRIDGE_FREEZABLE, fridge.GetFreezable())
+        cv.put(FRIDGE_DATE, fridge.GetDate())
+        openWriteableDB()
+
+        val rowID = db!!.insert(DOWNLOAD_TABLE, null, cv)
+        closeDB()
+        return rowID
+    }
+
+    //  Metodo che inserisce dentro il database download una tupla
+    fun InsertShopList(fridge: dbfridge): Long {
+        val cv = ContentValues()
+        cv.put(FRIDGE_EAN, fridge.GetEAN())
+        cv.put(FRIDGE_NAME, fridge.GetName())
+        openWriteableDB()
+
+        val rowID = db!!.insert(SHOPLIST_TABLE, null, cv)
+        closeDB()
+        return rowID
+    }
+
 
     //  Metodo che aggiorna un oggetto Frigo
     fun UpdateFridge(fridge: dbfridge): Int {
@@ -246,6 +292,28 @@ class dbhandler(context: Context?) {
                     cursor.getString(FRIDGE_EAN_COL)
                 )
                 return fridge
+            } catch (e: Exception) {
+                null
+            }
+        }
+        return null
+    }
+    private fun getDownloadFromCursor(cursor: Cursor?): dbdownload? {
+        if (cursor == null || cursor.count == 0) {
+            return null
+        } else {
+            try {
+                val download = dbdownload(
+                    cursor.getString(DOWNLOAD_NAME_COL),
+                    cursor.getString(DOWNLOAD_DESCRIPTION_COL),
+                    cursor.getString(DOWNLOAD_ALLERGENS_COL),
+                    cursor.getString(DOWNLOAD_DESCRIPTION_COL),
+                    cursor.getString(DOWNLOAD_UNIT_COL),
+                    cursor.getString(DOWNLOAD_RECYCLABLE_COL),
+                    cursor.getString(DOWNLOAD_FREEZABLE_COL),
+                    cursor.getString(FRIDGE_EAN_COL)
+                )
+                return download
             } catch (e: Exception) {
                 null
             }

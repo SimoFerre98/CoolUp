@@ -88,9 +88,12 @@ class fridge : Fragment() {
 
     class GetProductString (view : View, context: Context, Bluetooth_Fab: FloatingActionButton ) : AsyncTask<String?, String?, String?>(){
         var context=context
+        var view = view
         var Bluetooth_Fab= Bluetooth_Fab
         var EAN:String?=null
         var Success=false
+        var fridge = dbfridge()
+        var db = dbhandler(context)
         override fun onPreExecute() {
             Bluetooth_Fab.setImageResource(com.Simo_Elia.CoolUp.R.drawable.ic_action_on)
         }
@@ -102,6 +105,22 @@ class fridge : Fragment() {
             //Toast.makeText(context,"Click",Toast.LENGTH_SHORT).show()
             try{
                 EAN= barCode()
+                val query = "select * from Products where $EAN"
+                val checkLogin = dbonline.CheckLogin(view, context,R.id.progressBarFridge,query)
+                checkLogin.execute("")
+
+                //  Creazione dell'oggetto che verrà inserito nel db fridge
+                checkLogin.rs?.getString("EAN")?.let { fridge.SetEAN(it) }
+                checkLogin.rs?.getString("Name")?.let { fridge.SetName(it) }
+                checkLogin.rs?.getString("Category")?.let { fridge.SetCategory(it) }
+                checkLogin.rs?.getString("Allergens")?.let { fridge.SetAllergens(it) }
+                checkLogin.rs?.getString("Unit")?.let { fridge.SetUnit(it) }
+                checkLogin.rs?.getString("Recyclable")?.let { fridge.SetRecyclable(it) }
+                checkLogin.rs?.getString("Freezable")?.let { fridge.SetFreezable(it) }
+                checkLogin.rs?.getString("Date")?.let { fridge.SetDate(it) }
+                db.InsertFridge(fridge)
+
+
                 Success=true
             }
             catch (ex: java.lang.Exception) {

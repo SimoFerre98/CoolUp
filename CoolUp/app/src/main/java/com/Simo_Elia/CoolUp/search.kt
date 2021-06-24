@@ -35,6 +35,7 @@ class search : Fragment()  {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View?
     {
+        val query = "select * from Products"
         val view:View = inflater.inflate(R.layout.fragment_search,container,false)
 
        Toggle = view.findViewById(R.id.ToggleDB)
@@ -44,8 +45,9 @@ class search : Fragment()  {
                 if(isChecked)
                 {
                     Toast.makeText(context,"DB Launching",Toast.LENGTH_SHORT).show()
-                    val checkLogin = CheckLogin(view,requireContext())
-                    checkLogin.execute("")
+
+                    var DBOnline = dbonline.CheckLogin(view,requireContext(),R.id.progressBar,query)
+                    DBOnline.execute("")
                 }
                 else
                 {
@@ -56,72 +58,5 @@ class search : Fragment()  {
         return  view
     }
 
-    class CheckLogin(view : View, context: Context) : AsyncTask<String?, String?, String?>() {
-        var progressBar: ProgressBar= view.findViewById(R.id.progressBar)
-        var message: TextView= view.findViewById<View>(R.id.message) as TextView
-        var context = context
-        var z: String? = ""
-        var isSucces = false
-        var EAN = ""
-
-        @SuppressLint("NewApi")
-        fun connectionclass(): Connection? {
-            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-            StrictMode.setThreadPolicy(policy)
-            var connection: Connection? = null
-            var ConnectionURL: String? = null
-            try {
-                Class.forName("net.sourceforge.jtds.jdbc.Driver")
-                ConnectionURL =
-                    "jdbc:jtds:sqlserver://coolapp.database.windows.net:1433;DatabaseName=CoolUp;user=coolup_admin@coolapp;password=Eliaferre21;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;\n"
-                connection = DriverManager.getConnection(ConnectionURL)
-
-
-            } catch (se: SQLException) {
-                Log.e("error here 1 : ", se.message!!)
-            } catch (e: ClassNotFoundException) {
-                Log.e("error here 2 : ", e.message!!)
-            } catch (e: Exception) {
-                Log.e("error here 3 : ", e.message!!)
-            }
-            return connection
-        }
-
-
-        override fun onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE)
-        }
-
-        override fun onPostExecute(r: String?) {
-            progressBar.setVisibility(View.GONE)
-            if (isSucces) {
-                message.setText(EAN)
-            }
-        }
-
-        override fun doInBackground(vararg params: String?): String? {
-            try {
-                con = connectionclass() // Connect to database
-                if (con == null) {
-                    z = "Check Your Internet Access!"
-                } else {
-                    val query = "select * from Products"
-                    val stmt: Statement = con!!.createStatement()
-                    val rs: ResultSet = stmt.executeQuery(query)
-                    if (rs.next()) {
-                        EAN =
-                            rs.getString("EAN") //Name is the string label of a column in database, read through
-                        isSucces = true
-                        con!!.close()
-                    }
-                }
-            } catch (ex: java.lang.Exception) {
-                isSucces = false
-                z = ex.message
-                Log.d("sql error", z!!)
-            }
-            return z
-        }
-    }
 }
 
