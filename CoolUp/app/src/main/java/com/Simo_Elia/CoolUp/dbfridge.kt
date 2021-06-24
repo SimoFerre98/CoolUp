@@ -1,9 +1,9 @@
 package com.Simo_Elia.CoolUp
 
 
-class dbfrigo {
+class dbfridge {
     //  Attributi
-    var Id : Long = 0
+    //var Id : Int = 0
     var EAN : String
     var Name : String
     var Category : String
@@ -29,7 +29,7 @@ class dbfrigo {
     }
 
     //  Costruttore poer parametri
-    constructor(Id: Int,EAN : String,Name: String, Category : String,Description : String, Allergens : String,Unit : String,Recyclable : String,Freezable : String,Date : String)
+    constructor(EAN : String,Name: String, Category : String,Description : String, Allergens : String,Unit : String,Recyclable : String,Freezable : String,Date : String)
     {
         //this.Id = Id.toLong()
         this.EAN = EAN
@@ -57,6 +57,83 @@ class dbfrigo {
         this.Freezable = download.Freezable
         this.Date = ""
     }
+
+
+    //  Selettori
+    public fun GetEAN() : String = this.EAN
+
+    public fun GetName() : String
+    {
+        return this.Name
+    }
+    public fun GetCategory() : String
+    {
+        return this.Category
+    }
+    public fun GetDescription() : String
+    {
+        return this.Description
+    }
+    public fun GetAllergens() : String
+    {
+        return this.Allergens
+    }
+    public fun GetUnit() : String
+    {
+        return this.Unit
+    }
+    public fun GetRecyclable() : String
+    {
+        return this.Recyclable
+    }
+    public fun GetFreezable() : String
+    {
+        return this.Freezable
+    }
+    public fun GetDate() : String
+    {
+        return this.Date
+    }
+
+
+    //  Modificatori
+    public fun SetEAN(EAN: String)
+    {
+        this.EAN = EAN
+    }
+    public fun SetName(Name: String)
+    {
+        this.Name = Name
+    }
+    public fun SetCategory(Category: String)
+    {
+        this.Category = Category
+    }
+    public fun SetDescription(Description: String)
+    {
+        this.Description = Description
+    }
+    public fun SetAllergens(Allergens: String)
+    {
+        this.Allergens = Allergens
+    }
+    public fun SetUnit(Unit: String)
+    {
+        this.Unit = Unit
+    }
+    public fun SetRecyclable(Recyclable: String)
+    {
+        this.Recyclable = Recyclable
+    }
+    public fun SetFreezable(Freezable: String)
+    {
+        this.Freezable = Freezable
+    }
+    public fun SetDate(Date: String)
+    {
+        this.Date = Date
+    }
+
     //  Variabili static, possono servire per variabili boolean
     companion object
     {

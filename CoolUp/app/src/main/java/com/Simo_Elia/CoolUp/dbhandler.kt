@@ -17,35 +17,16 @@ class dbhandler(context: Context?) {
             db.execSQL(CREATE_FRIDGE_TABLE)
             db.execSQL(CREATE_DOWNLOAD_TABLE)
             db.execSQL(CREATE_SHOPLIST_TABLE)
-
-            // insert default lists
-            db.execSQL("INSERT INTO list VALUES (1, 'Personal')")
-            db.execSQL("INSERT INTO list VALUES (2, 'Business')")
-
-            // insert sample tasks
-            db.execSQL(
-                """
-                    INSERT INTO task VALUES (1, 1, 'Pay bills', 'Rent
-                    Phone
-                    Internet', 0, 0)
-                    """.trimIndent()
-            )
-            db.execSQL(
-                "INSERT INTO task VALUES (2, 1, 'Get hair cut', " +
-                        "'', 0, 0)"
-            )
         }
-
+        //  Metodo che serve per quando si fanno gli agiornamenti del DB
         override fun onUpgrade(
             db: SQLiteDatabase,
             oldVersion: Int, newVersion: Int
         ) {
-            Log.d(
-                "Task list", "Upgrading db from version "
-                        + oldVersion + " to " + newVersion
-            )
-            db.execSQL(DROP_LIST_TABLE)
-            db.execSQL(DROP_TASK_TABLE)
+            Log.d("CoolUp", "aggiornamento della versione del db dalla versione: " + oldVersion + " alla " + newVersion )
+            db.execSQL(DROP_FRIDGE_TABLE)
+            db.execSQL(DROP_DOWNLOAD_TABLE)
+            db.execSQL(DROP_SHOPLIST_TABLE)
             onCreate(db)
         }
     }
@@ -54,38 +35,47 @@ class dbhandler(context: Context?) {
     private var db: SQLiteDatabase? = null
     private val dbHelper: DBHelper
 
-    // private methods
+    // Metodo privato che serve per aprire una coinnessione di solo lettura con il DB
     private fun openReadableDB() {
         db = dbHelper.readableDatabase
     }
 
+    // Metodo privato che serve per aprire una coinnessione di lettura e scritturacon il DB
     private fun openWriteableDB() {
         db = dbHelper.writableDatabase
     }
 
+    //Metodo che chiude la connessione con il DB
     private fun closeDB() {
         if (db != null) db!!.close()
     }
 
+    //Metodo chye dealloca il cursore
     private fun CloseCursor(cursor: Cursor?) {
         if (cursor == null) {
-            cursor!!.close()
+            cursor?.close()
         }
     }
 
-    // public methods
-    val lists: ArrayList<Any>
-        get() {
-            val lists: ArrayList<List> = ArrayList<List>()
-            openReadableDB()
-            val cursor = db!!.query(
-                LIST_TABLE,
-                null, null, null, null, null, null
-            )
+    //  Metodo che restituisce un arraylist di tutti i valori dentro il db FRIGO
+    val FridgeLists: ArrayList<dbfridge> get() {
+            val lists: ArrayList<dbfridge> = ArrayList<dbfridge>()
+
+        openReadableDB()
+            val cursor = db!!.query( FRIDGE_TABLE,null, null, null, null, null, null )
             while (cursor.moveToNext()) {
-                val list = List<Any>()
-                list.setId(cursor.getInt(LIST_ID_COL))
-                list.setName(cursor.getString(LIST_NAME_COL))
+                val list = dbfridge()
+
+                list.SetName(cursor.getString(FRIDGE_NAME_COL))
+                list.SetCategory(cursor.getString(FRIDGE_CATEGORY_COL))
+                list.SetAllergens(cursor.getString(FRIDGE_ALLERGENS_COL))
+                list.SetDescription(cursor.getString(FRIDGE_DESCRIPTION_COL))
+                list.SetUnit(cursor.getString(FRIDGE_UNIT_COL))
+                list.SetRecyclable(cursor.getString(FRIDGE_RECYCLABLE_COL))
+                list.SetFreezable(cursor.getString(FRIDGE_FREEZABLE_COL))
+                list.SetDate(cursor.getString(FRIDGE_DATE_COL))
+                list.SetEAN(cursor.getString(FRIDGE_EAN_COL))
+
                 lists.add(list)
             }
             CloseCursor(cursor)
@@ -93,25 +83,69 @@ class dbhandler(context: Context?) {
             return lists
         }
 
-    fun getList(name: String): List? {
-        val where = LIST_NAME + "= ?"
-        val whereArgs = arrayOf(name)
+    //  Metodo che restituisce un arraylist di tutti i valori dentro il db DOWNLOAD
+    val DownloadLists: ArrayList<dbdownload> get() {
+        val lists: ArrayList<dbdownload> = ArrayList<dbdownload>()
+
         openReadableDB()
-        val cursor = db!!.query(
-            LIST_TABLE, null,
-            where, whereArgs, null, null, null
-        )
-        var list: List? = null
+        val cursor = db!!.query( DOWNLOAD_TABLE,null, null, null, null, null, null )
+        while (cursor.moveToNext()) {
+            val list = dbdownload()
+            list.SetName(cursor.getString(FRIDGE_NAME_COL))
+            list.SetCategory(cursor.getString(FRIDGE_CATEGORY_COL))
+            list.SetAllergens(cursor.getString(FRIDGE_ALLERGENS_COL))
+            list.SetDescription(cursor.getString(FRIDGE_DESCRIPTION_COL))
+            list.SetUnit(cursor.getString(FRIDGE_UNIT_COL))
+            list.SetRecyclable(cursor.getString(FRIDGE_RECYCLABLE_COL))
+            list.SetFreezable(cursor.getString(FRIDGE_FREEZABLE_COL))
+            list.SetEAN(cursor.getString(FRIDGE_EAN_COL))
+            lists.add(list)
+        }
+        CloseCursor(cursor)
+        closeDB()
+        return lists
+    }
+
+    //  Metodo che restituisce un arraylist di tutti i valori dentro il db SHOPLIST
+    val ShopListLists: ArrayList<dblist> get() {
+        val lists: ArrayList<dblist> = ArrayList<dblist>()
+
+        openReadableDB()
+        val cursor = db!!.query( SHOPLIST_TABLE,null, null, null, null, null, null )
+        while (cursor.moveToNext()) {
+            val list = dblist()
+            list.SetName(cursor.getString(FRIDGE_NAME_COL))
+            list.SetEAN(cursor.getString(FRIDGE_EAN_COL))
+            lists.add(list)
+        }
+        CloseCursor(cursor)
+        closeDB()
+        return lists
+    }
+
+    fun GetFridgeList(Name: String): dbfridge? {
+        val where = FRIDGE_TABLE + "= ?"
+        val whereArgs = arrayOf(Name)
+        openReadableDB()
+        val cursor = db!!.query(FRIDGE_TABLE, null, where, whereArgs, null, null, null )
+        var list: dbfridge? = null
         cursor.moveToFirst()
-        list = List(
-            cursor.getInt(LIST_ID_COL),
-            cursor.getString(LIST_NAME_COL)
+        list = dbfridge(
+
+                    cursor.getString(FRIDGE_NAME_COL),
+                    cursor.getString(FRIDGE_CATEGORY_COL),
+                    cursor.getString(FRIDGE_ALLERGENS_COL),
+                    cursor.getString(FRIDGE_DESCRIPTION_COL),
+                    cursor.getString(FRIDGE_UNIT_COL),
+                    cursor.getString(FRIDGE_RECYCLABLE_COL),
+                    cursor.getString(FRIDGE_FREEZABLE_COL),
+                    cursor.getString(FRIDGE_DATE_COL),
+                    cursor.getString(FRIDGE_EAN_COL)
         )
         CloseCursor(cursor)
         closeDB()
         return list
-    }
-
+    }/*
     fun getTasks(listName: String): ArrayList<Task?> {
         val where = TASK_LIST_ID + "= ? AND " +
                 TASK_HIDDEN + "!=1"
@@ -131,57 +165,92 @@ class dbhandler(context: Context?) {
         closeDB()
         return tasks
     }
-
-    fun getTask(id: Int): Task? {
-        val where = TASK_ID + "= ?"
-        val whereArgs = arrayOf(Integer.toString(id))
+*/
+    //  Metodo che ritorna il singolo oggetto di frtigo in base all'id
+    fun GetFrigo(Id: Int): dbfridge? {
+        val where = FRIDGE_ID + "= ?"
+        val whereArgs = arrayOf(Integer.toString(Id))
         openReadableDB()
-        val cursor = db!!.query(
-            TASK_TABLE,
-            null, where, whereArgs, null, null, null
-        )
+        val cursor = db!!.query(FRIDGE_TABLE,null, where, whereArgs, null, null, null)
         cursor.moveToFirst()
-        val task: Task? = getTaskFromCursor(cursor)
+        val task: dbfridge? = getFridgeFromCursor(cursor)
         CloseCursor(cursor)
         closeDB()
         return task
     }
 
-    fun insertTask(task: Task): Long {
+    //  Metodo che inserisce un oggetto nel db
+    fun InsertFridge(fridge: dbfridge): Long {
         val cv = ContentValues()
-        cv.put(TASK_LIST_ID, task.getListId())
-        cv.put(TASK_NAME, task.getName())
-        cv.put(TASK_NOTES, task.getNotes())
-        cv.put(TASK_COMPLETED, task.getCompletedDate())
-        cv.put(TASK_HIDDEN, task.getHidden())
+        cv.put(FRIDGE_EAN, fridge.GetEAN())
+        cv.put(FRIDGE_NAME, fridge.GetName())
+        cv.put(FRIDGE_CATEGORY, fridge.GetCategory())
+        cv.put(FRIDGE_DESCRIPTION, fridge.GetDescription())
+        cv.put(FRIDGE_ALLERGENS, fridge.GetAllergens())
+        cv.put(FRIDGE_UNIT, fridge.GetUnit())
+        cv.put(FRIDGE_RECYCLABLE, fridge.GetRecyclable())
+        cv.put(FRIDGE_FREEZABLE, fridge.GetFreezable())
+        cv.put(FRIDGE_DATE, fridge.GetDate())
         openWriteableDB()
-        val rowID = db!!.insert(TASK_TABLE, null, cv)
+
+        val rowID = db!!.insert(FRIDGE_TABLE, null, cv)
         closeDB()
         return rowID
     }
 
-    fun updateTask(task: Task): Int {
+    //  Metodo che aggiorna un oggetto Frigo
+    fun UpdateFridge(fridge: dbfridge): Int {
         val cv = ContentValues()
-        cv.put(TASK_LIST_ID, task.getListId())
-        cv.put(TASK_NAME, task.getName())
-        cv.put(TASK_NOTES, task.getNotes())
-        cv.put(TASK_COMPLETED, task.getCompletedDate())
-        cv.put(TASK_HIDDEN, task.getHidden())
-        val where = TASK_ID + "= ?"
-        val whereArgs = arrayOf<String>(java.lang.String.valueOf(task.getId()))
+        //cv.put(FRIDGE_ID, fridge.GetId())
+        cv.put(FRIDGE_EAN, fridge.GetEAN())
+        cv.put(FRIDGE_NAME, fridge.GetName())
+        cv.put(FRIDGE_CATEGORY, fridge.GetCategory())
+        cv.put(FRIDGE_DESCRIPTION, fridge.GetDescription())
+        cv.put(FRIDGE_ALLERGENS, fridge.GetAllergens())
+        cv.put(FRIDGE_UNIT, fridge.GetUnit())
+        cv.put(FRIDGE_RECYCLABLE, fridge.GetRecyclable())
+        cv.put(FRIDGE_FREEZABLE, fridge.GetFreezable())
+        cv.put(FRIDGE_DATE, fridge.GetDate())
+        val where = FRIDGE_ID + "= ?"
+        val whereArgs = arrayOf<String>(java.lang.String.valueOf(fridge.GetName()))
         openWriteableDB()
-        val rowCount = db!!.update(TASK_TABLE, cv, where, whereArgs)
+        val rowCount = db!!.update(FRIDGE_TABLE, cv, where, whereArgs)
         closeDB()
         return rowCount
     }
 
-    fun deleteTask(id: Long): Int {
-        val where = TASK_ID + "= ?"
+    //  Metodo che elimina un un oggetto frigo dalla table
+    fun DeleteFridge(id: Int): Int {
+        val where = FRIDGE_ID + "= ?"
         val whereArgs = arrayOf(id.toString())
         openWriteableDB()
-        val rowCount = db!!.delete(TASK_TABLE, where, whereArgs)
+        val rowCount = db!!.delete(FRIDGE_TABLE, where, whereArgs)
         closeDB()
         return rowCount
+    }
+
+    private fun getFridgeFromCursor(cursor: Cursor?): dbfridge? {
+         if (cursor == null || cursor.count == 0) {
+            return null
+        } else {
+            try {
+                val fridge = dbfridge(
+                    cursor.getString(FRIDGE_NAME_COL),
+                    cursor.getString(FRIDGE_CATEGORY_COL),
+                    cursor.getString(FRIDGE_ALLERGENS_COL),
+                    cursor.getString(FRIDGE_DESCRIPTION_COL),
+                    cursor.getString(FRIDGE_UNIT_COL),
+                    cursor.getString(FRIDGE_RECYCLABLE_COL),
+                    cursor.getString(FRIDGE_FREEZABLE_COL),
+                    cursor.getString(FRIDGE_DATE_COL),
+                    cursor.getString(FRIDGE_EAN_COL)
+                )
+                return fridge
+            } catch (e: Exception) {
+                null
+            }
+        }
+        return null
     }
 
     //  Variabili costanti per la gestione del Db
@@ -191,109 +260,92 @@ class dbhandler(context: Context?) {
         const val DB_VERSION = 1
 
         // Lista delle table
-        const val FRIDGE_TABLE = "fridge"
-        const val DOWNLOAD_TABLE = "download"
-        const val SHOPLIST_TABLE = "shoplist"
+        private const val FRIDGE_TABLE = "fridge"
+        private const val DOWNLOAD_TABLE = "download"
+        private const val SHOPLIST_TABLE = "shoplist"
 
         //  Variabili della tabella FRIGO
-        const val FRIDGE_ID = "Id"
-        const val FRIDGE_ID_COL = 0
-        const val FRIDGE_EAN = "EAN"
-        const val FRIDGE_EAN_COL = 1
-        const val FRIDGE_NAME = "Name"
-        const val FRIDGE_NAME_COL = 2
-        const val FRIDGE_CATEGORY = "Category"
-        const val FRIDGE_CATEGORY_COL = 3
-        const val FRIDGE_DESCRIPTION= "Description"
-        const val FRIDGE_DESCRIPTION_COL = 4
-        const val FRIDGE_ALLERGENS= "Allergens"
-        const val FRIDGE_ALLERGENS_COL = 5
-        const val FRIDGE_UNIT = "Unit"
-        const val FRIDGE_UNIT_COL = 6
-        const val FRIDGE_RECYCLABLE = "Recyclable"
-        const val FRIDGE_RECYCLABLE_COL = 7
-        const val FRIDGE_FREEZABLE = "freezable"
-        const val FRIDGE_FREEZABLE_COL = 8
-        const val FRIDGE_DATE = "Date"
-        const val FRIDGE_DATE_COL = 9
+        private const val FRIDGE_ID = "Id"
+        private const val FRIDGE_ID_COL = 0
+        private const val FRIDGE_EAN = "EAN"
+        private const val FRIDGE_EAN_COL = 1
+        private const val FRIDGE_NAME = "Name"
+        private const val FRIDGE_NAME_COL = 2
+        private const val FRIDGE_CATEGORY = "Category"
+        private const val FRIDGE_CATEGORY_COL = 3
+        private const val FRIDGE_DESCRIPTION= "Description"
+        private const val FRIDGE_DESCRIPTION_COL = 4
+        private const val FRIDGE_ALLERGENS= "Allergens"
+        private const val FRIDGE_ALLERGENS_COL = 5
+        private const val FRIDGE_UNIT = "Unit"
+        private const val FRIDGE_UNIT_COL = 6
+        private const val FRIDGE_RECYCLABLE = "Recyclable"
+        private const val FRIDGE_RECYCLABLE_COL = 7
+        private const val FRIDGE_FREEZABLE = "freezable"
+        private const val FRIDGE_FREEZABLE_COL = 8
+        private const val FRIDGE_DATE = "Date"
+        private const val FRIDGE_DATE_COL = 9
 
         //  Variabili della tabella DOWNLOAD
-        const val DOWNLOAD_EAN = "EAN"
-        const val DOWNLOAD_EAN_COL = 0
-        const val DOWNLOAD_NAME = "Name"
-        const val DOWNLOAD_NAME_COL = 1
-        const val DOWNLOAD_CATEGORY = "Category"
-        const val DOWNLOAD_CATEGORY_COL = 2
-        const val DOWNLOAD_DESCRIPTION= "Description"
-        const val DOWNLOAD_DESCRIPTION_COL = 3
-        const val DOWNLOAD_ALLERGENS= "Allergens"
-        const val DOWNLOAD_ALLERGENS_COL = 4
-        const val DOWNLOAD_UNIT = "Unit"
-        const val DOWNLOAD_UNIT_COL = 5
-        const val DOWNLOAD_RECYCLABLE = "Recyclable"
-        const val DOWNLOAD_RECYCLABLE_COL = 6
-        const val DOWNLOAD_FREEZABLE = "freezable"
-        const val DOWNLOAD_FREEZABLE_COL = 7
+        private const val DOWNLOAD_EAN = "EAN"
+        private const val DOWNLOAD_EAN_COL = 0
+        private const val DOWNLOAD_NAME = "Name"
+        private const val DOWNLOAD_NAME_COL = 1
+        private const val DOWNLOAD_CATEGORY = "Category"
+        private const val DOWNLOAD_CATEGORY_COL = 2
+        private const val DOWNLOAD_DESCRIPTION= "Description"
+        private const val DOWNLOAD_DESCRIPTION_COL = 3
+        private const val DOWNLOAD_ALLERGENS= "Allergens"
+        private const val DOWNLOAD_ALLERGENS_COL = 4
+        private const val DOWNLOAD_UNIT = "Unit"
+        private const val DOWNLOAD_UNIT_COL = 5
+        private const val DOWNLOAD_RECYCLABLE = "Recyclable"
+        private const val DOWNLOAD_RECYCLABLE_COL = 6
+        private const val DOWNLOAD_FREEZABLE = "freezable"
+        private const val DOWNLOAD_FREEZABLE_COL = 7
 
         //  Variabili per la tabbella SHOPLIST
-        const val SHOPLIST_EAN = "EAN"
-        const val SHOPLIST_EAN_COL = 0
-        const val SHOPLIST_NAME = "Name"
-        const val SHOPLIST_NAME_COL = 1
+        private const val SHOPLIST_EAN = "EAN"
+        private const val SHOPLIST_EAN_COL = 0
+        private const val SHOPLIST_NAME = "Name"
+        private const val SHOPLIST_NAME_COL = 1
 
         // CREATE ae DROP TABLE di tutte le tabelle
-        const val CREATE_FRIDGE_TABLE = "CREATE TABLE " + FRIDGE_TABLE + " (" +
+        private const val CREATE_FRIDGE_TABLE = "CREATE TABLE " + FRIDGE_TABLE + " (" +
                 FRIDGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                FRIDGE_EAN + " TEXT    NOT NULL UNIQUE " +
+                FRIDGE_EAN + " TEXT NOT NULL, " +
+                FRIDGE_NAME + " TEXT, " +
+                FRIDGE_CATEGORY + " TEXT, " +
+                FRIDGE_DESCRIPTION + " TEXT, " +
+                FRIDGE_ALLERGENS + " TEXT, " +
+                FRIDGE_UNIT + " TEXT, " +
+                FRIDGE_RECYCLABLE + " TEXT, " +
+                FRIDGE_FREEZABLE + " TEXT, " +
+                FRIDGE_DATE + " TEXT)"
+
+
+        private const val CREATE_DOWNLOAD_TABLE = "CREATE TABLE " + DOWNLOAD_TABLE + " (" +
+                DOWNLOAD_EAN + " TEXT NOT NULL, " +
                 DOWNLOAD_NAME + " TEXT, " +
                 DOWNLOAD_CATEGORY + " TEXT, " +
                 DOWNLOAD_DESCRIPTION + " TEXT, " +
                 DOWNLOAD_ALLERGENS + " TEXT, " +
                 DOWNLOAD_UNIT + " TEXT, " +
                 DOWNLOAD_RECYCLABLE + " TEXT, " +
-                DOWNLOAD_FREEZABLE + " TEXT " +
-                FRIDGE_DATE + " TEXT);"
+                DOWNLOAD_FREEZABLE + " TEXT)"
+
+        private const val CREATE_SHOPLIST_TABLE = "CREATE TABLE " + SHOPLIST_TABLE + " (" +
+                FRIDGE_EAN + " TEXT NOT NULL, " +
+                DOWNLOAD_NAME + " TEXT)"
 
 
-        const val CREATE_DOWNLOAD_TABLE = "CREATE TABLE " + DOWNLOAD_TABLE + " (" +
-                FRIDGE_EAN + " TEXT    NOT NULL UNIQUE " +
-                DOWNLOAD_NAME + " TEXT, " +
-                DOWNLOAD_CATEGORY + " TEXT, " +
-                DOWNLOAD_DESCRIPTION + " TEXT, " +
-                DOWNLOAD_ALLERGENS + " TEXT, " +
-                DOWNLOAD_UNIT + " TEXT, " +
-                DOWNLOAD_RECYCLABLE + " TEXT, " +
-                DOWNLOAD_FREEZABLE + " TEXT);"
+        private const val DROP_FRIDGE_TABLE = "DROP TABLE IF EXISTS " + FRIDGE_TABLE
 
-        const val CREATE_SHOPLIST_TABLE = "CREATE TABLE " + SHOPLIST_TABLE + " (" +
-                FRIDGE_EAN + " TEXT    NOT NULL UNIQUE " +
-                DOWNLOAD_NAME + " TEXT);"
+        private const val DROP_DOWNLOAD_TABLE = "DROP TABLE IF EXISTS " + DOWNLOAD_TABLE
+
+        private const val DROP_SHOPLIST_TABLE = "DROP TABLE IF EXISTS " + SHOPLIST_TABLE
 
 
-        const val CREATE_FRIDGE_TABLE = "DROP TABLE IF EXISTS " + FRIDGE_TABLE
-
-        const val CREATE_DOWNLOAD_TABLE = "DROP TABLE IF EXISTS " + DOWNLOAD_TABLE
-
-        const val CREATE_SHOPLIST_TABLE = "DROP TABLE IF EXISTS " + SHOPLIST_TABLE
-
-        private fun getTaskFromCursor(cursor: Cursor?): Task? {
-            return if (cursor == null || cursor.count == 0) {
-                null
-            } else {
-                try {
-                    Task(
-                        cursor.getInt(TASK_ID_COL),
-                        cursor.getInt(TASK_LIST_ID_COL),
-                        cursor.getString(TASK_NAME_COL),
-                        cursor.getString(TASK_NOTES_COL),
-                        cursor.getLong(TASK_COMPLETED_COL),
-                        cursor.getInt(TASK_HIDDEN_COL)
-                    )
-                } catch (e: Exception) {
-                    null
-                }
-            }
-        }
     }
 
     // constructor

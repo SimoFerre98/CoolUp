@@ -17,4 +17,25 @@ class dblist {
         this.EAN = EAN
         this.Name = Name
     }
+
+    //  Selettori
+    public fun GetEAN() : String
+    {
+        return this.EAN
+    }
+    public fun GetName() : String
+    {
+        return this.Name
+    }
+
+    //  Modificatori
+    public fun SetEAN(EAN: String)
+    {
+        this.EAN = EAN
+    }
+    public fun SetName(Name: String)
+    {
+        this.Name = Name
+    }
+
 }

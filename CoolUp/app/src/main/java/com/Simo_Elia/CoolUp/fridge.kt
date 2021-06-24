@@ -28,6 +28,11 @@ class fridge : Fragment() {
         fab= view.findViewById(R.id.fab)
 
 
+
+        var Handler = dbhandler(context)
+        var frigo = dbfridge("33224954578","pesce","carne","carne molto buona","Nessuno","1.5L","umido","SI","NO")
+        Handler.InsertFridge(frigo)
+
         Manual_Fab= view.findViewById<FloatingActionButton>(R.id.Manual_fab)
         Bluetooth_Fab= view.findViewById<FloatingActionButton>(R.id.Bluetooth_Scan)
         view.setOnClickListener(object : View.OnClickListener{

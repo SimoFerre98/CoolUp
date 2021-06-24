@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity()  {
         val bottomNav: BottomNavigationView = findViewById(R.id.bottomNavigationView)
         bottomNav.setOnNavigationItemSelectedListener(navListener)
 
+
+
         // Launching the main fragment : fridge
         val fridge= fridge();
         supportFragmentManager.beginTransaction().apply {
