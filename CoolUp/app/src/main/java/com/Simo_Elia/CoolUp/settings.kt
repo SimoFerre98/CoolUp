@@ -80,30 +80,27 @@ class settings : Fragment(R.layout.fragment_settings)  {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode==1) {
-            Toast.makeText(context, "Bluetooth is ON 1", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Bluetooth Abilitato", Toast.LENGTH_SHORT).show()
             buttonBlue.text = "ON"
             buttonBlue.setBackgroundColor(resources.getColor(R.color.green))
         }
         else if(resultCode == Activity.RESULT_OK && requestCode==0) {
-            Toast.makeText(context, "Bluetooth is ON 1", Toast.LENGTH_SHORT).show()
-            buttonBlue.text = "ON"
-            buttonBlue.setBackgroundColor(resources.getColor(R.color.green))
+            if(bluetoothAdapter.isEnabled){
+                Toast.makeText(context, "Bluetooth Abilitato", Toast.LENGTH_SHORT).show()
+                buttonBlue.text = "ON"
+                buttonBlue.setBackgroundColor(resources.getColor(R.color.green))
+            }
+            else{
+                Toast.makeText(context, "Bluetooth Disabilitato", Toast.LENGTH_SHORT).show()
+                buttonBlue.text = "OFF"
+                buttonBlue.setBackgroundColor(resources.getColor(R.color.red))
+            }
         }
         else if (resultCode == Activity.RESULT_CANCELED && requestCode==1) {
 
-                Toast.makeText(context, "Bluetooth is OFF", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Bluetooth Disabilitato", Toast.LENGTH_SHORT).show()
                 buttonBlue.text = "OFF"
                 buttonBlue.setBackgroundColor(resources.getColor(R.color.red))
-
-        }
-        else if (resultCode == Activity.RESULT_CANCELED && requestCode==0) {
-
-            Toast.makeText(context, "Bluetooth is OFF", Toast.LENGTH_SHORT).show()
-            buttonBlue.text = "ON"
-            buttonBlue.setBackgroundColor(resources.getColor(R.color.green))
-
-        
-
 
         }
     }
