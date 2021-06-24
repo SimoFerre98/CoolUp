@@ -7,25 +7,41 @@
     android:background="@color/teal_700"
     tools:context=".fridge">
 
-    <Switch
-        android:id="@+id/Toggle"
+    <Button
+        android:id="@+id/btnBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Switch"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@+id/Bluetooth_State"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextFragment" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Bluetooth_State"
+        app:layout_constraintTop_toTopOf="@+id/Bluetooth_State"
+        android:backgroundTint="@color/red"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/TextFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settaggino"
+        android:layout_marginTop="100dp"
+        android:text="@string/settings"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Bluetooth_State"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Bluetooth"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnBlue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextFragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
