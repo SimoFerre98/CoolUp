@@ -1,16 +1,16 @@
 package com.Simo_Elia.CoolUp
 
+import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.*
 import java.io.InputStream
 import java.util.*
@@ -30,24 +30,46 @@ private const val ARG_PARAM2 = "param2"
 val mUUID : UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
 
 
-class settings : Fragment()  {
+class settings : Fragment(R.layout.fragment_settings)  {
 
     var Toggle:Switch ?= null;
+    val BLUETOOTH_REQ_CODE = 1
+    lateinit var buttonBlue: Button
+    lateinit var bluetoothAdapter: BluetoothAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View?
     {
         val view:View = inflater.inflate(R.layout.fragment_settings,container,false)
 
-        Toggle = view.findViewById<Switch>(R.id.Toggle)
-        Toggle!!.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener{
-            buttonView, isChecked ->
-            if(isChecked)
+        buttonBlue = view.findViewById(R.id.btnBlue)
+        bluetoothAdapter= BluetoothAdapter.getDefaultAdapter()
+        if (bluetoothAdapter == null) {
+            Toast.makeText(context,"This device doesn't support Bluetooth",Toast.LENGTH_SHORT).show()
+        }
+
+        if (!bluetoothAdapter!!.isEnabled) {
+            buttonBlue.text = "OFF"
+            buttonBlue.setBackgroundColor(resources.getColor(R.color.red))
+        } else {
+            buttonBlue.text = "ON"
+            buttonBlue.setBackgroundColor(resources.getColor(R.color.green))
+        }
+
+        buttonBlue.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(v:View)
             {
-                Toast.makeText(context,"Bluetooth Acceso",Toast.LENGTH_LONG).show()
-                var value: Any=BarCode()
-            }else
-            {
-                Toast.makeText(context,"Bluetooth Spento",Toast.LENGTH_LONG).show()
+                if (!bluetoothAdapter.isEnabled) {
+
+                    val bluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                    startActivityForResult(bluetoothIntent, BLUETOOTH_REQ_CODE)
+
+                } else {
+                    val bluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                    startActivityForResult(bluetoothIntent, 0)
+                    bluetoothAdapter!!.disable()
+                    buttonBlue.text = "OFF"
+                    buttonBlue.setBackgroundColor(resources.getColor(R.color.red))
+                }
             }
         })
 
@@ -55,42 +77,35 @@ class settings : Fragment()  {
         return  view
     }
 
-    fun BarCode(){
-        // BlueTooth Connections
-        var btAdapter : BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        println("************************* TUTTI I DISPOSITIVI :"+btAdapter.bondedDevices)
-        var hc05 : BluetoothDevice = btAdapter.getRemoteDevice("00:20:12:08:C2:EB")
-        println("************************* NOME DISPOSITIVO :"+hc05.name)
-
-        // Try to connect with 3 attempts
-        var btSocket: BluetoothSocket
-        var counter = 0;
-        do{
-            btSocket = hc05.createRfcommSocketToServiceRecord(mUUID);
-            println("************************* NOME SOCKET :"+btSocket);
-            btSocket.connect()
-            println("************************* SOCKET CONNESSO? :"+btSocket.isConnected)
-            counter++
-        } while (!btSocket.isConnected && counter < 3)
-
-        // Ricevere la Stringa
-        var Barcode: String=""
-        var inputStream : InputStream = btSocket.inputStream;
-        inputStream.skip(inputStream.available().toLong());
-        do{
-            var SingleChar: Char = inputStream.read().toChar()
-            Barcode+=SingleChar
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode==1) {
+            Toast.makeText(context, "Bluetooth Abilitato", Toast.LENGTH_SHORT).show()
+            buttonBlue.text = "ON"
+            buttonBlue.setBackgroundColor(resources.getColor(R.color.green))
         }
-        while(inputStream.available()>0)
-        println("************************* BARCODE :"+Barcode)
+        else if(resultCode == Activity.RESULT_OK && requestCode==0) {
+            if(bluetoothAdapter.isEnabled){
+                Toast.makeText(context, "Bluetooth Abilitato", Toast.LENGTH_SHORT).show()
+                buttonBlue.text = "ON"
+                buttonBlue.setBackgroundColor(resources.getColor(R.color.green))
+            }
+            else{
+                Toast.makeText(context, "Bluetooth Disabilitato", Toast.LENGTH_SHORT).show()
+                buttonBlue.text = "OFF"
+                buttonBlue.setBackgroundColor(resources.getColor(R.color.red))
+            }
+        }
+        else if (resultCode == Activity.RESULT_CANCELED && requestCode==1) {
 
+                Toast.makeText(context, "Bluetooth Disabilitato", Toast.LENGTH_SHORT).show()
+                buttonBlue.text = "OFF"
+                buttonBlue.setBackgroundColor(resources.getColor(R.color.red))
 
-        btSocket.close()
-        println("************************* SOCKET CONNESSO? :"+btSocket.isConnected)
-
+        }
     }
-
 }
+
 
 
 

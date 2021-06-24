@@ -43,13 +43,13 @@ class search : Fragment()  {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 if(isChecked)
                 {
-                    Toast.makeText(context,"DB Launching",Toast.LENGTH_LONG).show()
+                    Toast.makeText(context,"DB Launching",Toast.LENGTH_SHORT).show()
                     val checkLogin = CheckLogin(view,requireContext())
                     checkLogin.execute("")
                 }
                 else
                 {
-                    Toast.makeText(context,"DB Disabled",Toast.LENGTH_LONG).show()
+                    Toast.makeText(context,"DB Disabled",Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -94,7 +94,6 @@ class search : Fragment()  {
 
         override fun onPostExecute(r: String?) {
             progressBar.setVisibility(View.GONE)
-            Toast.makeText(context, r, Toast.LENGTH_LONG).show()
             if (isSucces) {
                 message.setText(EAN)
             }
