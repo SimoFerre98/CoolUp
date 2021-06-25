@@ -31,7 +31,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [fridge.newInstance] factory method to
  * create an instance of this fragment.
  */
-class fridge : Fragment() {
+class fridge : Fragment(){
 
     var Toggle:Switch ?= null;
 
@@ -41,6 +41,7 @@ class fridge : Fragment() {
     lateinit var Bluetooth_Fab: FloatingActionButton
     var Clicked:Boolean =false
     var bluetoothAdapter= BluetoothAdapter.getDefaultAdapter()
+
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
