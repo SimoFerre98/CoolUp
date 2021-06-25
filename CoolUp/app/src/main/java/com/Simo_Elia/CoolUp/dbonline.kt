@@ -14,16 +14,15 @@ import java.sql.*
 class dbonline {
 
 
-    class CheckLogin(view : View, context: Context,ProgressBar:Int,query:String) : AsyncTask<String?, String?, String?>() {
-        var  ProgressBarIntId = ProgressBar
+    class CheckLogin(view : View, context: Context,ProgressBar:ProgressBar,query:String) : AsyncTask<String?, String?, String?>() {
         var query = query
-        var progressBar: ProgressBar = view.findViewById(ProgressBarIntId)
+        var progressBar=ProgressBar
 
         var context = context
         var z: String? = ""
         var isSucces = false
-        val rs: ResultSet ?= null
-        var EAN = ""
+        var rs: ResultSet ?= null
+        var EAN = "0"
 
         @SuppressLint("NewApi")
         fun connectionclass(): Connection? {
@@ -66,9 +65,8 @@ class dbonline {
                 } else {
                     val stmt: Statement = con!!.createStatement()
                     rs = stmt.executeQuery(query)
-                    if (rs.next()) {
-                        EAN =
-                            rs.getString("EAN") //Name is the string label of a column in database, read through
+                    while(rs!!.next()) {
+                        EAN = rs!!.getString(1) //Name is the string label of a column in database, read through
                         isSucces = true
                         con!!.close()
                     }
@@ -76,7 +74,7 @@ class dbonline {
             } catch (ex: java.lang.Exception) {
                 isSucces = false
                 var z = "Errore"
-                Toast.makeText(context,"dbonline: Errore sql", Toast.LENGTH_SHORT).show()
+
             }
             return z
         }

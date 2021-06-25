@@ -2,24 +2,25 @@ package com.Simo_Elia.CoolUp
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
+import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
+import android.widget.ProgressBar
 import android.widget.Switch
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.InputStream
-import android.content.Context
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
-import java.security.AccessController.getContext
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,21 +48,24 @@ class fridge : Fragment() {
 
         recyclerView=view.findViewById<RecyclerView>(R.id.FrigoRecycleView)
         //fab= view.findViewById(R.id.fab)
-
+/*
         var Handler = dbhandler(context)
         var frigo = dbfridge("33224954578","pesce","carne","carne molto buona","Nessuno","1.5L","umido","SI","NO")
         Handler.InsertFridge(frigo)
+
+ */
         fab= requireActivity().findViewById<FloatingActionButton>(R.id.fab)
         Manual_Fab= requireActivity().findViewById<FloatingActionButton>(R.id.Manual_fab)
         Bluetooth_Fab= requireActivity().findViewById<FloatingActionButton>(R.id.Bluetooth_Scan)
-        fab.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(view:View?){
+        fab.setOnClickListener(object : View.OnClickListener
+        {
+            override fun onClick(v:View?){
                 if(!Clicked) {
                     Manual_Fab.visibility = View.VISIBLE
                     Bluetooth_Fab.visibility = (View.VISIBLE)
                     Clicked=true
                     Bluetooth_Fab.setOnClickListener(object : View.OnClickListener{
-                        override fun onClick(view:View?){
+                        override fun onClick(v:View?){
                             if(!bluetoothAdapter.isEnabled){
                                 Toast.makeText(context,"Attivare il Bluetooth",Toast.LENGTH_SHORT).show()
                             }
@@ -72,7 +76,13 @@ class fridge : Fragment() {
                                 var EAN: String?= result.EAN
                                 println(EAN)
                             }
+                        }
+                    })
+                    Manual_Fab.setOnClickListener(object : View.OnClickListener{
+                        override fun onClick(v:View?){
 
+                            val intent = Intent(context, manualactivity::class.java)
+                            startActivity(intent)
                         }
                     })
                 }
@@ -90,10 +100,11 @@ class fridge : Fragment() {
         var context=context
         var view = view
         var Bluetooth_Fab= Bluetooth_Fab
-        var EAN:String?=null
+        var EAN:String=""
         var Success=false
         var fridge = dbfridge()
         var db = dbhandler(context)
+        var query : String ?=null
         override fun onPreExecute() {
             Bluetooth_Fab.setImageResource(com.Simo_Elia.CoolUp.R.drawable.ic_action_on)
         }
@@ -105,11 +116,37 @@ class fridge : Fragment() {
             //Toast.makeText(context,"Click",Toast.LENGTH_SHORT).show()
             try{
                 EAN= barCode()
-                val query = "select * from Products where $EAN"
-                val checkLogin = dbonline.CheckLogin(view, context,R.id.progressBarFridge,query)
+                query = "select * from Products"
+                print("**************************************QUERY: " + query)
+
+                Success=true
+            }
+            catch (ex: java.lang.Exception) {
+                Success=false
+            }
+            //  Se allinterno del db download non è già presente il codice EAN
+
+            if(db.GetDownload(EAN) == null)
+            {
+                Log.d(TAG,"Non ho trovato EAN")
+                //  Viene fatta una query al db azure chiedendo l'intera tupla del prodotto
+
+                var progressBar: ProgressBar =view.findViewById(R.id.progressBarFridge)
+                val checkLogin = dbonline.CheckLogin(view, context,progressBar,query!!)
                 checkLogin.execute("")
 
-                //  Creazione dell'oggetto che verrà inserito nel db fridge
+                /*
+                var fridge = dbfridge(checkLogin.EAN,
+                    checkLogin.rs.getString("Name"),
+                    checkLogin.rs.getString("Category"),
+                            checkLogin.rs.getString("Allergens"),
+                            checkLogin.rs.getString("Unit"),
+                            checkLogin.rs.getString("Recyclable"),
+                            checkLogin.rs.getString("Freezable"),
+                            checkLogin.rs.getString("Date"))
+
+                 */
+
                 checkLogin.rs?.getString("EAN")?.let { fridge.SetEAN(it) }
                 checkLogin.rs?.getString("Name")?.let { fridge.SetName(it) }
                 checkLogin.rs?.getString("Category")?.let { fridge.SetCategory(it) }
@@ -118,20 +155,39 @@ class fridge : Fragment() {
                 checkLogin.rs?.getString("Recyclable")?.let { fridge.SetRecyclable(it) }
                 checkLogin.rs?.getString("Freezable")?.let { fridge.SetFreezable(it) }
                 checkLogin.rs?.getString("Date")?.let { fridge.SetDate(it) }
+
+
+
+                //  Inserimento dell'oggetto fridge scaricato al db azure e inserito sia nel db download che nel db fridge
                 db.InsertFridge(fridge)
+                db.InsertDownload(fridge)
+            }else// Se ci fosse già l'oggetto in locale allora viene solo passato dentro la tabella fridge
+            {
+                Log.d(TAG,"Ho trovato EAN")
+                //  Metodo che cerca dentro il db download il prodotto in base al codice EAN e ritorna l'oggetto con l'intera tupla
+                var download = db.GetDownload(EAN!!)
 
+                //  Si inseriscono dentro l'oggetto fridge i valori dell'oggetto download attraverso modificatori e selettori
+                download?.let { fridge.SetEAN(it.GetEAN()) }
+                download?.let { fridge.SetName(it.GetName()) }
+                download?.let { fridge.SetCategory(it.GetCategory()) }
+                download?.let { fridge.SetDescription(it.GetDescription()) }
+                download?.let { fridge.SetAllergens(it.GetAllergens()) }
+                download?.let { fridge.SetUnit(it.GetUnit()) }
+                download?.let { fridge.SetRecyclable(it.GetRecyclable()) }
+                download?.let { fridge.SetFreezable(it.GetFreezable()) }
 
-                Success=true
-            }
-            catch (ex: java.lang.Exception) {
-                Success=false
+                //  L'oggetto fridge appena creato viene inserito dentro il db fridge
+                db.InsertFridge(fridge)
             }
             return null
         }
+
+        companion object {
+            private const val TAG = "fridge"
+        }
     }
 }
-
-
 
 fun barCode() :String{
     // BlueTooth Connections

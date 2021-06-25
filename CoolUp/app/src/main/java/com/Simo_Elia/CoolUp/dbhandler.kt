@@ -179,6 +179,7 @@ class dbhandler(context: Context?) {
         return task
     }
 
+    //  Metodo che ritorna il singolo oggetto di download in base all'EAN
     fun GetDownload(EAN: String): dbdownload? {
         val where = DOWNLOAD_EAN + "= ?"
         val whereArgs = arrayOf(EAN)
@@ -190,7 +191,19 @@ class dbhandler(context: Context?) {
         closeDB()
         return download
     }
-    
+
+    //  Metodo che ritorna il singolo oggetto di shoplist in base all'EAN
+    fun GetShopList(EAN: String): dblist? {
+        val where = SHOPLIST_TABLE + "= ?"
+        val whereArgs = arrayOf(EAN)
+        openReadableDB()
+        val cursor = db!!.query(SHOPLIST_TABLE,null, where, whereArgs, null, null, null)
+        cursor.moveToFirst()
+        val shoplist: dblist? = getShopListFromCursor(cursor)
+        CloseCursor(cursor)
+        closeDB()
+        return shoplist
+    }
 
 
     //  Metodo che inserisce un oggetto nel db
@@ -314,6 +327,22 @@ class dbhandler(context: Context?) {
                     cursor.getString(FRIDGE_EAN_COL)
                 )
                 return download
+            } catch (e: Exception) {
+                null
+            }
+        }
+        return null
+    }
+    private fun getShopListFromCursor(cursor: Cursor?): dblist? {
+        if (cursor == null || cursor.count == 0) {
+            return null
+        } else {
+            try {
+                val list = dblist(
+                    cursor.getString(DOWNLOAD_NAME_COL),
+                    cursor.getString(FRIDGE_EAN_COL)
+                )
+                return list
             } catch (e: Exception) {
                 null
             }
