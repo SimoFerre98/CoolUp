@@ -45,8 +45,8 @@ class search : Fragment()  {
                 if(isChecked)
                 {
                     Toast.makeText(context,"DB Launching",Toast.LENGTH_SHORT).show()
-
-                    var DBOnline = dbonline.CheckLogin(view,requireContext(),R.id.progressBar,query)
+                    var progressBar: ProgressBar =view.findViewById(R.id.progressBar)
+                    var DBOnline = dbonline.CheckLogin(view,requireContext(),progressBar,query)
                     DBOnline.execute("")
                 }
                 else
