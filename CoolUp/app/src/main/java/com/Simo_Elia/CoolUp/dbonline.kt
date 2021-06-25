@@ -22,7 +22,7 @@ class dbonline {
         var z: String? = ""
         var isSucces = false
         var rs: ResultSet ?= null
-        var EAN = "0"
+        var EAN = ""
 
         @SuppressLint("NewApi")
         fun connectionclass(): Connection? {
@@ -53,19 +53,17 @@ class dbonline {
             progressBar.setVisibility(View.VISIBLE)
         }
 
-        override fun onPostExecute(r: String?) {
-            progressBar.setVisibility(View.GONE)
-        }
-
         override fun doInBackground(vararg params: String?): String? {
             try {
                 con = connectionclass() // Connect to database
                 if (con == null) {
                     z = "Connessione fallita!"
-                } else {
+                } else
+                {
                     val stmt: Statement = con!!.createStatement()
                     rs = stmt.executeQuery(query)
-                    while(rs!!.next()) {
+                    if(rs!!.next())
+                    {
                         EAN = rs!!.getString(1) //Name is the string label of a column in database, read through
                         isSucces = true
                         con!!.close()
@@ -77,6 +75,9 @@ class dbonline {
 
             }
             return z
+        }
+        override fun onPostExecute(r: String?) {
+            progressBar.setVisibility(View.GONE)
         }
 
     }

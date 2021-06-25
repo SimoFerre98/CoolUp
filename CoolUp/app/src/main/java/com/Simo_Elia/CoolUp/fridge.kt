@@ -64,6 +64,7 @@ class fridge : Fragment() {
                     Manual_Fab.visibility = View.VISIBLE
                     Bluetooth_Fab.visibility = (View.VISIBLE)
                     Clicked=true
+                    //  Listener bluetooth fab
                     Bluetooth_Fab.setOnClickListener(object : View.OnClickListener{
                         override fun onClick(v:View?){
                             if(!bluetoothAdapter.isEnabled){
@@ -78,6 +79,7 @@ class fridge : Fragment() {
                             }
                         }
                     })
+                    //  Listener inserimento manuale
                     Manual_Fab.setOnClickListener(object : View.OnClickListener{
                         override fun onClick(v:View?){
 
@@ -105,36 +107,33 @@ class fridge : Fragment() {
         var fridge = dbfridge()
         var db = dbhandler(context)
         var query : String ?=null
+        var progressBar: ProgressBar =view.findViewById(R.id.progressBarFridge)
+
         override fun onPreExecute() {
             Bluetooth_Fab.setImageResource(com.Simo_Elia.CoolUp.R.drawable.ic_action_on)
         }
-        override fun onPostExecute(r: String?) {
-            Bluetooth_Fab.setImageResource(com.Simo_Elia.CoolUp.R.drawable.scanner_blue_filled)
-            if(Success==false) Toast.makeText(context,"Nessun Dispositivo/Prodotto Rilevato",Toast.LENGTH_LONG).show()
-        }
+
         override fun doInBackground(vararg params: String?) : String? {
             //Toast.makeText(context,"Click",Toast.LENGTH_SHORT).show()
             try{
                 EAN= barCode()
-                query = "select * from Products"
-                print("**************************************QUERY: " + query)
-
                 Success=true
             }
             catch (ex: java.lang.Exception) {
                 Success=false
             }
+
             //  Se allinterno del db download non è già presente il codice EAN
+            query = "select * from Products "//where EAN = $EAN
 
             if(db.GetDownload(EAN) == null)
             {
                 Log.d(TAG,"Non ho trovato EAN")
                 //  Viene fatta una query al db azure chiedendo l'intera tupla del prodotto
 
-                var progressBar: ProgressBar =view.findViewById(R.id.progressBarFridge)
+
                 val checkLogin = dbonline.CheckLogin(view, context,progressBar,query!!)
                 checkLogin.execute("")
-
                 /*
                 var fridge = dbfridge(checkLogin.EAN,
                     checkLogin.rs.getString("Name"),
@@ -183,6 +182,10 @@ class fridge : Fragment() {
             return null
         }
 
+        override fun onPostExecute(r: String?) {
+            Bluetooth_Fab.setImageResource(com.Simo_Elia.CoolUp.R.drawable.scanner_blue_filled)
+            if(Success==false) Toast.makeText(context,"Nessun Dispositivo/Prodotto Rilevato",Toast.LENGTH_LONG).show()
+        }
         companion object {
             private const val TAG = "fridge"
         }

@@ -6,25 +6,49 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/edit_Manual_Name"
+        android:id="@+id/edit_Manual_Category2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="@+id/manual_Name"
+        app:layout_constraintBottom_toBottomOf="@+id/manual_Category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/manual_Name"
-        app:layout_constraintTop_toTopOf="@+id/manual_Name" />
+        app:layout_constraintStart_toEndOf="@+id/manual_Category"
+        app:layout_constraintTop_toTopOf="@+id/manual_Category" />
 
     <TextView
-        android:id="@+id/manual_Name"
+        android:id="@+id/manual_Desciption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="TextView"
         android:textSize="25sp"
-        app:layout_constraintEnd_toStartOf="@+id/edit_Manual_Name"
+        app:layout_constraintEnd_toStartOf="@+id/edit_Manual_Desciption"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manual_Category" />
+
+    <EditText
+        android:id="@+id/edit_Manual_Desciption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="@+id/manual_Desciption"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/manual_Desciption"
+        app:layout_constraintTop_toTopOf="@+id/manual_Desciption" />
+
+    <TextView
+        android:id="@+id/manual_Category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="TextView"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/edit_Manual_Category2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Manual_Name" />
