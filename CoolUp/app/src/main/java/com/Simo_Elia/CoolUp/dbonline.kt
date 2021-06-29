@@ -32,10 +32,11 @@ class dbonline {
             var ConnectionURL: String? = null
             try {
                 Class.forName("net.sourceforge.jtds.jdbc.Driver")
+                //  Porta 3306 nel caso non funzioni la 1433
+                //
                 ConnectionURL =
-                    "jdbc:jtds:sqlserver://coolapp.database.windows.net:1433;DatabaseName=CoolUp;user=coolup_admin@coolapp;password=Eliaferre21;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;\n"
+                    "jdbc:jtds:sqlserver://ns1.educationhost.cloud:3306;DatabaseName=zznohcja_coolup;user=zznohcja;password=9L-:yimL34WR3l;hostNameInCertificate=*.database.windows.net;\n"
                 connection = DriverManager.getConnection(ConnectionURL)
-
 
             } catch (se: SQLException) {
                 Toast.makeText(context,"dbonline: Errore comando sql", Toast.LENGTH_SHORT).show()
