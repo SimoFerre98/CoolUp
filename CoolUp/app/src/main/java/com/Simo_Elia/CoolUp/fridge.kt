@@ -35,61 +35,85 @@ class fridge : Fragment(){
 
     var Toggle:Switch ?= null;
 
-    var recyclerView : RecyclerView ?=null
+    var RecyclerView : RecyclerView ?=null
     lateinit var fab: FloatingActionButton
     lateinit var Manual_Fab: FloatingActionButton
     lateinit var Bluetooth_Fab: FloatingActionButton
     var Clicked:Boolean =false
     var bluetoothAdapter= BluetoothAdapter.getDefaultAdapter()
-
+    val Products_Name: MutableList<String> = ArrayList()
+    val Products_Date: MutableList<String> = ArrayList()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    val view:View = inflater.inflate(R.layout.fragment_fridge,container,false)
+        val view:View = inflater.inflate(R.layout.fragment_fridge,container,false)
+        //  Imposta la progressobar Insivibile appena viene cambiata l'activity, farlo direttamente nel xml e renderla invisibile sempre tranne quando si deve mostrare a schertmo
 
-        recyclerView=view.findViewById<RecyclerView>(R.id.FrigoRecycleView)
+
         //fab= view.findViewById(R.id.fab)
-/*
-        var Handler = dbhandler(context)
-        var frigo = dbfridge("33224954578","pesce","carne","carne molto buona","Nessuno","1.5L","umido","SI","NO")
-        Handler.InsertFridge(frigo)
 
- */
+        var Handler = dbhandler(context)
+        var frigo = dbfridge("33224954578","Pesce","carne","carne molto buona","Nessuno","1.5Kg","umido","SI","12/78/55")
+        var frigo1 = dbfridge("33224954577","Carne","carne","carne molto buona","Nessuno","1.5kg","umido","SI","22/77/44")
+        var frigo2 = dbfridge("33224954576","Acqua","Bevande","Acqua molto buonan","Nessuno","1.5L","Plastica","NO","14/07/98")
+        Handler.InsertFridge(frigo)
+        Handler.InsertFridge(frigo1)
+        Handler.InsertFridge(frigo2)
+
+        //  Creazione degli oggetti che puntano ai widget nei fragment
+        RecyclerView=view.findViewById<RecyclerView>(R.id.FrigoRecycleView)
         fab= requireActivity().findViewById<FloatingActionButton>(R.id.fab)
         Manual_Fab= requireActivity().findViewById<FloatingActionButton>(R.id.Manual_fab)
         Bluetooth_Fab= requireActivity().findViewById<FloatingActionButton>(R.id.Bluetooth_Scan)
+
+        //  Viene creato un oggetto che contiene tutte le tuple presenti nella table download
+        var fridgelists = Handler.FridgeLists
+        for(i in fridgelists.iterator())
+        {
+            //  Ognu tupla viene iterata e il nome della tupla viene inserito in un arraylist che contiene i nomi di tutti i prodotti
+            Products_Name.add(i.GetName())
+            //  Identica cosa viene fatta per la data
+            Products_Date.add(i.GetDate())
+        }
+
+        //  Se viene cliccato il fab centrale con il '+' vengono fatti visualizzare gli altri due fab
         fab.setOnClickListener(object : View.OnClickListener
         {
             override fun onClick(v:View?){
                 if(!Clicked) {
+                    //  Se viene cliccato, si impostano a visible i due fab
                     Manual_Fab.visibility = View.VISIBLE
                     Bluetooth_Fab.visibility = (View.VISIBLE)
                     Clicked=true
-                    //  Listener bluetooth fab
+
+                    //  Listener bluetooth fab - Se viene cliccato il fab riferito al bluetooth
                     Bluetooth_Fab.setOnClickListener(object : View.OnClickListener{
                         override fun onClick(v:View?){
                             if(!bluetoothAdapter.isEnabled){
+                                //  Se il bluetooth non è attivo, viene visualizzato un toast che impone di attivarlo
                                 Toast.makeText(context,"Attivare il Bluetooth",Toast.LENGTH_SHORT).show()
                             }
                             else{
+                                //  Viene richiamato il metodo GetProductString che si occupa di ottenere dal dispositivo bluetooth un codice ean e di inserirlo nel db locale
                                 Toast.makeText(context,"Accensione Scanner",Toast.LENGTH_SHORT).show()
-                                var result= GetProductString(view!!,context!!,Bluetooth_Fab)
-                                result.execute()
-                                var EAN: String?= result.EAN
-                                println(EAN)
+                                //var result= GetProductString(view!!,context!!,Bluetooth_Fab)
+                                //result.execute()
+                                //var EAN: String?= result.EAN
+                                //println(EAN)
                             }
                         }
                     })
-                    //  Listener inserimento manuale
+                    //  Listener inserimento manuale - Se viene cliccato il fab riferito all'inserimento manuale
                     Manual_Fab.setOnClickListener(object : View.OnClickListener{
                         override fun onClick(v:View?){
-
+                            //  Viene cambiata l'activity e rimandato all'inserimento manuale di un nuovo prodotto
                             val intent = Intent(context, manualactivity::class.java)
                             startActivity(intent)
                         }
                     })
                 }
                 else{
+                    //  Altrimenti se non viene cliccato i due fab soprastanti al fab '+' rimangono invisibili
                     Manual_Fab.visibility = View.INVISIBLE
                     Bluetooth_Fab.visibility = (View.INVISIBLE)
                     Clicked=false

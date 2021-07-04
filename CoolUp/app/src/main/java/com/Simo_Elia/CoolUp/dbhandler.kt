@@ -324,7 +324,7 @@ class dbhandler(context: Context?) {
                     cursor.getString(DOWNLOAD_UNIT_COL),
                     cursor.getString(DOWNLOAD_RECYCLABLE_COL),
                     cursor.getString(DOWNLOAD_FREEZABLE_COL),
-                    cursor.getString(FRIDGE_EAN_COL)
+                    cursor.getString(DOWNLOAD_EAN_COL)
                 )
                 return download
             } catch (e: Exception) {
@@ -339,8 +339,8 @@ class dbhandler(context: Context?) {
         } else {
             try {
                 val list = dblist(
-                    cursor.getString(DOWNLOAD_NAME_COL),
-                    cursor.getString(FRIDGE_EAN_COL)
+                    cursor.getString(SHOPLIST_EAN_COL),
+                    cursor.getString(SHOPLIST_NAME_COL)
                 )
                 return list
             } catch (e: Exception) {

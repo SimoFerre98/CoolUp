@@ -49,11 +49,8 @@ class search : Fragment()  {
                 {
                     Toast.makeText(context,"DB Launching",Toast.LENGTH_SHORT).show()
                     var progressBar: ProgressBar =view.findViewById(R.id.progressBar)
-                    val checkLogin = CheckLogin(view,requireContext(),query)
-                    checkLogin.execute("")
-
-
-
+                    //val checkLogin = CheckLogin(view,requireContext(),query)
+                    //checkLogin.execute("")
 
                 }
                 else
@@ -64,7 +61,7 @@ class search : Fragment()  {
         })
         return  view
     }
-
+/*
     class CheckLogin(view : View, context: Context,query:String,) : AsyncTask<ResultSet?, String?, String?>() {
         var query = query
         var progressBar: ProgressBar= view.findViewById(R.id.progressBar)
@@ -136,6 +133,6 @@ class search : Fragment()  {
             return rs
         }
     }
-
+*/
 }
 
