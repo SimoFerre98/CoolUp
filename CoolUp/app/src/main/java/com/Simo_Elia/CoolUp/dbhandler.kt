@@ -57,6 +57,20 @@ class dbhandler(context: Context?) {
         }
     }
 
+    //  Metodo che restituisce la dimensione della table, cioè il numero massimo di tuple
+    fun DimDownloadTable():Int
+    {
+        var Conta = 0
+        openReadableDB()
+        val cursor = db!!.query( FRIDGE_TABLE,null, null, null, null, null, null )
+        while (cursor.moveToNext())
+        {
+            Conta++
+        }
+        closeDB()
+        return Conta
+    }
+
     //  Metodo che restituisce un arraylist di tutti i valori dentro il db FRIGO
     val FridgeLists: ArrayList<dbfridge> get() {
             val lists: ArrayList<dbfridge> = ArrayList<dbfridge>()
