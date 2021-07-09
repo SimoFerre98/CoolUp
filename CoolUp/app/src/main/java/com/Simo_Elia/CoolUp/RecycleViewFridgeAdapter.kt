@@ -30,7 +30,6 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         var v = LayoutInflater.from(parent.context).inflate(R.layout.single_item_fridge,parent,false)
-
         return ViewHolder(v)
     }
 

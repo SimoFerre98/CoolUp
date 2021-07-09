@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_fridge.*
+import kotlinx.android.synthetic.main.fragment_settings.*
 import java.io.InputStream
 
 
@@ -37,7 +38,7 @@ class fridge : Fragment(){
 
     var Toggle:Switch ?= null;
 
-    var RecyclerView : RecyclerView ?=null
+    lateinit var Fridge_RecyclerView : RecyclerView
     lateinit var fab: FloatingActionButton
     lateinit var Manual_Fab: FloatingActionButton
     lateinit var Bluetooth_Fab: FloatingActionButton
@@ -47,28 +48,29 @@ class fridge : Fragment(){
     var Products_Date: MutableList<String> = ArrayList()
     var LayoutManager : RecyclerView.LayoutManager ? = null
     var adapter : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>? = null
+    var Handler = dbhandler(context)
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view:View = inflater.inflate(R.layout.fragment_fridge,container,false)
         //  Imposta la progressobar Insivibile appena viene cambiata l'activity, farlo direttamente nel xml e renderla invisibile sempre tranne quando si deve mostrare a schertmo
 
+/*
 
-        //fab= view.findViewById(R.id.fab)
-
-        var Handler = dbhandler(context)
         var frigo = dbfridge("33224954578","Pesce","carne","carne molto buona","Nessuno","1.5Kg","umido","SI","12/78/55")
         var frigo1 = dbfridge("33224954577","Carne","carne","carne molto buona","Nessuno","1.5kg","umido","SI","22/77/44")
         var frigo2 = dbfridge("33224954576","Acqua","Bevande","Acqua molto buonan","Nessuno","1.5L","Plastica","NO","14/07/98")
         Handler.InsertFridge(frigo)
         Handler.InsertFridge(frigo1)
         Handler.InsertFridge(frigo2)
-
+*/
         //  Creazione degli oggetti che puntano ai widget nei fragment
-        RecyclerView=view.findViewById<RecyclerView>(R.id.FrigoRecycleView)
+        Fridge_RecyclerView=view.findViewById<RecyclerView>(R.id.FrigoRecycleView)
+        //RecyclerView = requireActivity().findViewById(R.id.FrigoRecycleView)
         fab= requireActivity().findViewById<FloatingActionButton>(R.id.fab)
         Manual_Fab= requireActivity().findViewById<FloatingActionButton>(R.id.Manual_fab)
         Bluetooth_Fab= requireActivity().findViewById<FloatingActionButton>(R.id.Bluetooth_Scan)
+
 
         //  Viene creato un oggetto che contiene tutte le tuple presenti nella table download
         var fridgelists = Handler.FridgeLists
@@ -81,12 +83,17 @@ class fridge : Fragment(){
             Products_Date.add(i.GetDate())
         }
 
-        LayoutManager = LinearLayoutManager(context)
-        FrigoRecycleView.layoutManager = LayoutManager
-        adapter = RecycleViewFridgeAdapter(context,Products_Name,Products_Date)
-        FrigoRecycleView.adapter = adapter
+        Log.d("PRODUCT_NAME",Products_Name.toString())
+        Log.d("PRODUCT_DATE",Products_Date.toString())
 
+        LayoutManager = LinearLayoutManager(context)
+        //FrigoRecycleView.setLayoutManager(LinearLayoutManager(context));
+        Fridge_RecyclerView.layoutManager = LayoutManager
+
+        adapter = RecycleViewFridgeAdapter(context,Products_Name,Products_Date)
+        Fridge_RecyclerView.adapter = adapter
         //  Se viene cliccato il fab centrale con il '+' vengono fatti visualizzare gli altri due fab
+
         fab.setOnClickListener(object : View.OnClickListener
         {
             override fun onClick(v:View?){
