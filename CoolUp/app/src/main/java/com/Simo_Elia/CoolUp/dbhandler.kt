@@ -66,9 +66,10 @@ class dbhandler(context: Context?) {
         while (cursor.moveToNext())
         {
             Conta++
+
         }
         closeDB()
-        return Conta
+        return FRIDGE_TABLE.length//Anche Conta come ritorno va bene per la dimensione della table
     }
 
     //  Metodo che restituisce un arraylist di tutti i valori dentro il db FRIGO

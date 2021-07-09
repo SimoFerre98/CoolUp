@@ -16,9 +16,11 @@ import android.widget.Switch
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_fridge.*
 import java.io.InputStream
 
 
@@ -41,8 +43,10 @@ class fridge : Fragment(){
     lateinit var Bluetooth_Fab: FloatingActionButton
     var Clicked:Boolean =false
     var bluetoothAdapter= BluetoothAdapter.getDefaultAdapter()
-    val Products_Name: MutableList<String> = ArrayList()
-    val Products_Date: MutableList<String> = ArrayList()
+    var Products_Name: MutableList<String> = ArrayList()
+    var Products_Date: MutableList<String> = ArrayList()
+    var LayoutManager : RecyclerView.LayoutManager ? = null
+    var adapter : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -71,10 +75,16 @@ class fridge : Fragment(){
         for(i in fridgelists.iterator())
         {
             //  Ognu tupla viene iterata e il nome della tupla viene inserito in un arraylist che contiene i nomi di tutti i prodotti
+
             Products_Name.add(i.GetName())
             //  Identica cosa viene fatta per la data
             Products_Date.add(i.GetDate())
         }
+
+        LayoutManager = LinearLayoutManager(context)
+        FrigoRecycleView.layoutManager = LayoutManager
+        adapter = RecycleViewFridgeAdapter(context,Products_Name,Products_Date)
+        FrigoRecycleView.adapter = adapter
 
         //  Se viene cliccato il fab centrale con il '+' vengono fatti visualizzare gli altri due fab
         fab.setOnClickListener(object : View.OnClickListener
@@ -89,7 +99,8 @@ class fridge : Fragment(){
                     //  Listener bluetooth fab - Se viene cliccato il fab riferito al bluetooth
                     Bluetooth_Fab.setOnClickListener(object : View.OnClickListener{
                         override fun onClick(v:View?){
-                            if(!bluetoothAdapter.isEnabled){
+                            if(!bluetoothAdapter.isEnabled)
+                            {
                                 //  Se il bluetooth non è attivo, viene visualizzato un toast che impone di attivarlo
                                 Toast.makeText(context,"Attivare il Bluetooth",Toast.LENGTH_SHORT).show()
                             }
@@ -122,6 +133,7 @@ class fridge : Fragment(){
         })
         return view
     }
+
 
     class GetProductString (view : View, context: Context, Bluetooth_Fab: FloatingActionButton ) : AsyncTask<String?, String?, String?>(){
         var context=context
@@ -168,7 +180,6 @@ class fridge : Fragment(){
                             checkLogin.rs.getString("Recyclable"),
                             checkLogin.rs.getString("Freezable"),
                             checkLogin.rs.getString("Date"))
-
                  */
 
                 checkLogin.rs?.getString("EAN")?.let { fridge.SetEAN(it) }
