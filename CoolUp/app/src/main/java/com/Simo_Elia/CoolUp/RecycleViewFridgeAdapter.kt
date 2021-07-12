@@ -10,7 +10,7 @@ import java.util.logging.Handler
 
 class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<String>,Products_Date: MutableList<String>) : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>() {
 
-    private lateinit var dbhandler : dbhandler
+    var Handler = dbhandler(context)
     var Products_Name = Products_Name
     var Products_Date = Products_Date
     var Context = context
@@ -30,6 +30,7 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         var v = LayoutInflater.from(parent.context).inflate(R.layout.single_item_fridge,parent,false)
+
         return ViewHolder(v)
     }
 
@@ -39,9 +40,6 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
     }
 
     override fun getItemCount(): Int {
-        return dbhandler.DimDownloadTable()
+        return Handler.DimDownloadTable()
     }
-
-
-
 }

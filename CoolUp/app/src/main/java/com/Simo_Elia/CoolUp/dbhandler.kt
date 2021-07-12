@@ -60,43 +60,34 @@ class dbhandler(context: Context?) {
     //  Metodo che restituisce la dimensione della table, cioè il numero massimo di tuple
     fun DimDownloadTable():Int
     {
-        var Conta = 0
-        openReadableDB()
-        val cursor = db!!.query( FRIDGE_TABLE,null, null, null, null, null, null )
-        while (cursor.moveToNext())
-        {
-            Conta++
-
-        }
-        closeDB()
-        return FRIDGE_TABLE.length//Anche Conta come ritorno va bene per la dimensione della table
+        return FRIDGE_TABLE.length
     }
 
     //  Metodo che restituisce un arraylist di tutti i valori dentro il db FRIGO
     val FridgeLists: ArrayList<dbfridge> get() {
-            val lists: ArrayList<dbfridge> = ArrayList<dbfridge>()
+        val lists: ArrayList<dbfridge> = ArrayList<dbfridge>()
 
         openReadableDB()
-            val cursor = db!!.query( FRIDGE_TABLE,null, null, null, null, null, null )
-            while (cursor.moveToNext()) {
-                val list = dbfridge()
+        val cursor = db!!.query( FRIDGE_TABLE,null, null, null, null, null, null )
+        while (cursor.moveToNext()) {
+            val list = dbfridge()
 
-                list.SetName(cursor.getString(FRIDGE_NAME_COL))
-                list.SetCategory(cursor.getString(FRIDGE_CATEGORY_COL))
-                list.SetAllergens(cursor.getString(FRIDGE_ALLERGENS_COL))
-                list.SetDescription(cursor.getString(FRIDGE_DESCRIPTION_COL))
-                list.SetUnit(cursor.getString(FRIDGE_UNIT_COL))
-                list.SetRecyclable(cursor.getString(FRIDGE_RECYCLABLE_COL))
-                list.SetFreezable(cursor.getString(FRIDGE_FREEZABLE_COL))
-                list.SetDate(cursor.getString(FRIDGE_DATE_COL))
-                list.SetEAN(cursor.getString(FRIDGE_EAN_COL))
+            list.SetName(cursor.getString(FRIDGE_NAME_COL))
+            list.SetCategory(cursor.getString(FRIDGE_CATEGORY_COL))
+            list.SetAllergens(cursor.getString(FRIDGE_ALLERGENS_COL))
+            list.SetDescription(cursor.getString(FRIDGE_DESCRIPTION_COL))
+            list.SetUnit(cursor.getString(FRIDGE_UNIT_COL))
+            list.SetRecyclable(cursor.getString(FRIDGE_RECYCLABLE_COL))
+            list.SetFreezable(cursor.getString(FRIDGE_FREEZABLE_COL))
+            list.SetDate(cursor.getString(FRIDGE_DATE_COL))
+            list.SetEAN(cursor.getString(FRIDGE_EAN_COL))
 
-                lists.add(list)
-            }
-            CloseCursor(cursor)
-            closeDB()
-            return lists
+            lists.add(list)
         }
+        CloseCursor(cursor)
+        closeDB()
+        return lists
+    }
 
     //  Metodo che restituisce un arraylist di tutti i valori dentro il db DOWNLOAD
     val DownloadLists: ArrayList<dbdownload> get() {
@@ -147,15 +138,15 @@ class dbhandler(context: Context?) {
         cursor.moveToFirst()
         list = dbfridge(
 
-                    cursor.getString(FRIDGE_NAME_COL),
-                    cursor.getString(FRIDGE_CATEGORY_COL),
-                    cursor.getString(FRIDGE_ALLERGENS_COL),
-                    cursor.getString(FRIDGE_DESCRIPTION_COL),
-                    cursor.getString(FRIDGE_UNIT_COL),
-                    cursor.getString(FRIDGE_RECYCLABLE_COL),
-                    cursor.getString(FRIDGE_FREEZABLE_COL),
-                    cursor.getString(FRIDGE_DATE_COL),
-                    cursor.getString(FRIDGE_EAN_COL)
+            cursor.getString(FRIDGE_NAME_COL),
+            cursor.getString(FRIDGE_CATEGORY_COL),
+            cursor.getString(FRIDGE_ALLERGENS_COL),
+            cursor.getString(FRIDGE_DESCRIPTION_COL),
+            cursor.getString(FRIDGE_UNIT_COL),
+            cursor.getString(FRIDGE_RECYCLABLE_COL),
+            cursor.getString(FRIDGE_FREEZABLE_COL),
+            cursor.getString(FRIDGE_DATE_COL),
+            cursor.getString(FRIDGE_EAN_COL)
         )
         CloseCursor(cursor)
         closeDB()
@@ -304,7 +295,7 @@ class dbhandler(context: Context?) {
     }
 
     private fun getFridgeFromCursor(cursor: Cursor?): dbfridge? {
-         if (cursor == null || cursor.count == 0) {
+        if (cursor == null || cursor.count == 0) {
             return null
         } else {
             try {
