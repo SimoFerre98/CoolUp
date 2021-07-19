@@ -1,6 +1,7 @@
 package com.Simo_Elia.CoolUp
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +40,13 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
         holder.Item_Product_Date.text = Products_Date.get(position)
     }
 
-    override fun getItemCount(): Int {
-        return Handler.DimDownloadTable()
+    override fun getItemCount(): Int
+    {
+        Log.d("Tabella Download: ",Handler.DimDownloadTable().toString())
+        //Log.d("Tabella Download: ",Handler.
+        Log.d("Tabella Fridge: ",Handler.DimFridgeTable().toString())
+        Log.d("Tabella ShopList: ",Handler.DimShopListTable().toString())
+        //return Handler.DimFridgeTable()
+        return Handler.DimFridgeTable()
     }
 }

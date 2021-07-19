@@ -57,10 +57,46 @@ class dbhandler(context: Context?) {
         }
     }
 
-    //  Metodo che restituisce la dimensione della table, cioè il numero massimo di tuple
+    //  Metodo che restituisce la dimensione delle table, cioè il numero massimo di tuple
     fun DimDownloadTable():Int
     {
-        return FRIDGE_TABLE.length
+        var Dim:Int
+        Dim = 0
+        openReadableDB()
+        val cursor = db!!.query( DOWNLOAD_TABLE,null, null, null, null, null, null )
+        while (cursor.moveToNext()) {
+            Dim += 1
+        }
+        CloseCursor(cursor)
+        //closeDB()
+        return Dim
+    }
+    fun DimFridgeTable() :Int
+    {
+        var Dim:Int
+        Dim = 0
+        openReadableDB()
+        val cursor = db!!.query( FRIDGE_TABLE,null, null, null, null, null, null )
+        while (cursor.moveToNext())
+        {
+            Dim += 1
+        }
+        CloseCursor(cursor)
+        //closeDB()
+        return Dim
+    }
+    fun DimShopListTable():Int
+    {
+        var Dim:Int
+        Dim = 0
+        openReadableDB()
+        val cursor = db!!.query( SHOPLIST_TABLE,null, null, null, null, null, null )
+        while (cursor.moveToNext()) {
+            Dim += 1
+        }
+        CloseCursor(cursor)
+        //closeDB()
+        return Dim
     }
 
     //  Metodo che restituisce un arraylist di tutti i valori dentro il db FRIGO
@@ -85,7 +121,7 @@ class dbhandler(context: Context?) {
             lists.add(list)
         }
         CloseCursor(cursor)
-        closeDB()
+        //closeDB()
         return lists
     }
 
@@ -108,7 +144,7 @@ class dbhandler(context: Context?) {
             lists.add(list)
         }
         CloseCursor(cursor)
-        closeDB()
+        //closeDB()
         return lists
     }
 
@@ -125,7 +161,7 @@ class dbhandler(context: Context?) {
             lists.add(list)
         }
         CloseCursor(cursor)
-        closeDB()
+        //closeDB()
         return lists
     }
 
@@ -149,7 +185,7 @@ class dbhandler(context: Context?) {
             cursor.getString(FRIDGE_EAN_COL)
         )
         CloseCursor(cursor)
-        closeDB()
+        //closeDB()
         return list
     }/*
     fun getTasks(listName: String): ArrayList<Task?> {
@@ -181,7 +217,7 @@ class dbhandler(context: Context?) {
         cursor.moveToFirst()
         val task: dbfridge? = getFridgeFromCursor(cursor)
         CloseCursor(cursor)
-        closeDB()
+        //closeDB()
         return task
     }
 
@@ -194,7 +230,7 @@ class dbhandler(context: Context?) {
         cursor.moveToFirst()
         val download: dbdownload? = getDownloadFromCursor(cursor)
         CloseCursor(cursor)
-        closeDB()
+        //closeDB()
         return download
     }
 
@@ -207,7 +243,7 @@ class dbhandler(context: Context?) {
         cursor.moveToFirst()
         val shoplist: dblist? = getShopListFromCursor(cursor)
         CloseCursor(cursor)
-        closeDB()
+        //closeDB()
         return shoplist
     }
 
@@ -227,7 +263,7 @@ class dbhandler(context: Context?) {
         openWriteableDB()
 
         val rowID = db!!.insert(FRIDGE_TABLE, null, cv)
-        closeDB()
+        //closeDB()
         return rowID
     }
 
@@ -246,7 +282,7 @@ class dbhandler(context: Context?) {
         openWriteableDB()
 
         val rowID = db!!.insert(DOWNLOAD_TABLE, null, cv)
-        closeDB()
+        //closeDB()
         return rowID
     }
 
@@ -258,7 +294,7 @@ class dbhandler(context: Context?) {
         openWriteableDB()
 
         val rowID = db!!.insert(SHOPLIST_TABLE, null, cv)
-        closeDB()
+        //closeDB()
         return rowID
     }
 
@@ -290,7 +326,7 @@ class dbhandler(context: Context?) {
         val whereArgs = arrayOf(id.toString())
         openWriteableDB()
         val rowCount = db!!.delete(FRIDGE_TABLE, where, whereArgs)
-        closeDB()
+        //closeDB()
         return rowCount
     }
 
