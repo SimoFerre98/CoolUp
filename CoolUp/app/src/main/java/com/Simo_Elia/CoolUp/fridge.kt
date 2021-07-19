@@ -56,14 +56,13 @@ class fridge : Fragment(){
         //fab= view.findViewById(R.id.fab)
 
         var Handler = dbhandler(context)
-        /*
         var frigo = dbfridge("33224954578","Pesce","carne","carne molto buona","Nessuno","1.5Kg","umido","SI","12/78/55")
         var frigo1 = dbfridge("33224954577","Carne","carne","carne molto buona","Nessuno","1.5kg","umido","SI","22/77/44")
         var frigo2 = dbfridge("33224954576","Acqua","Bevande","Acqua molto buonan","Nessuno","1.5L","Plastica","NO","14/07/98")
         Handler.InsertFridge(frigo)
         Handler.InsertFridge(frigo1)
         Handler.InsertFridge(frigo2)
-        */
+
 
 
         //  Creazione degli oggetti che puntano ai widget nei fragment

@@ -36,12 +36,14 @@ class settings : Fragment(R.layout.fragment_settings)  {
     val BLUETOOTH_REQ_CODE = 1
     lateinit var buttonBlue: Button
     lateinit var bluetoothAdapter: BluetoothAdapter
+    lateinit var ButtonSite : Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View?
     {
         val view:View = inflater.inflate(R.layout.fragment_settings,container,false)
 
         buttonBlue = view.findViewById(R.id.btnBlue)
+        ButtonSite = view.findViewById(R.id.Visit_Site_Btn)
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter()
         if (bluetoothAdapter == null) {
             Toast.makeText(context,"Questo dispositivo non supporta il Bluetooth",Toast.LENGTH_SHORT).show()
@@ -70,6 +72,13 @@ class settings : Fragment(R.layout.fragment_settings)  {
                     buttonBlue.text = "OFF"
                     buttonBlue.setBackgroundColor(resources.getColor(R.color.red))
                 }
+            }
+        })
+
+        ButtonSite.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(v: View?) {
+                val intent = Intent(context, coolupWabView::class.java)
+                startActivity(intent)
             }
         })
 
