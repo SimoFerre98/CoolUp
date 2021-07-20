@@ -477,13 +477,11 @@ class dbhandler(context: Context?) {
                 FRIDGE_EAN + " TEXT NOT NULL, " +
                 DOWNLOAD_NAME + " TEXT)"
 
-
         private const val DROP_FRIDGE_TABLE = "DROP TABLE IF EXISTS " + FRIDGE_TABLE
 
         private const val DROP_DOWNLOAD_TABLE = "DROP TABLE IF EXISTS " + DOWNLOAD_TABLE
 
         private const val DROP_SHOPLIST_TABLE = "DROP TABLE IF EXISTS " + SHOPLIST_TABLE
-
 
     }
 

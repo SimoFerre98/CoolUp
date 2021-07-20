@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -29,7 +28,7 @@
                 <action android:name="android.intent.action.INSERT_OR_EDIT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".coolupWabView">
+        <activity android:name=".coolupWabView" >
             <intent-filter>
                 <action android:name="android.intent.action.WEB_SEARCH"/>
             </intent-filter>

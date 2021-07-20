@@ -124,6 +124,8 @@ class fridge : Fragment(){
                         override fun onClick(v:View?){
                             //  Viene cambiata l'activity e rimandato all'inserimento manuale di un nuovo prodotto
                             val intent = Intent(context, manualactivity::class.java)
+
+
                             startActivity(intent)
                         }
                     })
