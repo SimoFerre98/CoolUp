@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,7 +25,7 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
     {
         var Item_Product_Name : TextView
         var Item_Product_Date : TextView
-        var LinearLayout_Item : LinearLayout
+        var LinearLayout_Item : ConstraintLayout
         init
         {
             Item_Product_Name = itemView.findViewById(R.id.Name_Product)
@@ -45,6 +47,8 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
 
         //  currentDate è un oggetto contenente la data corrente
         val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+         Log.d("Giorno corrente:" , currentDate.substring(0,10))
+           Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,10))
 
         if (Products_Date.get(position).substring(7, 10) < currentDate.substring(7, 10)) {
             holder.LinearLayout_Item.setBackgroundColor(Color.RED)
