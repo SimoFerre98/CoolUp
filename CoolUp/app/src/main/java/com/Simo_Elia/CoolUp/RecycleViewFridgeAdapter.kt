@@ -46,27 +46,42 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
         //  currentDate è un oggetto contenente la data corrente
         val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
 
-        //Se gorno mese anno sono maggiori della data di odierna il layout si colora di rosso
-        if(currentDate.substring(0,2) < Products_Date.get(position).substring(0,2))// Se gg maggiore del giorno corrente
-        {
-            if(currentDate.substring(4,6) <= Products_Date.get(position).substring(4,6))//  Se mese maggiore del mese corrente
-            {
-                if(currentDate.substring(7,10) <= Products_Date.get(position).substring(7,10))//  Se anno maggiore rispettto all'anno corrente
-                {
-                    Log.d("Giorno corrente:" , currentDate.substring(0,2) + currentDate.substring(4,6) + currentDate.substring(7,10))
-                    Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,2) + Products_Date.get(position).substring(4,6) + Products_Date.get(position).substring(7,10))
+        if (Products_Date.get(position).substring(7, 10) < currentDate.substring(7, 10)) {
+            holder.LinearLayout_Item.setBackgroundColor(Color.RED)
+        } else if (Products_Date.get(position).substring(7, 10) > currentDate.substring(7, 10)) {
+            holder.LinearLayout_Item.setBackgroundColor(Color.GREEN)
+        } else if (Products_Date.get(position).substring(7, 10) == currentDate.substring(7, 10)) {
+            if (Products_Date.get(position).substring(4, 6) < currentDate.substring(4, 6)) {
+                holder.LinearLayout_Item.setBackgroundColor(Color.RED)
+            } else if (Products_Date.get(position).substring(4, 6) > currentDate.substring(4, 6)) {
+                holder.LinearLayout_Item.setBackgroundColor(Color.GREEN)
+            } else if (Products_Date.get(position).substring(4, 6) == currentDate.substring(4, 6)) {
+
+                var DiffDay: Int =
+                    Products_Date.get(position).substring(0, 2).toInt() - currentDate.substring(
+                        0,
+                        2
+                    ).toInt()
+
+                if (DiffDay > 7) {
+                    holder.LinearLayout_Item.setBackgroundColor(Color.GREEN)
+                } else if (DiffDay == 0) {
                     holder.LinearLayout_Item.setBackgroundColor(Color.RED)
+                } else if (DiffDay > 3 && DiffDay < 7) {
+                    holder.LinearLayout_Item.setBackgroundColor(Color.YELLOW)
+                } else if (DiffDay > 0 && DiffDay <= 3) {
+                    holder.LinearLayout_Item.setBackgroundColor(Color.rgb(255, 128, 0))
+                } else if (DiffDay < 0) {
+                    holder.LinearLayout_Item.setBackgroundColor(Color.GRAY)
                 }
             }
-        }else if((currentDate.substring(0,2) > Products_Date.get(position).substring(0,2)))
-        {
-            Log.d("Giorno corrente:" , currentDate.substring(0,2))
-            Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,2))
-            holder.LinearLayout_Item.setBackgroundColor(Color.YELLOW)
         }
 
-    }//((currentDate.substring(0,2).toInt() - 3).toString() > Products_Date.get(position).substring(0,2) )
+    }
 
+        //((currentDate.substring(0,2).toInt() - 3).toString() > Products_Date.get(position).substring(0,2) )
+// Log.d("Giorno corrente:" , currentDate.substring(0,2))
+//            Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,2))
 
     override fun getItemCount(): Int
     {
