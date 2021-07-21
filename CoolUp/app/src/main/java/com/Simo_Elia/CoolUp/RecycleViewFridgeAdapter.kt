@@ -17,12 +17,11 @@ import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<String>,Products_Date: MutableList<String>,Product_Id:MutableList<Int>) : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>() {
+class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<String>,Products_Date: MutableList<String>) : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>() {
 
     var Handler = dbhandler(context)
     var Products_Name = Products_Name
     var Products_Date = Products_Date
-    var Product_Id = Product_Id
     var Context = context
     //  Una inner class può accederer agli elementi della classe esterna
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -54,27 +53,7 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
                         true
                     }
                     R.id.delete->{
-                        /**set delete*/
-                        AlertDialog.Builder(Context)
-                            .setTitle("Delete")
-                            .setIcon(R.drawable.ic_warning)
-                            .setMessage("Sei sicuro di eliminarlo?")
-                            .setPositiveButton("Si"){
-                                    dialog,_->
-                                Products_Name.removeAt(adapterPosition)
-                                Products_Date.removeAt(adapterPosition)
-                                notifyDataSetChanged()
-                                Toast.makeText(Context,"Prodotto cancellato",Toast.LENGTH_SHORT).show()
-                                dialog.dismiss()
-                            }
-                            .setNegativeButton("No"){
-                                    dialog,_->
-                                dialog.dismiss()
-                            }
-                            .create()
-                            .show()
-                        Handler.DeleteFridge(Product_Id.get(adapterPosition))
-                        Product_Id.removeAt(adapterPosition)
+
                         true
                     }
                     else-> true
