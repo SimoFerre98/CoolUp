@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.jar.Attributes
 
 class RecycleViewFridgeAdapter(
     context: Context?,
@@ -39,6 +40,7 @@ class RecycleViewFridgeAdapter(
 
 
     var Context = context
+
     //  Una inner class può accederer agli elementi della classe esterna
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
@@ -106,12 +108,66 @@ class RecycleViewFridgeAdapter(
             popupMenus.setOnMenuItemClickListener {
                 when(it.itemId){
                     R.id.editText->{
+                        val v = LayoutInflater.from(Context).inflate(R.layout.add_item,null)
+                        val Modifica_Name = v.findViewById<EditText>(R.id.Modifica_Name)
+                        val Modifica_Category = v.findViewById<EditText>(R.id.Modifica_Category)
+                        val Modifica_Description = v.findViewById<EditText>(R.id.Modifica_Descizione)
+                        val Modifica_Allergens = v.findViewById<EditText>(R.id.Modifica_Allergens)
+                        val Modifica_Unit = v.findViewById<EditText>(R.id.Modifica_Unit)
+                        val Modifica_Recyclable = v.findViewById<EditText>(R.id.Modifica_Recyclable)
+                        val Modifica_Freezable = v.findViewById<EditText>(R.id.MOdifica_Freezable)
+                        val Modifica_Date = v.findViewById<EditText>(R.id.MOdifica_Date)
+
+                        AlertDialog.Builder(Context)
+                            .setView(v)
+                            .setPositiveButton("Ok"){
+                                    dialog,_->
+
+                                var Name = Modifica_Name.text.toString()
+                                var Category = Modifica_Category.text.toString()
+                                var Description= Modifica_Description.text.toString()
+                                var Allergens= Modifica_Allergens.text.toString()
+                                var Unit = Modifica_Unit.text.toString()
+                                var Recyclable = Modifica_Recyclable.text.toString()
+                                var Freezable = Modifica_Freezable.text.toString()
+                                var Date = Modifica_Date.text.toString()
+
+                                Item_Product_Name.text = Name
+                                Item_Product_Date.text = Date
+
+                                var Fridge = dbfridge("Nessuno", Name,
+                                    Category,
+                                    Description,
+                                    Allergens,
+                                    Unit,
+                                    Recyclable,
+                                    Freezable,
+                                    Date)
+
+                                Fridge.SetId(Product_Id.get(adapterPosition))
+
+                                Handler.UpdateFridge(Fridge)
+
+                                notifyDataSetChanged()
+                                Toast.makeText(Context,"Le informazioni sono state modificate",Toast.LENGTH_LONG).show()
+                                dialog.dismiss()
+
+                            }
+                            .setNegativeButton("Cancella"){
+                                    dialog,_->
+                                dialog.dismiss()
+
+                            }
+                            .create()
+                            .show()
+
                         true
                     }
                     R.id.delete->{
-                        /**set delete*/
+
                         AlertDialog.Builder(Context)
-                            .setTitle("Delete")
+                            .setTitle("Cancella")
+
                             .setIcon(R.drawable.ic_warning)
                             .setMessage("Sei sicuro di eliminarlo?")
                             .setPositiveButton("Si"){
@@ -134,6 +190,7 @@ class RecycleViewFridgeAdapter(
                     }
                     else-> true
                 }
+
 
             }
             popupMenus.show()

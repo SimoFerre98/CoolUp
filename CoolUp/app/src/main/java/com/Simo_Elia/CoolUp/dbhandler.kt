@@ -319,10 +319,11 @@ class dbhandler(context: Context?) {
         cv.put(FRIDGE_FREEZABLE, fridge.GetFreezable())
         cv.put(FRIDGE_DATE, fridge.GetDate())
         val where = FRIDGE_ID + "= ?"
-        val whereArgs = arrayOf<String>(java.lang.String.valueOf(fridge.GetName()))
+        val whereArgs = arrayOf<String>(java.lang.String.valueOf(fridge.GetId()))
         openWriteableDB()
         val rowCount = db!!.update(FRIDGE_TABLE, cv, where, whereArgs)
         closeDB()
+        Log.d("Row Aggiornate: " , rowCount.toString())
         return rowCount
     }
 
