@@ -21,8 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.InputStream
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -46,9 +44,16 @@ class fridge : Fragment(){
     var bluetoothAdapter= BluetoothAdapter.getDefaultAdapter()
     val Products_Name: MutableList<String> = ArrayList()
     val Products_Date: MutableList<String> = ArrayList()
+    val Products_Unit: MutableList<String> = ArrayList()
+    //val Products_EAN: MutableList<String> = ArrayList()
+    val Products_Category: MutableList<String> = ArrayList()
+    val Products_Description: MutableList<String> = ArrayList()
+    val Products_Allergens: MutableList<String> = ArrayList()
+    val Products_Recycle: MutableList<String> = ArrayList()
+    val Products_Freezable: MutableList<String> = ArrayList()
+    val Product_Id :MutableList<Int> = ArrayList()
     var LayoutManager : RecyclerView.LayoutManager ? = null
     var adapter : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>? = null
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -82,16 +87,31 @@ class fridge : Fragment(){
             Products_Name.add(i.GetName())
             //  Identica cosa viene fatta per la data
             Products_Date.add(i.GetDate())
+            Product_Id.add(i.GetId())
+            Products_Unit.add(i.GetUnit())
+            Products_Description.add(i.GetDescription())
+            Products_Allergens.add(i.GetAllergens())
+            Products_Recycle.add(i.GetRecyclable())
+            Products_Freezable.add(i.GetFreezable())
+            Products_Category.add(i.GetCategory())
+            // Products_EAN.add(i.GetEAN())
         }
-
-
-        Log.d("PRODUCT_NAME",Products_Name.toString())
-        Log.d("PRODUCT_DATE",Products_Date.toString())
 
         LayoutManager = LinearLayoutManager(context)
         //FrigoRecycleView.setLayoutManager(LinearLayoutManager(context));
         Fridge_RecyclerView.layoutManager = LayoutManager
-        adapter = RecycleViewFridgeAdapter(context,Products_Name,Products_Date)
+        adapter = RecycleViewFridgeAdapter(context,
+            Products_Name,
+            Products_Date,
+            Product_Id,
+            //Product_EAN,
+            Products_Unit,
+            Products_Category,
+            Products_Description,
+            Products_Allergens,
+            Products_Recycle,
+            Products_Freezable,
+        )
         Fridge_RecyclerView.adapter = adapter
 
         // Controlla se la table adibita al frigo è vuota, se è vuota notifica con un toast

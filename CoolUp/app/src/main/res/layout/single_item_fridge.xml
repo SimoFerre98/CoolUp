@@ -23,7 +23,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/Name_Product"
-                android:text="Title"
+                android:text="Nome"
                 android:textSize="30sp"
                 android:layout_margin="6dp"
                 android:textColor="@color/black"
@@ -31,12 +31,75 @@
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/Date_Product"
-                android:text="SubTitle"
+                android:text="Scadenza"
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 android:layout_margin="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/Unit_show"
+                android:text="Unit"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:layout_margin="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+            <!--<TextView
+                android:id="@+id/EAN_show"
+                android:text="EAN"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:layout_margin="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>-->
+            <TextView
+                android:id="@+id/Category_show"
+                android:text="Categoria"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:layout_margin="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/Description_show"
+                android:text="Descrizione"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:layout_margin="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/Allergens_show"
+                android:text="Allergeni"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:layout_margin="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/Recycle_show"
+                android:text="Reciclabile"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:layout_margin="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/Freezable_show"
+                android:text="Freezer"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:layout_margin="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
         </LinearLayout>
         <ImageView
             android:id="@+id/Menu_Product"

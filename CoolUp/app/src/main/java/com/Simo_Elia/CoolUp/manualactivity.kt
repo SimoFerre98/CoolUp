@@ -43,10 +43,10 @@ class manualactivity : AppCompatActivity() {
 
                 var Handler = dbhandler(this@manualactivity)
 
-                var frigo = dbfridge("33224954578", Edite_Manual_Name?.text.toString(),
+                var frigo = dbfridge("Nessuno", Edite_Manual_Name?.text.toString(),
                     Edite_Manual_Category?.text.toString(),
                     Edite_Manual_Description?.text.toString(),
-                    Edite_Manual_Quantity?.text.toString(),
+                    "Nessuno",
                     Edite_Manual_Quantity?.text.toString(),
                     "Nessuno",
                     "Nessuno",

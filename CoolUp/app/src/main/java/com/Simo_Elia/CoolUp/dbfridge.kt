@@ -3,7 +3,7 @@ package com.Simo_Elia.CoolUp
 
 class dbfridge {
     //  Attributi
-    //var Id : Int = 0
+    var Id : Int = 0
     var EAN : String
     var Name : String
     var Category : String
@@ -60,6 +60,11 @@ class dbfridge {
 
 
     //  Selettori
+    fun GetId() : Int
+    {
+        return this.Id
+    }
+
     public fun GetEAN() : String = this.EAN
 
     public fun GetName() : String
@@ -97,6 +102,10 @@ class dbfridge {
 
 
     //  Modificatori
+    fun SetId(Id:Int)
+    {
+        this.Id = Id
+    }
     public fun SetEAN(EAN: String)
     {
         this.EAN = EAN
