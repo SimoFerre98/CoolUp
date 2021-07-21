@@ -125,7 +125,6 @@ class fridge : Fragment(){
                             //  Viene cambiata l'activity e rimandato all'inserimento manuale di un nuovo prodotto
                             val intent = Intent(context, manualactivity::class.java)
 
-
                             startActivity(intent)
                         }
                     })
