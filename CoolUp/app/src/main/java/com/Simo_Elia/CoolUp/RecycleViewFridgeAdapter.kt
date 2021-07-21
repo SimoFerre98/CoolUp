@@ -246,11 +246,11 @@ class RecycleViewFridgeAdapter(
         } else if (Products_Date.get(position).substring(6, 10) > currentDate.substring(6, 10)) {
             holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
         } else if (Products_Date.get(position).substring(6, 10) == currentDate.substring(6, 10)) {
-            if (Products_Date.get(position).substring(4, 6) < currentDate.substring(4, 6)) {
+            if (Products_Date.get(position).substring(3, 5) < currentDate.substring(3, 5)) {
                 holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
-            } else if (Products_Date.get(position).substring(4, 6) > currentDate.substring(4, 6)) {
+            } else if (Products_Date.get(position).substring(3, 5) > currentDate.substring(3, 5)) {
                 holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
-            } else if (Products_Date.get(position).substring(4, 6) == currentDate.substring(4, 6)) {
+            } else if (Products_Date.get(position).substring(3, 5) == currentDate.substring(3, 5)) {
 
                 var DiffDay: Int =
                     Products_Date.get(position).substring(0, 2).toInt() - currentDate.substring(0,2).toInt()
