@@ -1,13 +1,16 @@
 package com.Simo_Elia.CoolUp
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.util.logging.Handler
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<String>,Products_Date: MutableList<String>) : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>() {
 
@@ -20,11 +23,12 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
     {
         var Item_Product_Name : TextView
         var Item_Product_Date : TextView
-
+        var LinearLayout_Item : LinearLayout
         init
         {
             Item_Product_Name = itemView.findViewById(R.id.Name_Product)
             Item_Product_Date = itemView.findViewById(R.id.Date_Product)
+            LinearLayout_Item = itemView.findViewById(R.id.LinearLayout_Item)
         }
     }
 
@@ -38,7 +42,31 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.Item_Product_Name.text = Products_Name.get(position)
         holder.Item_Product_Date.text = Products_Date.get(position)
-    }
+
+        //  currentDate è un oggetto contenente la data corrente
+        val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+
+        //Se gorno mese anno sono maggiori della data di odierna il layout si colora di rosso
+        if(currentDate.substring(0,2) < Products_Date.get(position).substring(0,2))// Se gg maggiore del giorno corrente
+        {
+            if(currentDate.substring(4,6) <= Products_Date.get(position).substring(4,6))//  Se mese maggiore del mese corrente
+            {
+                if(currentDate.substring(7,10) <= Products_Date.get(position).substring(7,10))//  Se anno maggiore rispettto all'anno corrente
+                {
+                    Log.d("Giorno corrente:" , currentDate.substring(0,2) + currentDate.substring(4,6) + currentDate.substring(7,10))
+                    Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,2) + Products_Date.get(position).substring(4,6) + Products_Date.get(position).substring(7,10))
+                    holder.LinearLayout_Item.setBackgroundColor(Color.RED)
+                }
+            }
+        }else if((currentDate.substring(0,2) > Products_Date.get(position).substring(0,2)))
+        {
+            Log.d("Giorno corrente:" , currentDate.substring(0,2))
+            Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,2))
+            holder.LinearLayout_Item.setBackgroundColor(Color.YELLOW)
+        }
+
+    }//((currentDate.substring(0,2).toInt() - 3).toString() > Products_Date.get(position).substring(0,2) )
+
 
     override fun getItemCount(): Int
     {
