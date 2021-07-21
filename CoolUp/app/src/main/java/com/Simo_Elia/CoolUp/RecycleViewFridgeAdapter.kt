@@ -18,12 +18,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.jar.Attributes
 
-class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<String>,Products_Date: MutableList<String>,Product_Id:MutableList<Int>) : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>() {
+class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<String>,Products_Date: MutableList<String>) : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>() {
 
     var Handler = dbhandler(context)
     var Products_Name = Products_Name
     var Products_Date = Products_Date
-    var Product_Id = Product_Id
     var Context = context
 
     //  Una inner class può accederer agli elementi della classe esterna
@@ -105,7 +104,7 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
                             }
                             .create()
                             .show()
-                        
+
                         true
                     }
                     R.id.delete->{

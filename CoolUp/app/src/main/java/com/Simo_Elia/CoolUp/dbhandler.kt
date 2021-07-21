@@ -113,7 +113,7 @@ class dbhandler(context: Context?) {
         val cursor = db!!.query( FRIDGE_TABLE,null, null, null, null, null, null )
         while (cursor.moveToNext()) {
             val list = dbfridge()
-            list.SetId(cursor.getInt(FRIDGE_ID_COL))
+
             list.SetName(cursor.getString(FRIDGE_NAME_COL))
             list.SetCategory(cursor.getString(FRIDGE_CATEGORY_COL))
             list.SetAllergens(cursor.getString(FRIDGE_ALLERGENS_COL))
@@ -327,7 +327,7 @@ class dbhandler(context: Context?) {
         return rowCount
     }
 
-    //  Metodo che elimina un singolo prodotto
+    //  Metodo che elimina un un oggetto frigo dalla table
     fun DeleteFridge(id: Int): Int {
         val where = FRIDGE_ID + "= ?"
         val whereArgs = arrayOf(id.toString())
