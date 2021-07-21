@@ -24,18 +24,16 @@
             <TextView
                 android:id="@+id/Name_Product"
                 android:text="Title"
-                android:textColor="@color/black"
-                android:textSize="19sp"
-                android:textStyle="bold"
+                android:textSize="30sp"
                 android:layout_margin="6dp"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/Date_Product"
                 android:text="SubTitle"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="15sp"
-                android:textStyle="bold"
+                android:textSize="25sp"
+                android:textColor="@color/black"
                 android:layout_margin="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
