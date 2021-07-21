@@ -4,29 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:theme="@style/Theme.CoolUp">
 
     <TextView
         android:id="@+id/Manual_Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
         android:layout_marginTop="30dp"
         android:text="Data:"
         android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/Edit_Manual_Date"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Manual_Quantity" />
 
     <EditText
         android:id="@+id/Edit_Manual_Category"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="Inserisci"
+        android:hint="  Inserisci"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/Manual_Category"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/Manual_Category"
+        app:layout_constraintEnd_toEndOf="@+id/Edit_Manual_Name"
+        app:layout_constraintStart_toStartOf="@+id/Edit_Manual_Name"
         app:layout_constraintTop_toTopOf="@+id/Manual_Category" />
 
     <TextView
@@ -43,14 +44,13 @@
 
     <EditText
         android:id="@+id/Edit_Manual_Desciption"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="Inserisci"
+        android:hint="  Inserisci"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/Manual_Desciption"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/Manual_Desciption"
+        app:layout_constraintEnd_toEndOf="@+id/Edit_Manual_Category"
+        app:layout_constraintStart_toStartOf="@+id/Edit_Manual_Category"
         app:layout_constraintTop_toTopOf="@+id/Manual_Desciption" />
 
     <TextView
@@ -70,7 +70,7 @@
         android:id="@+id/TitleManualInsert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="100dp"
         android:gravity="center"
         android:text="@string/TitleManualInsert"
         android:textSize="30sp"
@@ -82,7 +82,7 @@
         android:id="@+id/Manual_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:text="Nome:"
         android:textSize="25sp"
         app:layout_constraintEnd_toStartOf="@+id/Edit_Manual_Name"
@@ -92,9 +92,9 @@
 
     <EditText
         android:id="@+id/Edit_Manual_Name"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="Inserisci"
+        android:hint="  Inserisci"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="@+id/Manual_Name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,13 +118,13 @@
         android:id="@+id/Edit_Manual_Quantity"
         android:layout_width="89dp"
         android:layout_height="43dp"
-        android:layout_marginEnd="80dp"
         android:ems="10"
-        android:text="      n"
         android:inputType="number"
+        android:hint="      n"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/Manual_Quantity"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/Edit_Manual_Desciption"
+        app:layout_constraintStart_toStartOf="@+id/Edit_Manual_Desciption"
         app:layout_constraintTop_toTopOf="@+id/Manual_Quantity"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -133,23 +133,26 @@
         android:layout_width="110dp"
         android:layout_height="50dp"
         android:ems="10"
-        android:text="dd/mm/aaaa"
         android:inputType="date"
+        android:text="dd/mm/aaaa"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/Manual_Date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Manual_Date"
+        app:layout_constraintEnd_toEndOf="@+id/Edit_Manual_Quantity"
+        app:layout_constraintStart_toStartOf="@+id/Edit_Manual_Quantity"
         app:layout_constraintTop_toTopOf="@+id/Manual_Date" />
 
     <Button
         android:id="@+id/Manual_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Inserisci"
         android:radius="10dp"
-        android:layout_marginBottom="100dp"
+        android:text="Inserisci"
+        android:textAllCaps="false"
+        android:textSize="25sp"
+        android:backgroundTint="@color/CoolUpBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Manual_Date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

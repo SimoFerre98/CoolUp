@@ -10,5 +10,10 @@
     <color name="red">#e11a1a</color>
     <color name="green">#49e11a</color>
     <color name="CoolUpBlue">#00ADEF</color>
+    <color name="mygreen">#2fb440</color>
+    <color name="background">#FF018786</color>
+    <color name="mygray">#8d8e8e</color>
+    <color name="myred">#ec3d3d</color>
+    <color name="myyellow">#d8d537</color>
 
 </resources>

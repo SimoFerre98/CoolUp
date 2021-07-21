@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_700"
+    android:background="@color/background">
     tools:context=".fridge">
 
     <Button
         android:id="@+id/btnBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
         android:text="Button"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/Bluetooth_State"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/Bluetooth_State"
-        app:layout_constraintTop_toTopOf="@+id/Bluetooth_State"
-        android:backgroundTint="@color/red"
-        android:textColor="@color/black"/>
+        app:layout_constraintTop_toTopOf="@+id/Bluetooth_State" />
 
     <TextView
         android:id="@+id/TextFragment"
@@ -48,10 +48,11 @@
         android:id="@+id/Online_Site_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:text="Visita il sito"
-        android:textSize="20sp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/Visit_Site_Btn"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Bluetooth_State" />
 
@@ -59,13 +60,39 @@
         android:id="@+id/Visit_Site_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
         android:backgroundTint="@color/CoolUpBlue"
         android:text="Vai"
+        android:textSize="18sp"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="@+id/Online_Site_TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/Online_Site_TextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="@+id/btnBlue"
+        app:layout_constraintStart_toStartOf="@+id/btnBlue"
+        app:layout_constraintTop_toTopOf="@+id/Online_Site_TextView" />
+
+    <TextView
+        android:id="@+id/Scanner_Light_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="ScannerLight"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/Visit_Site_Btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Online_Site_TextView" />
+
+    <Button
+        android:id="@+id/Scanner_Light_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/CoolUpBlue"
+        android:text="Cambia"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/Scanner_Light_TextView"
+        app:layout_constraintEnd_toEndOf="@+id/Visit_Site_Btn"
+        app:layout_constraintStart_toStartOf="@+id/Visit_Site_Btn"
+        app:layout_constraintTop_toTopOf="@+id/Scanner_Light_TextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

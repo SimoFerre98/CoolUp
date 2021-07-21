@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,12 +26,12 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
     {
         var Item_Product_Name : TextView
         var Item_Product_Date : TextView
-        var LinearLayout_Item : ConstraintLayout
+        var ConstraintLayout_Item : ConstraintLayout
         init
         {
             Item_Product_Name = itemView.findViewById(R.id.Name_Product)
             Item_Product_Date = itemView.findViewById(R.id.Date_Product)
-            LinearLayout_Item = itemView.findViewById(R.id.LinearLayout_Item)
+            ConstraintLayout_Item = itemView.findViewById(R.id.ConstraintLayout_Item)
         }
     }
 
@@ -50,15 +51,15 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
          Log.d("Giorno corrente:" , currentDate.substring(0,10))
            Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,10))
 
-        if (Products_Date.get(position).substring(7, 10) < currentDate.substring(7, 10)) {
-            holder.LinearLayout_Item.setBackgroundColor(Color.RED)
-        } else if (Products_Date.get(position).substring(7, 10) > currentDate.substring(7, 10)) {
-            holder.LinearLayout_Item.setBackgroundColor(Color.GREEN)
-        } else if (Products_Date.get(position).substring(7, 10) == currentDate.substring(7, 10)) {
+        if (Products_Date.get(position).substring(6, 10) < currentDate.substring(6, 10)) {
+            holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
+        } else if (Products_Date.get(position).substring(6, 10) > currentDate.substring(6, 10)) {
+            holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
+        } else if (Products_Date.get(position).substring(6, 10) == currentDate.substring(6, 10)) {
             if (Products_Date.get(position).substring(4, 6) < currentDate.substring(4, 6)) {
-                holder.LinearLayout_Item.setBackgroundColor(Color.RED)
+                holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
             } else if (Products_Date.get(position).substring(4, 6) > currentDate.substring(4, 6)) {
-                holder.LinearLayout_Item.setBackgroundColor(Color.GREEN)
+                holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
             } else if (Products_Date.get(position).substring(4, 6) == currentDate.substring(4, 6)) {
 
                 var DiffDay: Int =
@@ -68,15 +69,15 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
                     ).toInt()
 
                 if (DiffDay > 7) {
-                    holder.LinearLayout_Item.setBackgroundColor(Color.GREEN)
+                    holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
                 } else if (DiffDay == 0) {
-                    holder.LinearLayout_Item.setBackgroundColor(Color.RED)
+                    holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.myred))
                 } else if (DiffDay > 3 && DiffDay < 7) {
-                    holder.LinearLayout_Item.setBackgroundColor(Color.YELLOW)
+                    holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.myyellow))
                 } else if (DiffDay > 0 && DiffDay <= 3) {
-                    holder.LinearLayout_Item.setBackgroundColor(Color.rgb(255, 128, 0))
+                    holder.ConstraintLayout_Item.setBackgroundColor(Color.rgb(255, 128, 0))
                 } else if (DiffDay < 0) {
-                    holder.LinearLayout_Item.setBackgroundColor(Color.GRAY)
+                    holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
                 }
             }
         }
