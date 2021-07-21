@@ -1,15 +1,18 @@
 package com.Simo_Elia.CoolUp
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.media.Image
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,14 +28,47 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
     {
         var Item_Product_Name : TextView
         var Item_Product_Date : TextView
-        var LinearLayout_Item : ConstraintLayout
+        var Menu_Product : ImageView
+        var LinearLayout_Item : LinearLayout
         init
         {
             Item_Product_Name = itemView.findViewById(R.id.Name_Product)
             Item_Product_Date = itemView.findViewById(R.id.Date_Product)
             LinearLayout_Item = itemView.findViewById(R.id.LinearLayout_Item)
+            Menu_Product = itemView.findViewById(R.id.Menu_Product)
+            Menu_Product.setOnClickListener()
+            {
+                popupMenus(it)
+            }
+        }
+
+        private fun popupMenus(v:View) {
+            // val position = userList[adapterPosition]
+            val position = adapterPosition
+            val popupMenus = PopupMenu(Context,v)
+            popupMenus.inflate(R.menu.show_menu)
+            popupMenus.setOnMenuItemClickListener {
+                when(it.itemId){
+                    R.id.editText->{
+                        true
+                    }
+                    R.id.delete->{
+
+                        true
+                    }
+                    else-> true
+                }
+
+            }
+            popupMenus.show()
+            val popup = PopupMenu::class.java.getDeclaredField("mPopup")
+            popup.isAccessible = true
+            val menu = popup.get(popupMenus)
+            menu.javaClass.getDeclaredMethod("setForceShowIcon",Boolean::class.java)
+                .invoke(menu,true)
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -47,25 +83,22 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
 
         //  currentDate è un oggetto contenente la data corrente
         val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
-         Log.d("Giorno corrente:" , currentDate.substring(0,10))
-           Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,10))
+        Log.d("Giorno corrente:" , currentDate.substring(6,10))
+        Log.d("Giorno prodotto:" , Products_Date.get(position).substring(6,10))
 
-        if (Products_Date.get(position).substring(7, 10) < currentDate.substring(7, 10)) {
-            holder.LinearLayout_Item.setBackgroundColor(Color.RED)
-        } else if (Products_Date.get(position).substring(7, 10) > currentDate.substring(7, 10)) {
+        if (Products_Date.get(position).substring(6, 10) < currentDate.substring(6, 10)) {
+            holder.LinearLayout_Item.setBackgroundColor(Color.GRAY)
+        } else if (Products_Date.get(position).substring(6, 10) > currentDate.substring(6, 10)) {
             holder.LinearLayout_Item.setBackgroundColor(Color.GREEN)
-        } else if (Products_Date.get(position).substring(7, 10) == currentDate.substring(7, 10)) {
+        } else if (Products_Date.get(position).substring(6, 10) == currentDate.substring(6, 10)) {
             if (Products_Date.get(position).substring(4, 6) < currentDate.substring(4, 6)) {
-                holder.LinearLayout_Item.setBackgroundColor(Color.RED)
+                holder.LinearLayout_Item.setBackgroundColor(Color.GRAY)
             } else if (Products_Date.get(position).substring(4, 6) > currentDate.substring(4, 6)) {
                 holder.LinearLayout_Item.setBackgroundColor(Color.GREEN)
             } else if (Products_Date.get(position).substring(4, 6) == currentDate.substring(4, 6)) {
 
                 var DiffDay: Int =
-                    Products_Date.get(position).substring(0, 2).toInt() - currentDate.substring(
-                        0,
-                        2
-                    ).toInt()
+                    Products_Date.get(position).substring(0, 2).toInt() - currentDate.substring(0,2).toInt()
 
                 if (DiffDay > 7) {
                     holder.LinearLayout_Item.setBackgroundColor(Color.GREEN)
@@ -83,16 +116,8 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
 
     }
 
-        //((currentDate.substring(0,2).toInt() - 3).toString() > Products_Date.get(position).substring(0,2) )
-// Log.d("Giorno corrente:" , currentDate.substring(0,2))
-//            Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,2))
-
     override fun getItemCount(): Int
     {
-        Log.d("Tabella Download: ",Handler.DimDownloadTable().toString())
-        //Log.d("Tabella Download: ",Handler.
-        Log.d("Tabella Fridge: ",Handler.DimFridgeTable().toString())
-        Log.d("Tabella ShopList: ",Handler.DimShopListTable().toString())
         //return Handler.DimFridgeTable()
         return Handler.DimFridgeTable()
     }

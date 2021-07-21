@@ -99,6 +99,12 @@ class dbhandler(context: Context?) {
         return Dim
     }
 
+    fun SortFridgeTable()
+    {
+        val SORT_FRIDGE_TABLE = "SELECT * FROM FRIDGE_TABLE ORDER BY date(FRIDGE_DATE) DESC Limit 1"
+        val SORTED_FRIDGE = "SELECT * FROM FRIDGE_TABLE order by substr (fecha,0,2) || substr(fecha,3,4) || substr(fecha,6,10) DESC"
+        db?.execSQL(SORT_FRIDGE_TABLE)
+    }
     //  Metodo che restituisce un arraylist di tutti i valori dentro il db FRIGO
     val FridgeLists: ArrayList<dbfridge> get() {
         val lists: ArrayList<dbfridge> = ArrayList<dbfridge>()

@@ -21,6 +21,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.InputStream
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -47,7 +49,8 @@ class fridge : Fragment(){
     var LayoutManager : RecyclerView.LayoutManager ? = null
     var adapter : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>? = null
 
-    @RequiresApi(Build.VERSION_CODES.M)
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view:View = inflater.inflate(R.layout.fragment_fridge,container,false)
         //  Imposta la progressobar Insivibile appena viene cambiata l'activity, farlo direttamente nel xml e renderla invisibile sempre tranne quando si deve mostrare a schertmo
@@ -55,15 +58,14 @@ class fridge : Fragment(){
         //fab= view.findViewById(R.id.fab)
 
         var Handler = dbhandler(context)
-
-
-
-        /*    var frigo1 = dbfridge("33224954577","Carne","carne","carne molto buona","Nessuno","1.5kg","umido","SI","22/77/44")
+        /*
+            var frigo1 = dbfridge("33224954577","Carne","carne","carne molto buona","Nessuno","1.5kg","umido","SI","22/77/44")
             var frigo2 = dbfridge("33224954576","Acqua","Bevande","Acqua molto buonan","Nessuno","1.5L","Plastica","NO","14/07/98")
-        var frigo = dbfridge("33224954578","Pesce","carne","carne molto buona","Nessuno","1.5Kg","umido","SI","12/78/55")
-        Handler.InsertFridge(frigo)
+            var frigo = dbfridge("33224954578","Pesce","carne","carne molto buona","Nessuno","1.5Kg","umido","SI","12/78/55")
+            Handler.InsertFridge(frigo)
             Handler.InsertFridge(frigo1)
-            Handler.InsertFridge(frigo2)*/
+            Handler.InsertFridge(frigo2)
+        */
 
         //  Creazione degli oggetti che puntano ai widget nei fragment
         Fridge_RecyclerView=view.findViewById<RecyclerView>(R.id.FrigoRecycleView)
@@ -82,6 +84,7 @@ class fridge : Fragment(){
             Products_Date.add(i.GetDate())
         }
 
+
         Log.d("PRODUCT_NAME",Products_Name.toString())
         Log.d("PRODUCT_DATE",Products_Date.toString())
 
@@ -96,7 +99,7 @@ class fridge : Fragment(){
         {
             Toast.makeText(context,"Non ci sono prodotti nel tuo frigo",Toast.LENGTH_SHORT).show()
         }
-        
+
         //  Se viene cliccato il fab centrale con il '+' vengono fatti visualizzare gli altri due fab
         fab.setOnClickListener(object : View.OnClickListener
         {
