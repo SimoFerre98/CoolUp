@@ -5,6 +5,7 @@
         android:id="@+id/editText"
         android:title="Edit Text"
         android:icon="@drawable/ic_edit"
+
         />
     <item
         android:id="@+id/delete"

@@ -108,12 +108,12 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
         Log.d("Giorno prodotto:" , Products_Date.get(position).substring(6,10))
 
         if (Products_Date.get(position).substring(6, 10) < currentDate.substring(6, 10)) {
-            holder.LinearLayout_Item.setBackgroundColor(Color.GRAY)
+            holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
         } else if (Products_Date.get(position).substring(6, 10) > currentDate.substring(6, 10)) {
-            holder.LinearLayout_Item.setBackgroundColor(Color.GREEN)
+            holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
         } else if (Products_Date.get(position).substring(6, 10) == currentDate.substring(6, 10)) {
             if (Products_Date.get(position).substring(4, 6) < currentDate.substring(4, 6)) {
-                holder.LinearLayout_Item.setBackgroundColor(Color.GRAY)
+                holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
             } else if (Products_Date.get(position).substring(4, 6) > currentDate.substring(4, 6)) {
                 holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
             } else if (Products_Date.get(position).substring(4, 6) == currentDate.substring(4, 6)) {

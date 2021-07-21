@@ -134,7 +134,7 @@
         android:layout_height="50dp"
         android:ems="10"
         android:inputType="date"
-        android:text="dd/mm/aaaa"
+        android:hint="dd/mm/aaaa"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/Manual_Date"
         app:layout_constraintEnd_toEndOf="@+id/Edit_Manual_Quantity"

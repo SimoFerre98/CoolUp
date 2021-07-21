@@ -117,10 +117,10 @@ class fridge : Fragment(){
                             else{
                                 //  Viene richiamato il metodo GetProductString che si occupa di ottenere dal dispositivo bluetooth un codice ean e di inserirlo nel db locale
                                 Toast.makeText(context,"Accensione Scanner",Toast.LENGTH_SHORT).show()
-                                //var result= GetProductString(view!!,context!!,Bluetooth_Fab)
-                                //result.execute()
-                                //var EAN: String?= result.EAN
-                                //println(EAN)
+                                var result= GetProductString(view!!,context!!,Bluetooth_Fab)
+                                result.execute()
+                                var EAN: String?= result.EAN
+                                println(EAN)
                             }
                         }
                     })
