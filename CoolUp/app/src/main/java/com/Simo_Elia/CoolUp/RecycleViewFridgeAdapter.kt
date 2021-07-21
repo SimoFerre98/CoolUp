@@ -17,11 +17,12 @@ import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<String>,Products_Date: MutableList<String>) : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>() {
+class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<String>,Products_Date: MutableList<String>,Product_Id:MutableList<Int>) : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>() {
 
     var Handler = dbhandler(context)
     var Products_Name = Products_Name
     var Products_Date = Products_Date
+    var Product_Id = Product_Id
     var Context = context
     //  Una inner class può accederer agli elementi della classe esterna
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -53,7 +54,27 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
                         true
                     }
                     R.id.delete->{
-
+                        /**set delete*/
+                        AlertDialog.Builder(Context)
+                            .setTitle("Delete")
+                            .setIcon(R.drawable.ic_warning)
+                            .setMessage("Sei sicuro di eliminarlo?")
+                            .setPositiveButton("Si"){
+                                    dialog,_->
+                                Products_Name.removeAt(adapterPosition)
+                                Products_Date.removeAt(adapterPosition)
+                                notifyDataSetChanged()
+                                Toast.makeText(Context,"Prodotto cancellato",Toast.LENGTH_SHORT).show()
+                                dialog.dismiss()
+                            }
+                            .setNegativeButton("No"){
+                                    dialog,_->
+                                dialog.dismiss()
+                            }
+                            .create()
+                            .show()
+                        Handler.DeleteFridge(Product_Id.get(adapterPosition))
+                        Product_Id.removeAt(adapterPosition)
                         true
                     }
                     else-> true
@@ -94,22 +115,22 @@ class RecycleViewFridgeAdapter(context: Context?, Products_Name: MutableList<Str
             if (Products_Date.get(position).substring(4, 6) < currentDate.substring(4, 6)) {
                 holder.LinearLayout_Item.setBackgroundColor(Color.GRAY)
             } else if (Products_Date.get(position).substring(4, 6) > currentDate.substring(4, 6)) {
-                holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
+                holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
             } else if (Products_Date.get(position).substring(4, 6) == currentDate.substring(4, 6)) {
 
                 var DiffDay: Int =
                     Products_Date.get(position).substring(0, 2).toInt() - currentDate.substring(0,2).toInt()
 
                 if (DiffDay > 7) {
-                    holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
+                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
                 } else if (DiffDay == 0) {
-                    holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.myred))
+                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.myred))
                 } else if (DiffDay > 3 && DiffDay < 7) {
-                    holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.myyellow))
+                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.myyellow))
                 } else if (DiffDay > 0 && DiffDay <= 3) {
-                    holder.ConstraintLayout_Item.setBackgroundColor(Color.rgb(255, 128, 0))
+                    holder.LinearLayout_Item.setBackgroundColor(Color.rgb(255, 128, 0))
                 } else if (DiffDay < 0) {
-                    holder.ConstraintLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
+                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
                 }
             }
         }

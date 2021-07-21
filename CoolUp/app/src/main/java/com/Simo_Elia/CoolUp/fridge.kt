@@ -46,9 +46,9 @@ class fridge : Fragment(){
     var bluetoothAdapter= BluetoothAdapter.getDefaultAdapter()
     val Products_Name: MutableList<String> = ArrayList()
     val Products_Date: MutableList<String> = ArrayList()
+    val Product_Id :MutableList<Int> = ArrayList()
     var LayoutManager : RecyclerView.LayoutManager ? = null
     var adapter : RecyclerView.Adapter<RecycleViewFridgeAdapter.ViewHolder>? = null
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -82,16 +82,13 @@ class fridge : Fragment(){
             Products_Name.add(i.GetName())
             //  Identica cosa viene fatta per la data
             Products_Date.add(i.GetDate())
+            Product_Id.add(i.GetId())
         }
-
-
-        Log.d("PRODUCT_NAME",Products_Name.toString())
-        Log.d("PRODUCT_DATE",Products_Date.toString())
 
         LayoutManager = LinearLayoutManager(context)
         //FrigoRecycleView.setLayoutManager(LinearLayoutManager(context));
         Fridge_RecyclerView.layoutManager = LayoutManager
-        adapter = RecycleViewFridgeAdapter(context,Products_Name,Products_Date)
+        adapter = RecycleViewFridgeAdapter(context,Products_Name,Products_Date,Product_Id)
         Fridge_RecyclerView.adapter = adapter
 
         // Controlla se la table adibita al frigo è vuota, se è vuota notifica con un toast
