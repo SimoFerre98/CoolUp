@@ -11,18 +11,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/Indietro_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/CoolUpBlue"
-            android:text=" Indietro"
             android:textAllCaps="false"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_backarrow"
+            app:tint="@color/white"
+
+            />
 
         <TextView
             android:id="@+id/LightScannerTextView"
@@ -38,8 +41,8 @@
 
         <ImageView
             android:id="@+id/imageModeOn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_marginTop="50dp"
             android:src="@drawable/scanner_mode_on"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
+
             android:text="Fai passare il codice di fronte allo scanner per attivare la modalità configurabile"
             android:textAlignment="center"
             android:textSize="30sp"
@@ -61,9 +66,9 @@
 
         <ImageView
             android:id="@+id/imageLightNormal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="100dp"
             android:src="@drawable/scanner_light_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,9 +88,9 @@
 
         <ImageView
             android:id="@+id/imageLightOff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="100dp"
             android:src="@drawable/scanner_light_off"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -107,9 +112,9 @@
 
         <ImageView
             android:id="@+id/imageModeOff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="100dp"
             android:src="@drawable/scanner_mode_off"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

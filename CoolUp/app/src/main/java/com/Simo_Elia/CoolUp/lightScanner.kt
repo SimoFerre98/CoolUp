@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 /**
@@ -15,7 +16,7 @@ import androidx.fragment.app.FragmentTransaction
  * create an instance of this fragment.
  */
 class lightScanner : Fragment() {
-    lateinit var BackButton: Button
+    lateinit var BackButton: FloatingActionButton
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

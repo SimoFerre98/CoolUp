@@ -229,7 +229,7 @@ class fridge : Fragment(){
 
                 //  Inserimento dell'oggetto fridge scaricato al db azure e inserito sia nel db download che nel db fridge
                 db.InsertFridge(fridge)
-                db.InsertDownload(fridge)
+                //db.InsertDownload(fridge)
             }else// Se ci fosse già l'oggetto in locale allora viene solo passato dentro la tabella fridge
             {
                 Log.d(TAG,"Ho trovato EAN")
