@@ -28,9 +28,16 @@ class manualactivity : AppCompatActivity() {
     var Edite_Manual_Freezable: CheckBox? = null
     var Check:Boolean = true
     var Manual_btn: Button? = null
-    lateinit var Recyclable:String
-    lateinit var Freezable : String
 
+    //  Variabili per il controllo degli inserimentii
+    var Check_Name:String = "Nessun Nome"
+    var Check_Category : String = "Nessuna Categorya"
+    var Check_Description : String = "Nessuna Descrizione"
+    var Check_Allergens : String = "Nessun Allergene"
+    var Check_Unit : String = "Nessuna Quantità"
+    var Check_Date : String = "Nessuna Data"
+    var Check_Recyclable : String = "No"
+    var Check_Freezable : String = "No"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.manual_activity)
@@ -62,29 +69,23 @@ class manualactivity : AppCompatActivity() {
 
                 ParseDate(Date,currentDate,v)
 
-                if(Edite_Manual_Recyclable?.isChecked == true)
-                {
-                    Recyclable = "Si"
-                }else
-                {
-                    Recyclable = "No"
-                }
-                if(Edite_Manual_Freezable?.isChecked == true)
-                {
-                    Freezable = "Si"
-                }else
-                {
-                    Freezable = "no"
-                }
+                CheckInsert()
+
+                Log.d("Name: ", Check_Name)
+                Log.d("Categoria: ", Check_Category)
+                Log.d("Descrizione: ", Check_Description)
+                Log.d("Allergeni: ", Check_Allergens)
+
                 if(Check) {
                     var frigo = dbfridge(
-                        "Nessuno", Edite_Manual_Name?.text.toString(),
-                        Edite_Manual_Category?.text.toString(),
-                        Edite_Manual_Description?.text.toString(),
-                        Edite_Manual_Allergens?.text.toString(),
-                        Edite_Manual_Quantity?.text.toString(),
-                        Recyclable,
-                        Freezable,
+                        "0000000000000000",
+                        Check_Name,
+                        Check_Category,
+                        Check_Description,
+                        Check_Allergens,
+                        Check_Unit,
+                        Check_Recyclable,
+                        Check_Freezable,
                         Edite_Manual_Date?.text.toString()
                     )
 
@@ -129,5 +130,62 @@ class manualactivity : AppCompatActivity() {
             }
 
         return true
+    }
+
+    fun CheckInsert()
+    {
+        //  Controllo del nome
+        if(Edite_Manual_Name?.text!!.isEmpty() == false)
+        {
+            Check_Name = Edite_Manual_Name?.text.toString()
+        }
+
+        //  Controllo della categoria
+        if(Edite_Manual_Category?.text!!.isEmpty() == false)
+        {
+            Check_Category = Edite_Manual_Category?.text.toString()
+        }
+
+        //  Controllo della descrizione
+        if(Edite_Manual_Description?.text!!.isEmpty() == false)
+        {
+           Check_Description = Edite_Manual_Description?.text.toString()
+        }
+
+        //  Controllo allergeni
+        if(Edite_Manual_Allergens?.text!!.isEmpty() == false)
+        {
+            Check_Allergens = Edite_Manual_Allergens?.text.toString()
+        }
+
+        //  Controllo della quantità
+        if(Edite_Manual_Quantity?.text!!.isEmpty() == false)
+        {
+            Check_Unit = Edite_Manual_Quantity?.text.toString()
+        }
+
+        //  Controllo della data
+        if(Edite_Manual_Date?.text!!.isEmpty() == false)
+        {
+            Check_Date = Edite_Manual_Date?.text.toString()
+        }
+
+        //  Controllo reciclabile
+        if(Edite_Manual_Recyclable?.isChecked == true)
+        {
+            Check_Recyclable = "Si"
+        }else
+        {
+            Check_Recyclable = "No"
+        }
+
+        //  Controllo freezable
+        if(Edite_Manual_Freezable?.isChecked == true)
+        {
+            Check_Freezable = "Si"
+        }else
+        {
+            Check_Freezable = "No"
+        }
     }
 }

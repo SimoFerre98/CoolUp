@@ -41,14 +41,14 @@ class search : Fragment()  {
         var Search = view.findViewById<TextView>(R.id.message)
         var ISBN = "8020141800002"
         val query = "select * from Products where EAN = $ISBN"
-       Toggle = view.findViewById(R.id.ToggleDB)
+       //Toggle = view.findViewById(R.id.ToggleDB)
 
         Toggle!!.setOnCheckedChangeListener(object: CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 if(isChecked)
                 {
                     Toast.makeText(context,"DB Launching",Toast.LENGTH_SHORT).show()
-                    var progressBar: ProgressBar =view.findViewById(R.id.progressBar)
+                    //var progressBar: ProgressBar =view.findViewById(R.id.progressBar)
                     //val checkLogin = CheckLogin(view,requireContext(),query)
                     //checkLogin.execute("")
 
