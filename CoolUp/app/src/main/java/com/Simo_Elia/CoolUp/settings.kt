@@ -32,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
 
 // Bluetooth constant
 val mUUID : UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
-val CHANNEL_ID = "channelID"
+val CHANNEL_ID = "CoolUp"
 val CHANNEL_NAME = "channelName"
 val NOTIFICATION_ID = 0
 
@@ -49,6 +49,10 @@ class settings : Fragment(R.layout.fragment_settings)   {
 
     fun createNotificationChannel(){
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+
+            val name : CharSequence = "CoolUpReminderChannel"
+            val description = "Channel For Alarm Manager"
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_DEFAULT).apply {
                 lightColor = Color.GREEN
