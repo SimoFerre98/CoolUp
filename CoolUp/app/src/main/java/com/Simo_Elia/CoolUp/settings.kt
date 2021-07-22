@@ -2,8 +2,6 @@ package com.Simo_Elia.CoolUp
 
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import kotlinx.android.synthetic.*
-import java.io.InputStream
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,6 +35,7 @@ class settings : Fragment(R.layout.fragment_settings)  {
     lateinit var buttonBlue: Button
     lateinit var bluetoothAdapter: BluetoothAdapter
     lateinit var ButtonSite : Button
+    lateinit var ButtonLight:Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View?
     {
@@ -44,6 +43,8 @@ class settings : Fragment(R.layout.fragment_settings)  {
 
         buttonBlue = view.findViewById(R.id.btnBlue)
         ButtonSite = view.findViewById(R.id.Visit_Site_Btn)
+        ButtonLight= view.findViewById(R.id.Scanner_Light_Button)
+
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter()
         if (bluetoothAdapter == null) {
             Toast.makeText(context,"Questo dispositivo non supporta il Bluetooth",Toast.LENGTH_SHORT).show()
@@ -82,9 +83,23 @@ class settings : Fragment(R.layout.fragment_settings)  {
             }
         })
 
-
+        ButtonLight.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(v: View?) {
+                changeFragment()
+            }
+        })
         return  view
     }
+
+
+    private fun changeFragment() {
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.flFragment, lightScanner())
+            .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .commit()
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
