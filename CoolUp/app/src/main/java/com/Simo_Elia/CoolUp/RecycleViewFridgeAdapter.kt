@@ -44,6 +44,7 @@ class RecycleViewFridgeAdapter(
     //  Una inner class può accederer agli elementi della classe esterna
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
+        // VALORI
         var Item_Product_Name : TextView
         var Item_Product_Date : TextView
         var Item_Product_Unit:TextView
@@ -54,10 +55,22 @@ class RecycleViewFridgeAdapter(
         var Item_Product_Recycle:TextView
         var Item_Product_Freezable:TextView
 
+        // RIGHE
+        var Text_Product_Name : TextView
+        var Text_Product_Date : TextView
+        var Row_Product_Unit:LinearLayout
+        var Row_Product_Category:LinearLayout
+        //var Item_Product_EAN :TextView
+        var Row_Product_Description :LinearLayout
+        var Row_Product_Allergens:LinearLayout
+        var Row_Product_Recycle:LinearLayout
+        var Row_Product_Freezable:LinearLayout
+
         var Menu_Product : ImageView
         var LinearLayout_Item : LinearLayout
         init
         {
+            // VALORI
             Item_Product_Name = itemView.findViewById(R.id.Name_Product)
             Item_Product_Date = itemView.findViewById(R.id.Date_Product)
             Item_Product_Unit = itemView.findViewById(R.id.Unit_show)
@@ -67,6 +80,16 @@ class RecycleViewFridgeAdapter(
             Item_Product_Allergens = itemView.findViewById(R.id.Allergens_show)
             Item_Product_Recycle = itemView.findViewById(R.id.Recycle_show)
             Item_Product_Freezable = itemView.findViewById(R.id.Freezable_show)
+
+            // RIGHE
+            Text_Product_Name = itemView.findViewById(R.id.Name_Product_TextView)
+            Text_Product_Date = itemView.findViewById(R.id.Date_Product_TextView)
+            Row_Product_Unit = itemView.findViewById(R.id.UnitRow)
+            Row_Product_Category = itemView.findViewById(R.id.CategoryRow)
+            Row_Product_Description = itemView.findViewById(R.id.DescriptionRow)
+            Row_Product_Allergens = itemView.findViewById(R.id.AllergensRow)
+            Row_Product_Recycle = itemView.findViewById(R.id.RecycleRow)
+            Row_Product_Freezable = itemView.findViewById(R.id.FreezableRow)
 
 
             LinearLayout_Item = itemView.findViewById(R.id.LinearLayout_Item)
@@ -78,23 +101,29 @@ class RecycleViewFridgeAdapter(
             var Clicked= false
             itemView.setOnClickListener(){
                 if(Clicked==false){
-                    Item_Product_Unit.visibility = View.VISIBLE
-                    //Item_Product_EAN.visibility = View.VISIBLE
-                    Item_Product_Category.visibility = View.VISIBLE
-                    Item_Product_Description.visibility = View.VISIBLE
-                    Item_Product_Allergens.visibility = View.VISIBLE
-                    Item_Product_Recycle.visibility = View.VISIBLE
-                    Item_Product_Freezable.visibility = View.VISIBLE
+                    Item_Product_Name.setTextSize(15F)
+                    Item_Product_Date.setTextSize(15F)
+                    Text_Product_Name.visibility = View.VISIBLE
+                    Text_Product_Date.visibility= View.VISIBLE
+                    Row_Product_Unit.visibility= View.VISIBLE
+                    Row_Product_Category.visibility= View.VISIBLE
+                    Row_Product_Description.visibility= View.VISIBLE
+                    Row_Product_Allergens.visibility= View.VISIBLE
+                    Row_Product_Recycle.visibility= View.VISIBLE
+                    Row_Product_Freezable.visibility= View.VISIBLE
                     Clicked=true
                 }
                 else{
-                    Item_Product_Unit.visibility = View.GONE
-                    //Item_Product_EAN.visibility = View.GONE
-                    Item_Product_Category.visibility = View.GONE
-                    Item_Product_Description.visibility = View.GONE
-                    Item_Product_Allergens.visibility = View.GONE
-                    Item_Product_Recycle.visibility = View.GONE
-                    Item_Product_Freezable.visibility = View.GONE
+                    Item_Product_Name.setTextSize(30F)
+                    Item_Product_Date.setTextSize(30F)
+                    Text_Product_Name.visibility = View.GONE
+                    Text_Product_Date.visibility= View.GONE
+                    Row_Product_Unit.visibility= View.GONE
+                    Row_Product_Category.visibility= View.GONE
+                    Row_Product_Description.visibility= View.GONE
+                    Row_Product_Allergens.visibility= View.GONE
+                    Row_Product_Recycle.visibility= View.GONE
+                    Row_Product_Freezable.visibility= View.GONE
                     Clicked=false
                 }
             }
