@@ -25,6 +25,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.Simo_Elia.CoolUp.Search.search
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
@@ -133,7 +134,7 @@ class MainActivity : AppCompatActivity()  {
 
                 val fridge= fridge()
                 val shoplist=shoplist()
-                val search=search()
+                val search= search()
                 val settings=settings()
 
                 when (item.itemId) {
