@@ -34,8 +34,6 @@ private const val ARG_PARAM2 = "param2"
  */
 class fridge : Fragment(){
 
-    var Toggle:Switch ?= null;
-
     lateinit var Fridge_RecyclerView : RecyclerView
     lateinit var fab: FloatingActionButton
     lateinit var Manual_Fab: FloatingActionButton
@@ -59,8 +57,6 @@ class fridge : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view:View = inflater.inflate(R.layout.fragment_fridge,container,false)
         //  Imposta la progressobar Insivibile appena viene cambiata l'activity, farlo direttamente nel xml e renderla invisibile sempre tranne quando si deve mostrare a schertmo
-
-        //fab= view.findViewById(R.id.fab)
 
         var Handler = dbhandler(context)
         /*
