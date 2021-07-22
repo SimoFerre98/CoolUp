@@ -1,22 +1,49 @@
 package com.Simo_Elia.CoolUp
 
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothSocket
+import android.content.Context
+import android.graphics.Color
+import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.Simo_Elia.CoolUp.Search.search
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_fridge.*
+import java.io.InputStream
 import java.sql.Connection
+import java.sql.ResultSet
+import java.sql.SQLException
+import java.sql.Statement
 
 var con:Connection?=null
 
 class MainActivity : AppCompatActivity()  {
+
+
+    val CHANNEL_ID = "channelID"
+    val CHANNEL_NAME = "channelName"
+    val NOTIFICATION_ID = 0
+
     // Connection SQL
 
 
@@ -30,11 +57,37 @@ class MainActivity : AppCompatActivity()  {
     lateinit private var Manual_fab : FloatingActionButton
     lateinit private var Bluetooth_Scan : FloatingActionButton
 
+    fun createNotificationChannel(){
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_DEFAULT).apply {
+                lightColor = Color.GREEN
+                enableLights(true)
+            }
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
+    }
+
 
     // Settings when launching the application
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+    /*
+        createNotificationChannel()
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("COOL UP")
+            .setContentText("Controlla il tuo frigo!")
+            .setSmallIcon(R.drawable.ic_cool_up_blue)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build()
+
+        val notificationManager = NotificationManagerCompat.from(this)
+
+        btnShowNotification.set*/
+
+
         //Ricerca del fab
         fab = findViewById(R.id.fab)
         fab_list = findViewById(R.id.fab_list)
@@ -80,7 +133,7 @@ class MainActivity : AppCompatActivity()  {
 
                 val fridge= fridge()
                 val shoplist=shoplist()
-                val search= search()
+                val search=search()
                 val settings=settings()
 
                 when (item.itemId) {

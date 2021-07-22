@@ -80,7 +80,7 @@
                 android:visibility="gone">
                 <TextView
                     android:id="@+id/Unit_show_TextView"
-                    android:text="Unit : "
+                    android:text="Quantità : "
                     android:textSize="15sp"
                     android:layout_margin="6dp"
                     android:textColor="@color/black"

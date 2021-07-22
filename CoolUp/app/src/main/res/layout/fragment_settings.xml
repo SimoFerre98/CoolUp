@@ -7,19 +7,6 @@
     android:background="@color/background">
     tools:context=".fridge">
 
-    <Button
-        android:id="@+id/btnBlue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/red"
-        android:text="Button"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/Bluetooth_State"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/Bluetooth_State"
-        app:layout_constraintTop_toTopOf="@+id/Bluetooth_State" />
-
     <TextView
         android:id="@+id/TextFragment"
         android:layout_width="wrap_content"
@@ -36,13 +23,51 @@
         android:id="@+id/Bluetooth_State"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:text="Bluetooth"
         android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/btnBlue"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextFragment" />
+
+    <Button
+        android:id="@+id/btnBlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:text="OFF"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/Bluetooth_State"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/Bluetooth_State"
+        app:layout_constraintTop_toTopOf="@+id/Bluetooth_State" />
+
+    <TextView
+        android:id="@+id/Notifcation_State"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Notifiche"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/btnNotification"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Bluetooth_State" />
+
+    <Button
+        android:id="@+id/btnNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:text="OFF"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/Notifcation_State"
+        app:layout_constraintEnd_toEndOf="@+id/btnBlue"
+        app:layout_constraintStart_toStartOf="@+id/btnBlue"
+        app:layout_constraintTop_toTopOf="@+id/Notifcation_State" />
+
 
     <TextView
         android:id="@+id/Online_Site_TextView"
@@ -54,7 +79,7 @@
         app:layout_constraintEnd_toStartOf="@+id/Visit_Site_Btn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Bluetooth_State" />
+        app:layout_constraintTop_toBottomOf="@+id/Notifcation_State" />
 
     <Button
         android:id="@+id/Visit_Site_Btn"
@@ -62,8 +87,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/CoolUpBlue"
         android:text="Vai"
-        android:textSize="18sp"
         android:textAllCaps="false"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/Online_Site_TextView"
         app:layout_constraintEnd_toEndOf="@+id/btnBlue"
         app:layout_constraintStart_toStartOf="@+id/btnBlue"
@@ -87,8 +112,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/CoolUpBlue"
         android:text="Cambia"
-        android:textSize="18sp"
         android:textAllCaps="false"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/Scanner_Light_TextView"
         app:layout_constraintEnd_toEndOf="@+id/Visit_Site_Btn"
         app:layout_constraintStart_toStartOf="@+id/Visit_Site_Btn"

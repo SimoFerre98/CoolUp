@@ -1,13 +1,19 @@
 package com.Simo_Elia.CoolUp
 
-import android.app.Activity
+import android.app.*
 import android.bluetooth.BluetoothAdapter
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import kotlinx.android.synthetic.*
@@ -26,9 +32,11 @@ private const val ARG_PARAM2 = "param2"
 
 // Bluetooth constant
 val mUUID : UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+val CHANNEL_ID = "channelID"
+val CHANNEL_NAME = "channelName"
+val NOTIFICATION_ID = 0
 
-
-class settings : Fragment(R.layout.fragment_settings)  {
+class settings : Fragment(R.layout.fragment_settings)   {
 
     var Toggle:Switch ?= null;
     val BLUETOOTH_REQ_CODE = 1
@@ -36,6 +44,21 @@ class settings : Fragment(R.layout.fragment_settings)  {
     lateinit var bluetoothAdapter: BluetoothAdapter
     lateinit var ButtonSite : Button
     lateinit var ButtonLight:Button
+    lateinit var ButtonNotification: Button
+    var NotificationEnabled = false
+
+    fun createNotificationChannel(){
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT).apply {
+                lightColor = Color.GREEN
+                enableLights(true)
+            }
+            val manager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View?
     {
@@ -44,6 +67,7 @@ class settings : Fragment(R.layout.fragment_settings)  {
         buttonBlue = view.findViewById(R.id.btnBlue)
         ButtonSite = view.findViewById(R.id.Visit_Site_Btn)
         ButtonLight= view.findViewById(R.id.Scanner_Light_Button)
+        ButtonNotification = view.findViewById(R.id.btnNotification)
 
         bluetoothAdapter= BluetoothAdapter.getDefaultAdapter()
         if (bluetoothAdapter == null) {
@@ -75,6 +99,42 @@ class settings : Fragment(R.layout.fragment_settings)  {
                 }
             }
         })
+
+        createNotificationChannel()
+
+        val intent = Intent(context, MainActivity::class.java)
+        val pendingIntent = TaskStackBuilder.create(context).run{
+            addNextIntentWithParentStack(intent)
+            getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+            .setContentTitle("COOL UP")
+            .setContentText("Controlla il tuo frigo!")
+            .setSmallIcon(R.mipmap.ic_blue_on_white_round)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .build()
+
+        val notificationManager = NotificationManagerCompat.from(requireContext())
+
+
+        ButtonNotification.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(v: View?) {
+
+                if(NotificationEnabled== false){
+                    notificationManager.notify(NOTIFICATION_ID, notification)
+                    ButtonNotification.setBackgroundColor(resources.getColor(R.color.green))
+                    ButtonNotification.setText("ON")
+                }
+                else{
+                    ButtonNotification.setBackgroundColor(resources.getColor(R.color.red))
+                    ButtonNotification.setText("OFF")
+                }
+            }
+        })
+
+
 
         ButtonSite.setOnClickListener(object :View.OnClickListener{
             override fun onClick(v: View?) {
