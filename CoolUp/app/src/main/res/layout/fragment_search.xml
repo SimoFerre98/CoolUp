@@ -5,15 +5,25 @@
     android:layout_width="match_parent"
     android:orientation="vertical">
 
-    <SearchView android:id = "@+id/SearchView"
-        android:layout_height="wrap_content"
+    <EditText
+        android:id="@+id/SearchEditTextView"
         android:layout_width="match_parent"
-        android:layout_margin = "16dp"
-        android:background = "@drawable/search_background"
+        android:layout_height="40dp"
+        android:hint="Cerca prodotto"
+        android:textAlignment="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/edit_text_border"
+        android:textSize="20dp"
         />
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/SearchRecycleView"
+        android:layoutAnimation="@anim/fridge_animation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

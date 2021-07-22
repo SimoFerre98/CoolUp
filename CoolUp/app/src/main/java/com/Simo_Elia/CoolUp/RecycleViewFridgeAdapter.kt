@@ -268,8 +268,8 @@ class RecycleViewFridgeAdapter(
 
         //  currentDate è un oggetto contenente la data corrente
         val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
-        Log.d("Giorno corrente:" , currentDate.substring(0,2) + currentDate.substring(3,5) + currentDate.substring(6,10))
-        Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,2)+ Products_Date.get(position).substring(3,5) + Products_Date.get(position).substring(6,10))
+        // Log.d("Giorno corrente:" , currentDate.substring(0,2) + currentDate.substring(3,5) + currentDate.substring(6,10))
+        //  Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,2)+ Products_Date.get(position).substring(3,5) + Products_Date.get(position).substring(6,10))
 
         if (Products_Date.get(position).substring(6, 10) < currentDate.substring(6, 10))
         {

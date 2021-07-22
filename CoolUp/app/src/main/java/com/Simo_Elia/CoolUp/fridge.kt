@@ -70,7 +70,6 @@ class fridge : Fragment(){
 
         //  Creazione degli oggetti che puntano ai widget nei fragment
         Fridge_RecyclerView=view.findViewById<RecyclerView>(R.id.FrigoRecycleView)
-        Fridge_RecyclerView.setNestedScrollingEnabled(false);
         fab= requireActivity().findViewById<FloatingActionButton>(R.id.fab)
         Manual_Fab= requireActivity().findViewById<FloatingActionButton>(R.id.Manual_fab)
         Bluetooth_Fab= requireActivity().findViewById<FloatingActionButton>(R.id.Bluetooth_Scan)

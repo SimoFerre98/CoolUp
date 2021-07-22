@@ -405,7 +405,7 @@ class dbhandler(context: Context?) {
     companion object {
         // Costanti del database
         const val DB_NAME = "CoolUp.db"
-        const val DB_VERSION = 1
+        const val DB_VERSION = 2
 
         // Lista delle table
         private const val FRIDGE_TABLE = "fridge"

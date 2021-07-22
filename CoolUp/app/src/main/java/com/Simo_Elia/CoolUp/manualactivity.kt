@@ -38,6 +38,7 @@ class manualactivity : AppCompatActivity() {
     var Check_Date : String = "Nessuna Data"
     var Check_Recyclable : String = "No"
     var Check_Freezable : String = "No"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.manual_activity)
@@ -69,7 +70,7 @@ class manualactivity : AppCompatActivity() {
 
                 ParseDate(Date,currentDate,v)
 
-                CheckInsert()
+                CheckInsert(v)
 
                 Log.d("Name: ", Check_Name)
                 Log.d("Categoria: ", Check_Category)
@@ -89,8 +90,18 @@ class manualactivity : AppCompatActivity() {
                         Edite_Manual_Date?.text.toString()
                     )
 
+                    var download = dbdownload(
+                        "0000000000000000",
+                        Check_Name,
+                        Check_Category,
+                        Check_Description,
+                        Check_Allergens,
+                        Check_Unit,
+                        Check_Recyclable,
+                        Check_Freezable
+                    )
                     Handler.InsertFridge(frigo)
-
+                    Handler.InsertDownload(download)
                     Toast.makeText(this@manualactivity, "Inserimento corretto", Toast.LENGTH_SHORT)
                         .show()
 
@@ -132,12 +143,17 @@ class manualactivity : AppCompatActivity() {
         return true
     }
 
-    fun CheckInsert()
+    fun CheckInsert(v:View?)
     {
         //  Controllo del nome
         if(Edite_Manual_Name?.text!!.isEmpty() == false)
         {
             Check_Name = Edite_Manual_Name?.text.toString()
+
+        }else
+        {
+            Toast.makeText(v?.context, "Inserisci il nome del prodotto", Toast.LENGTH_LONG).show()
+            Check = false
         }
 
         //  Controllo della categoria
