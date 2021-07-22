@@ -3,10 +3,12 @@ package com.Simo_Elia.CoolUp
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.icu.util.Freezable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,10 +21,15 @@ class manualactivity : AppCompatActivity() {
     var Edite_Manual_Name: EditText? = null
     var Edite_Manual_Category: EditText? = null
     var Edite_Manual_Description: EditText? = null
+    var Edite_Manual_Allergens: EditText? = null
     var Edite_Manual_Quantity: EditText? = null
     var Edite_Manual_Date: EditText? = null
+    var Edite_Manual_Recyclable: CheckBox? = null
+    var Edite_Manual_Freezable: CheckBox? = null
     var Check:Boolean = true
     var Manual_btn: Button? = null
+    lateinit var Recyclable:String
+    lateinit var Freezable : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +40,9 @@ class manualactivity : AppCompatActivity() {
         Edite_Manual_Description = findViewById(R.id.Edit_Manual_Desciption)
         Edite_Manual_Quantity = findViewById(R.id.Edit_Manual_Quantity)
         Edite_Manual_Date = findViewById(R.id.Edit_Manual_Date)
-
+        Edite_Manual_Allergens = findViewById(R.id.Edit_Manual_Allergens)
+        Edite_Manual_Recyclable = findViewById(R.id.checkBox_Manual_Recycle)
+        Edite_Manual_Freezable = findViewById(R.id.checkBox_Manual_Freezable)
         Manual_btn = findViewById(R.id.Manual_Btn)
     }
 
@@ -53,15 +62,29 @@ class manualactivity : AppCompatActivity() {
 
                 ParseDate(Date,currentDate,v)
 
+                if(Edite_Manual_Recyclable?.isChecked == true)
+                {
+                    Recyclable = "Si"
+                }else
+                {
+                    Recyclable = "No"
+                }
+                if(Edite_Manual_Freezable?.isChecked == true)
+                {
+                    Freezable = "Si"
+                }else
+                {
+                    Freezable = "no"
+                }
                 if(Check) {
                     var frigo = dbfridge(
                         "Nessuno", Edite_Manual_Name?.text.toString(),
                         Edite_Manual_Category?.text.toString(),
                         Edite_Manual_Description?.text.toString(),
-                        "Nessuno",
+                        Edite_Manual_Allergens?.text.toString(),
                         Edite_Manual_Quantity?.text.toString(),
-                        "Nessuno",
-                        "Nessuno",
+                        Recyclable,
+                        Freezable,
                         Edite_Manual_Date?.text.toString()
                     )
 
