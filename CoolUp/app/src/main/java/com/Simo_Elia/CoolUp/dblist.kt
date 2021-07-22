@@ -2,6 +2,7 @@ package com.Simo_Elia.CoolUp
 
 class dblist {
     //  Variaqbili
+    var Id:Int = 0
     var EAN : String
     var Name : String
 
@@ -19,6 +20,10 @@ class dblist {
     }
 
     //  Selettori
+    fun GetId() : Int
+    {
+        return this.Id
+    }
     public fun GetEAN() : String
     {
         return this.EAN
@@ -29,6 +34,10 @@ class dblist {
     }
 
     //  Modificatori
+    fun SetId(Id:Int)
+    {
+        this.Id = Id
+    }
     public fun SetEAN(EAN: String)
     {
         this.EAN = EAN

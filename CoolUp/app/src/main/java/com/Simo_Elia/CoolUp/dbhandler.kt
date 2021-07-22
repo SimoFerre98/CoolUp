@@ -139,14 +139,15 @@ class dbhandler(context: Context?) {
         val cursor = db!!.query( DOWNLOAD_TABLE,null, null, null, null, null, null )
         while (cursor.moveToNext()) {
             val list = dbdownload()
-            list.SetName(cursor.getString(FRIDGE_NAME_COL))
-            list.SetCategory(cursor.getString(FRIDGE_CATEGORY_COL))
-            list.SetAllergens(cursor.getString(FRIDGE_ALLERGENS_COL))
-            list.SetDescription(cursor.getString(FRIDGE_DESCRIPTION_COL))
-            list.SetUnit(cursor.getString(FRIDGE_UNIT_COL))
-            list.SetRecyclable(cursor.getString(FRIDGE_RECYCLABLE_COL))
-            list.SetFreezable(cursor.getString(FRIDGE_FREEZABLE_COL))
-            list.SetEAN(cursor.getString(FRIDGE_EAN_COL))
+            list.SetId(cursor.getInt(DOWNLOAD_ID_COL))
+            list.SetName(cursor.getString(DOWNLOAD_NAME_COL))
+            list.SetCategory(cursor.getString(DOWNLOAD_CATEGORY_COL))
+            list.SetAllergens(cursor.getString(DOWNLOAD_ALLERGENS_COL))
+            list.SetDescription(cursor.getString(DOWNLOAD_DESCRIPTION_COL))
+            list.SetUnit(cursor.getString(DOWNLOAD_UNIT_COL))
+            list.SetRecyclable(cursor.getString(DOWNLOAD_RECYCLABLE_COL))
+            list.SetFreezable(cursor.getString(DOWNLOAD_FREEZABLE_COL))
+            list.SetEAN(cursor.getString(DOWNLOAD_EAN_COL))
             lists.add(list)
         }
         CloseCursor(cursor)
@@ -162,8 +163,9 @@ class dbhandler(context: Context?) {
         val cursor = db!!.query( SHOPLIST_TABLE,null, null, null, null, null, null )
         while (cursor.moveToNext()) {
             val list = dblist()
-            list.SetName(cursor.getString(FRIDGE_NAME_COL))
-            list.SetEAN(cursor.getString(FRIDGE_EAN_COL))
+            list.SetId(cursor.getInt(SHOPLIST_ID_COL))
+            list.SetName(cursor.getString(SHOPLIST_NAME_COL))
+            list.SetEAN(cursor.getString(SHOPLIST_EAN_COL))
             lists.add(list)
         }
         CloseCursor(cursor)
@@ -274,17 +276,16 @@ class dbhandler(context: Context?) {
     }
 
     //  Metodo che inserisce dentro il database download una tupla
-    fun InsertDownload(fridge: dbfridge): Long {
+    fun InsertDownload(download: dbdownload): Long {
         val cv = ContentValues()
-        cv.put(FRIDGE_EAN, fridge.GetEAN())
-        cv.put(FRIDGE_NAME, fridge.GetName())
-        cv.put(FRIDGE_CATEGORY, fridge.GetCategory())
-        cv.put(FRIDGE_DESCRIPTION, fridge.GetDescription())
-        cv.put(FRIDGE_ALLERGENS, fridge.GetAllergens())
-        cv.put(FRIDGE_UNIT, fridge.GetUnit())
-        cv.put(FRIDGE_RECYCLABLE, fridge.GetRecyclable())
-        cv.put(FRIDGE_FREEZABLE, fridge.GetFreezable())
-        cv.put(FRIDGE_DATE, fridge.GetDate())
+        cv.put(DOWNLOAD_EAN, download.GetEAN())
+        cv.put(DOWNLOAD_NAME, download.GetName())
+        cv.put(DOWNLOAD_CATEGORY, download.GetCategory())
+        cv.put(DOWNLOAD_DESCRIPTION, download.GetDescription())
+        cv.put(DOWNLOAD_ALLERGENS, download.GetAllergens())
+        cv.put(DOWNLOAD_UNIT, download.GetUnit())
+        cv.put(DOWNLOAD_RECYCLABLE, download.GetRecyclable())
+        cv.put(DOWNLOAD_FREEZABLE, download.GetFreezable())
         openWriteableDB()
 
         val rowID = db!!.insert(DOWNLOAD_TABLE, null, cv)
@@ -293,10 +294,11 @@ class dbhandler(context: Context?) {
     }
 
     //  Metodo che inserisce dentro il database download una tupla
-    fun InsertShopList(fridge: dbfridge): Long {
+    fun InsertShopList(ShopList: dblist): Long {
         val cv = ContentValues()
-        cv.put(FRIDGE_EAN, fridge.GetEAN())
-        cv.put(FRIDGE_NAME, fridge.GetName())
+        cv.put(SHOPLIST_ID, ShopList.GetId())
+        cv.put(SHOPLIST_EAN, ShopList.GetEAN())
+        cv.put(SHOPLIST_NAME, ShopList.GetName())
         openWriteableDB()
 
         val rowID = db!!.insert(SHOPLIST_TABLE, null, cv)
@@ -433,28 +435,32 @@ class dbhandler(context: Context?) {
         private const val FRIDGE_DATE_COL = 9
 
         //  Variabili della tabella DOWNLOAD
+        private const val DOWNLOAD_ID = "Id"
+        private const val DOWNLOAD_ID_COL = 0
         private const val DOWNLOAD_EAN = "EAN"
-        private const val DOWNLOAD_EAN_COL = 0
+        private const val DOWNLOAD_EAN_COL = 1
         private const val DOWNLOAD_NAME = "Name"
-        private const val DOWNLOAD_NAME_COL = 1
+        private const val DOWNLOAD_NAME_COL = 2
         private const val DOWNLOAD_CATEGORY = "Category"
-        private const val DOWNLOAD_CATEGORY_COL = 2
+        private const val DOWNLOAD_CATEGORY_COL = 3
         private const val DOWNLOAD_DESCRIPTION= "Description"
-        private const val DOWNLOAD_DESCRIPTION_COL = 3
+        private const val DOWNLOAD_DESCRIPTION_COL = 4
         private const val DOWNLOAD_ALLERGENS= "Allergens"
-        private const val DOWNLOAD_ALLERGENS_COL = 4
+        private const val DOWNLOAD_ALLERGENS_COL = 5
         private const val DOWNLOAD_UNIT = "Unit"
-        private const val DOWNLOAD_UNIT_COL = 5
+        private const val DOWNLOAD_UNIT_COL = 6
         private const val DOWNLOAD_RECYCLABLE = "Recyclable"
-        private const val DOWNLOAD_RECYCLABLE_COL = 6
+        private const val DOWNLOAD_RECYCLABLE_COL = 7
         private const val DOWNLOAD_FREEZABLE = "freezable"
-        private const val DOWNLOAD_FREEZABLE_COL = 7
+        private const val DOWNLOAD_FREEZABLE_COL = 8
 
         //  Variabili per la tabbella SHOPLIST
+        private const val SHOPLIST_ID = "Id"
+        private const val SHOPLIST_ID_COL = 0
         private const val SHOPLIST_EAN = "EAN"
-        private const val SHOPLIST_EAN_COL = 0
+        private const val SHOPLIST_EAN_COL = 1
         private const val SHOPLIST_NAME = "Name"
-        private const val SHOPLIST_NAME_COL = 1
+        private const val SHOPLIST_NAME_COL = 2
 
         // CREATE ae DROP TABLE di tutte le tabelle
         private const val CREATE_FRIDGE_TABLE = "CREATE TABLE " + FRIDGE_TABLE + " (" +
@@ -471,6 +477,7 @@ class dbhandler(context: Context?) {
 
 
         private const val CREATE_DOWNLOAD_TABLE = "CREATE TABLE " + DOWNLOAD_TABLE + " (" +
+                DOWNLOAD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 DOWNLOAD_EAN + " TEXT NOT NULL, " +
                 DOWNLOAD_NAME + " TEXT, " +
                 DOWNLOAD_CATEGORY + " TEXT, " +
@@ -481,8 +488,9 @@ class dbhandler(context: Context?) {
                 DOWNLOAD_FREEZABLE + " TEXT)"
 
         private const val CREATE_SHOPLIST_TABLE = "CREATE TABLE " + SHOPLIST_TABLE + " (" +
-                FRIDGE_EAN + " TEXT NOT NULL, " +
-                DOWNLOAD_NAME + " TEXT)"
+                SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                SHOPLIST_EAN + " TEXT NOT NULL, " +
+                SHOPLIST_NAME + " TEXT)"
 
         private const val DROP_FRIDGE_TABLE = "DROP TABLE IF EXISTS " + FRIDGE_TABLE
 
