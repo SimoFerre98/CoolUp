@@ -10,6 +10,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.isDigitsOnly
+import java.text.SimpleDateFormat
+import java.util.*
 
 class manualactivity : AppCompatActivity() {
 
@@ -18,7 +21,7 @@ class manualactivity : AppCompatActivity() {
     var Edite_Manual_Description: EditText? = null
     var Edite_Manual_Quantity: EditText? = null
     var Edite_Manual_Date: EditText? = null
-
+    var Check:Boolean = true
     var Manual_btn: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,29 +39,72 @@ class manualactivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("FUORI: ","Fuori dal click")
+
         Manual_btn?.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v:View?){
-                Log.d("Cliccato: ","CLICK DENTRO IL CLICK LISTENER")
 
+                Check = true
                 var Handler = dbhandler(this@manualactivity)
 
-                var frigo = dbfridge("Nessuno", Edite_Manual_Name?.text.toString(),
-                    Edite_Manual_Category?.text.toString(),
-                    Edite_Manual_Description?.text.toString(),
-                    "Nessuno",
-                    Edite_Manual_Quantity?.text.toString(),
-                    "Nessuno",
-                    "Nessuno",
-                    Edite_Manual_Date?.text.toString())
+                val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(
+                    Date()
+                )
+                var Date = Edite_Manual_Date?.text.toString()
 
-                Handler.InsertFridge(frigo)
+                ParseDate(Date,currentDate,v)
 
-                Toast.makeText(this@manualactivity,"Inserimento corretto", Toast.LENGTH_SHORT).show()
+                if(Check) {
+                    var frigo = dbfridge(
+                        "Nessuno", Edite_Manual_Name?.text.toString(),
+                        Edite_Manual_Category?.text.toString(),
+                        Edite_Manual_Description?.text.toString(),
+                        "Nessuno",
+                        Edite_Manual_Quantity?.text.toString(),
+                        "Nessuno",
+                        "Nessuno",
+                        Edite_Manual_Date?.text.toString()
+                    )
 
-                val intent = Intent(this@manualactivity, MainActivity::class.java)
-                startActivity(intent)
+                    Handler.InsertFridge(frigo)
+
+                    Toast.makeText(this@manualactivity, "Inserimento corretto", Toast.LENGTH_SHORT)
+                        .show()
+
+                    val intent = Intent(this@manualactivity, MainActivity::class.java)
+                    startActivity(intent)
+                }
             }
         })
+    }
+    fun ParseDate(Date:String,currentDate:String,v:View?):Boolean
+    {
+            if(Date.length == 10)
+            {
+                if (Date.substring(6, 10).toInt() < currentDate.substring(6, 10).toInt()) {
+                    Check = false
+                    Toast.makeText(
+                        v?.context,
+                        "Anno minore dell'anno corrente",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else if (Date.substring(3, 5).toInt() > 12 || Date.substring(3, 5)
+                        .toInt() < 1
+                ) {
+                    Check = false
+                    Toast.makeText(v?.context, "Mese errato", Toast.LENGTH_LONG).show()
+                } else if (Date.substring(0, 2).toInt() > 31 || Date.substring(0, 2)
+                        .toInt() < 1
+                ) {
+                    Check = false
+                    Toast.makeText(v?.context, "Giorno errato", Toast.LENGTH_LONG).show()
+                }
+            }else
+            {
+                Toast.makeText(v?.context, "Data errata", Toast.LENGTH_LONG).show()
+                Check = false
+                return false
+            }
+
+        return true
     }
 }

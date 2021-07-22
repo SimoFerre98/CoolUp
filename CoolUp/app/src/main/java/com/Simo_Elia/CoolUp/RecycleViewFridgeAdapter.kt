@@ -118,6 +118,7 @@ class RecycleViewFridgeAdapter(
                         val Modifica_Freezable = v.findViewById<EditText>(R.id.MOdifica_Freezable)
                         val Modifica_Date = v.findViewById<EditText>(R.id.MOdifica_Date)
 
+
                         AlertDialog.Builder(Context)
                             .setView(v)
                             .setPositiveButton("Ok"){
@@ -238,32 +239,42 @@ class RecycleViewFridgeAdapter(
 
         //  currentDate è un oggetto contenente la data corrente
         val currentDate: String = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
-        Log.d("Giorno corrente:" , currentDate.substring(6,10))
-        Log.d("Giorno prodotto:" , Products_Date.get(position).substring(6,10))
+        Log.d("Giorno corrente:" , currentDate.substring(0,2) + currentDate.substring(3,5) + currentDate.substring(6,10))
+        Log.d("Giorno prodotto:" , Products_Date.get(position).substring(0,2)+ Products_Date.get(position).substring(3,5) + Products_Date.get(position).substring(6,10))
 
-        if (Products_Date.get(position).substring(6, 10) < currentDate.substring(6, 10)) {
+        if (Products_Date.get(position).substring(6, 10) < currentDate.substring(6, 10))
+        {
             holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
-        } else if (Products_Date.get(position).substring(6, 10) > currentDate.substring(6, 10)) {
+        } else if (Products_Date.get(position).substring(6, 10) > currentDate.substring(6, 10))
+        {
             holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
-        } else if (Products_Date.get(position).substring(6, 10) == currentDate.substring(6, 10)) {
-            if (Products_Date.get(position).substring(4, 6) < currentDate.substring(4, 6)) {
+        } else if (Products_Date.get(position).substring(6, 10) == currentDate.substring(6, 10))
+        {
+            if (Products_Date.get(position).substring(3, 5) < currentDate.substring(3, 5))
+            {
                 holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
-            } else if (Products_Date.get(position).substring(4, 6) > currentDate.substring(4, 6)) {
+            } else if (Products_Date.get(position).substring(3, 5) > currentDate.substring(3, 5))
+            {
                 holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
-            } else if (Products_Date.get(position).substring(4, 6) == currentDate.substring(4, 6)) {
+            } else if (Products_Date.get(position).substring(3, 5) == currentDate.substring(3, 5))
+            {
 
                 var DiffDay: Int =
                     Products_Date.get(position).substring(0, 2).toInt() - currentDate.substring(0,2).toInt()
-
-                if (DiffDay > 7) {
+                if (DiffDay > 7)
+                {
                     holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
-                } else if (DiffDay == 0) {
+                } else if (DiffDay == 0)
+                {
                     holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.myred))
-                } else if (DiffDay > 3 && DiffDay < 7) {
+                } else if (DiffDay > 3 && DiffDay < 7)
+                {
                     holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.myyellow))
-                } else if (DiffDay > 0 && DiffDay <= 3) {
+                } else if (DiffDay > 0 && DiffDay <= 3)
+                {
                     holder.LinearLayout_Item.setBackgroundColor(Color.rgb(255, 128, 0))
-                } else if (DiffDay < 0) {
+                } else if (DiffDay < 0)
+                {
                     holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
                 }
             }
