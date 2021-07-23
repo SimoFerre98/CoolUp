@@ -56,6 +56,43 @@ class shoplist : Fragment() {
             Shoplist_unit.add(i.Unit)
         }
 
+        fab.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                val v = LayoutInflater.from(v?.context).inflate(R.layout.add_shoplist,null)
+                val ShoplistName = v.findViewById<EditText>(R.id.InsertShoplistName)
+                val ShoplistUnit = v.findViewById<EditText>(R.id.InserShoplistUnit)
+
+                AlertDialog.Builder(v.context)
+                    .setView(v)
+                    .setPositiveButton("Ok"){
+                            dialog,_->
+
+                        var Name = ShoplistName.text.toString()
+                        var Unit = ShoplistUnit.text.toString()
+
+                        Shoplist_Name.add(Name)
+                        Shoplist_unit.add(Unit)
+
+                        var shoplist = dblist(Unit,
+                            Name
+                        )
+
+                        Handler.InsertShopList(shoplist)
+
+                        Toast.makeText(v.context,"Le informazioni sono state modificate", Toast.LENGTH_LONG).show()
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("Cancella"){
+                            dialog,_->
+                        dialog.dismiss()
+
+                    }
+                    .create()
+                    .show()
+            }
+
+        })
+
         LayoutManager = LinearLayoutManager(context)
         ShoplistRecyclerView.layoutManager = LayoutManager
 
@@ -72,8 +109,10 @@ class shoplist : Fragment() {
             Toast.makeText(context,"Non ci sono prodotti nella tua lista", Toast.LENGTH_SHORT).show()
         }
 
-        Delete_Btn.setOnClickListener(object : View.OnClickListener{
-            override fun onClick(v:View?){
+        Delete_Btn.setOnClickListener(object : View.OnClickListener
+        {
+            override fun onClick(v:View?)
+            {
                 if(!Clicked)
                 {
                     Handler.DeleteAllShoplist()
@@ -82,7 +121,7 @@ class shoplist : Fragment() {
                 {
                     Clicked=false
                 }
-                }
+            }
         })
 
         return view
