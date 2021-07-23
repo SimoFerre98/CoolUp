@@ -1,4 +1,4 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Fridge
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
@@ -12,12 +12,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Switch
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.Simo_Elia.CoolUp.Database.dbfridge
+import com.Simo_Elia.CoolUp.Database.dbhandler
+import com.Simo_Elia.CoolUp.Database.dbonline
+import com.Simo_Elia.CoolUp.R
+import com.Simo_Elia.CoolUp.Settings.mUUID
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.InputStream
@@ -175,7 +179,7 @@ class fridge : Fragment(){
         var progressBar: ProgressBar =view.findViewById(R.id.progressBarFridge)
 
         override fun onPreExecute() {
-            Bluetooth_Fab.setImageResource(com.Simo_Elia.CoolUp.R.drawable.ic_action_on)
+            Bluetooth_Fab.setImageResource(R.drawable.ic_action_on)
         }
 
         override fun doInBackground(vararg params: String?) : String? {
@@ -248,7 +252,7 @@ class fridge : Fragment(){
         }
 
         override fun onPostExecute(r: String?) {
-            Bluetooth_Fab.setImageResource(com.Simo_Elia.CoolUp.R.drawable.scanner_blue_filled)
+            Bluetooth_Fab.setImageResource(R.drawable.scanner_blue_filled)
             if(Success==false) Toast.makeText(context,"Nessun Dispositivo/Prodotto Rilevato",Toast.LENGTH_LONG).show()
         }
         companion object {

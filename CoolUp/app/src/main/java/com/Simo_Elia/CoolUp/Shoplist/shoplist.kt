@@ -1,4 +1,4 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Shoplist
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -11,7 +11,9 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.Simo_Elia.CoolUp.Search.SearchRecyclerView
+import com.Simo_Elia.CoolUp.Database.dbhandler
+import com.Simo_Elia.CoolUp.Database.dblist
+import com.Simo_Elia.CoolUp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match

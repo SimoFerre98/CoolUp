@@ -1,9 +1,9 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Database
 
 
-class dbfridge {
+class dbdownload {
     //  Attributi
-    var Id : Int = 0
+    var Id:Int = 0
     var EAN : String
     var Name : String
     var Category : String
@@ -12,7 +12,6 @@ class dbfridge {
     var Unit : String
     var Recyclable : String
     var Freezable : String
-    var Date: String
 
     //  Costruttore di default
     constructor()
@@ -25,13 +24,11 @@ class dbfridge {
         Unit = ""
         Recyclable = ""
         Freezable = FALSE   //  Variabile impostata di default a FALSE, cioè di base i prodotti non sono nel freezer
-        Date = ""
     }
 
     //  Costruttore poer parametri
-    constructor(EAN : String,Name: String, Category : String,Description : String, Allergens : String,Unit : String,Recyclable : String,Freezable : String,Date : String)
+    constructor(EAN : String,Name: String, Category : String,Description : String, Allergens : String,Unit : String,Recyclable : String,Freezable : String)
     {
-        //this.Id = Id.toLong()
         this.EAN = EAN
         this.Name = Name
         this.Category = Category
@@ -40,33 +37,17 @@ class dbfridge {
         this.Unit = Unit
         this.Recyclable = Recyclable
         this.Freezable = Freezable
-        this.Date = Date
     }
-
-    //  Costruttore per copia, serve per copiare i valori scaricati in download dal server azure.
-    constructor(download: dbdownload)
-    {
-        //this.Id = Id.toLong()
-        this.EAN = download.EAN
-        this.Name = download.Name
-        this.Category = download.Category
-        this.Description = download.Description
-        this.Allergens = download.Allergens
-        this.Unit = download.Unit
-        this.Recyclable = download.Recyclable
-        this.Freezable = download.Freezable
-        this.Date = ""
-    }
-
 
     //  Selettori
     fun GetId() : Int
     {
         return this.Id
     }
-
-    public fun GetEAN() : String = this.EAN
-
+    public fun GetEAN() : String
+    {
+        return this.EAN
+    }
     public fun GetName() : String
     {
         return this.Name
@@ -95,10 +76,6 @@ class dbfridge {
     {
         return this.Freezable
     }
-    public fun GetDate() : String
-    {
-        return this.Date
-    }
 
 
     //  Modificatori
@@ -114,13 +91,13 @@ class dbfridge {
     {
         this.Name = Name
     }
-    public fun SetCategory(Category: String)
-    {
-        this.Category = Category
-    }
     public fun SetDescription(Description: String)
     {
         this.Description = Description
+    }
+    public fun SetCategory(Category: String)
+    {
+        this.Category = Category
     }
     public fun SetAllergens(Allergens: String)
     {
@@ -138,11 +115,6 @@ class dbfridge {
     {
         this.Freezable = Freezable
     }
-    public fun SetDate(Date: String)
-    {
-        this.Date = Date
-    }
-
     //  Variabili static, possono servire per variabili boolean
     companion object
     {

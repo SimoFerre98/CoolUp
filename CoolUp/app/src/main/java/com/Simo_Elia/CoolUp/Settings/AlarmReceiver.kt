@@ -1,4 +1,4 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Settings
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.Simo_Elia.CoolUp.MainActivity
+import com.Simo_Elia.CoolUp.R
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {

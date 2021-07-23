@@ -1,22 +1,19 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Settings
 
 import android.app.*
 import android.bluetooth.BluetoothAdapter
-import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.Simo_Elia.CoolUp.R
 import kotlinx.android.synthetic.*
 import java.util.*
 

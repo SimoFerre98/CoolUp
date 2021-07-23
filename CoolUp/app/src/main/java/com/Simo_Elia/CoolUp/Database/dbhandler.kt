@@ -1,4 +1,4 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Database
 
 import android.content.ContentValues
 import android.content.Context

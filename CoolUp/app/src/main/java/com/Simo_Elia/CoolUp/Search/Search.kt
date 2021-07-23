@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.Simo_Elia.CoolUp.R
-import com.Simo_Elia.CoolUp.dbhandler
+import com.Simo_Elia.CoolUp.Database.dbhandler
 import java.util.*
 import kotlin.collections.ArrayList
 

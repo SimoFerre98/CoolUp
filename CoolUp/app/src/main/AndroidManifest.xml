@@ -23,18 +23,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".manualactivity">
+        <activity android:name=".Fridge.manualactivity">
             <intent-filter>
                 <action android:name="android.intent.action.INSERT_OR_EDIT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".coolupWabView" >
+        <activity android:name=".Settings.coolupWabView" >
             <intent-filter>
                 <action android:name="android.intent.action.WEB_SEARCH"/>
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlarmReceiver"/>
+        <receiver android:name=".Settings.AlarmReceiver"/>
     </application>
 
 </manifest>

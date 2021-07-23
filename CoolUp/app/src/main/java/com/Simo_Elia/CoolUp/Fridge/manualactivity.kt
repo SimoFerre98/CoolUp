@@ -1,9 +1,6 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Fridge
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.icu.util.Freezable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,7 +9,11 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.isDigitsOnly
+import com.Simo_Elia.CoolUp.Database.dbdownload
+import com.Simo_Elia.CoolUp.Database.dbfridge
+import com.Simo_Elia.CoolUp.Database.dbhandler
+import com.Simo_Elia.CoolUp.MainActivity
+import com.Simo_Elia.CoolUp.R
 import java.text.SimpleDateFormat
 import java.util.*
 

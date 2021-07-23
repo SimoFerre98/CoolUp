@@ -1,17 +1,10 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Settings
 
-import android.R
 import android.app.Activity
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.coolup_webview.*
 
 

@@ -1,12 +1,12 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Settings
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.FragmentTransaction
+import com.Simo_Elia.CoolUp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 

@@ -1,18 +1,19 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Fridge
 
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.Simo_Elia.CoolUp.Database.dbfridge
+import com.Simo_Elia.CoolUp.Database.dbhandler
+import com.Simo_Elia.CoolUp.R
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.jar.Attributes
 
 class RecycleViewFridgeAdapter(
     context: Context?,
@@ -135,8 +136,7 @@ class RecycleViewFridgeAdapter(
             popupMenus.inflate(R.menu.show_menu)
             popupMenus.setOnMenuItemClickListener {
                 when(it.itemId){
-                    R.id.editText->{
-                        val v = LayoutInflater.from(Context).inflate(R.layout.add_item,null)
+                    R.id.editText ->{
                         val Modifica_Name = v.findViewById<EditText>(R.id.Modifica_Name)
                         val Modifica_Category = v.findViewById<EditText>(R.id.Modifica_Category)
                         val Modifica_Description = v.findViewById<EditText>(R.id.Modifica_Descizione)
@@ -145,6 +145,8 @@ class RecycleViewFridgeAdapter(
                         val Modifica_Recyclable = v.findViewById<EditText>(R.id.Modifica_Recyclable)
                         val Modifica_Freezable = v.findViewById<EditText>(R.id.MOdifica_Freezable)
                         val Modifica_Date = v.findViewById<EditText>(R.id.MOdifica_Date)
+                        val v = LayoutInflater.from(Context).inflate(R.layout.add_item,null)
+
 
 
                         AlertDialog.Builder(Context)
@@ -192,7 +194,7 @@ class RecycleViewFridgeAdapter(
 
                         true
                     }
-                    R.id.delete->{
+                    R.id.delete ->{
 
                         AlertDialog.Builder(Context)
                             .setTitle("Cancella")
@@ -267,18 +269,26 @@ class RecycleViewFridgeAdapter(
 
         if (Products_Date.get(position).substring(6, 10) < currentDate.substring(6, 10))
         {
-            holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
+            holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!,
+                R.color.mygray
+            ))
         } else if (Products_Date.get(position).substring(6, 10) > currentDate.substring(6, 10))
         {
-            holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
+            holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!,
+                R.color.mygreen
+            ))
         } else if (Products_Date.get(position).substring(6, 10) == currentDate.substring(6, 10))
         {
             if (Products_Date.get(position).substring(3, 5) < currentDate.substring(3, 5))
             {
-                holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
+                holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!,
+                    R.color.mygray
+                ))
             } else if (Products_Date.get(position).substring(3, 5) > currentDate.substring(3, 5))
             {
-                holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
+                holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!,
+                    R.color.mygreen
+                ))
             } else if (Products_Date.get(position).substring(3, 5) == currentDate.substring(3, 5))
             {
 
@@ -286,19 +296,27 @@ class RecycleViewFridgeAdapter(
                     Products_Date.get(position).substring(0, 2).toInt() - currentDate.substring(0,2).toInt()
                 if (DiffDay > 7)
                 {
-                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygreen))
+                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!,
+                        R.color.mygreen
+                    ))
                 } else if (DiffDay == 0)
                 {
-                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.myred))
+                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!,
+                        R.color.myred
+                    ))
                 } else if (DiffDay > 3 && DiffDay < 7)
                 {
-                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.myyellow))
+                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!,
+                        R.color.myyellow
+                    ))
                 } else if (DiffDay > 0 && DiffDay <= 3)
                 {
                     holder.LinearLayout_Item.setBackgroundColor(Color.rgb(255, 128, 0))
                 } else if (DiffDay < 0)
                 {
-                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!, R.color.mygray))
+                    holder.LinearLayout_Item.setBackgroundColor(ContextCompat.getColor(Context!!,
+                        R.color.mygray
+                    ))
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Database
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import com.Simo_Elia.CoolUp.con
 import java.sql.*
 
 class dbonline {

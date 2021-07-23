@@ -9,7 +9,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.Simo_Elia.CoolUp.R
-import com.Simo_Elia.CoolUp.dbhandler
+import com.Simo_Elia.CoolUp.Database.dbhandler
 import java.util.*
 import kotlin.collections.ArrayList
 

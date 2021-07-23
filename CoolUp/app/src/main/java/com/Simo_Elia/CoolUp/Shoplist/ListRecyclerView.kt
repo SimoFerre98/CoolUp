@@ -1,4 +1,4 @@
-package com.Simo_Elia.CoolUp
+package com.Simo_Elia.CoolUp.Shoplist
 
 import android.app.AlertDialog
 import android.content.Context
@@ -11,6 +11,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.Simo_Elia.CoolUp.Database.dbhandler
+import com.Simo_Elia.CoolUp.Database.dblist
+import com.Simo_Elia.CoolUp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListRecyclerView(
@@ -81,7 +84,7 @@ class ListRecyclerView(
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListRecyclerView.ViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
     {
         var v = LayoutInflater.from(parent.context).inflate(R.layout.shoplist_item,parent,false)
 

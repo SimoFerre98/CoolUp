@@ -1,41 +1,26 @@
 package com.Simo_Elia.CoolUp
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.graphics.Color
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
-import android.os.StrictMode
-import android.os.StrictMode.ThreadPolicy
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.Switch
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.Simo_Elia.CoolUp.Fridge.fridge
 import com.Simo_Elia.CoolUp.Search.search
+import com.Simo_Elia.CoolUp.Settings.settings
+import com.Simo_Elia.CoolUp.Shoplist.shoplist
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_fridge.*
-import java.io.InputStream
 import java.sql.Connection
-import java.sql.ResultSet
-import java.sql.SQLException
-import java.sql.Statement
 
 var con:Connection?=null
 
@@ -135,9 +120,9 @@ class MainActivity : AppCompatActivity()  {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
                 val fridge= fridge()
-                val shoplist=shoplist()
+                val shoplist= shoplist()
                 val search= search()
-                val settings=settings()
+                val settings= settings()
 
                 when (item.itemId) {
                     // Fridge Option
