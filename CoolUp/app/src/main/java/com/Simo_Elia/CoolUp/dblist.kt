@@ -3,19 +3,19 @@ package com.Simo_Elia.CoolUp
 class dblist {
     //  Variaqbili
     var Id:Int = 0
-    var EAN : String
+    var Unit : String
     var Name : String
 
     //  Costruttore di default
     constructor() {
-        EAN = ""
+        Unit = ""
         Name = ""
     }
 
     //  Costruttorte per parametri
-    constructor(EAN : String,Name: String)
+    constructor(Unit : String,Name: String)
     {
-        this.EAN = EAN
+        this.Unit = Unit
         this.Name = Name
     }
 
@@ -24,9 +24,9 @@ class dblist {
     {
         return this.Id
     }
-    public fun GetEAN() : String
+    public fun GetUnit() : String
     {
-        return this.EAN
+        return this.Unit
     }
     public fun GetName() : String
     {
@@ -38,9 +38,9 @@ class dblist {
     {
         this.Id = Id
     }
-    public fun SetEAN(EAN: String)
+    public fun SetUnit(Unit: String)
     {
-        this.EAN = EAN
+        this.Unit = Unit
     }
     public fun SetName(Name: String)
     {

@@ -16,6 +16,7 @@ import android.os.StrictMode.ThreadPolicy
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity()  {
     lateinit private var fab_list : FloatingActionButton
     lateinit private var Manual_fab : FloatingActionButton
     lateinit private var Bluetooth_Scan : FloatingActionButton
+    lateinit private var Delete_Btn : ImageView
 
     fun createNotificationChannel(){
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
@@ -94,7 +96,7 @@ class MainActivity : AppCompatActivity()  {
         fab_list = findViewById(R.id.fab_list)
         Manual_fab = findViewById(R.id.Manual_fab)
         Bluetooth_Scan = findViewById(R.id.Bluetooth_Scan)
-
+        Delete_Btn = findViewById(R.id.ShoplistDeleteAll)
 
         // Toolbar association
         myToolbar = findViewById(R.id.myToolbar)
@@ -141,6 +143,7 @@ class MainActivity : AppCompatActivity()  {
                     // Fridge Option
                     R.id.MyFridge ->
                     {
+                        Delete_Btn.visibility = View.GONE
                         fab.visibility = View.VISIBLE
                         fab_list.visibility = View.INVISIBLE
                         Manual_fab.visibility = View.INVISIBLE
@@ -153,6 +156,7 @@ class MainActivity : AppCompatActivity()  {
                     // ShopList Option
                     R.id.MyShoppingList ->
                     {
+                        Delete_Btn.visibility = View.VISIBLE
                         fab.visibility = View.VISIBLE
                         fab_list.visibility = View.VISIBLE
                         Manual_fab.visibility = View.INVISIBLE
@@ -166,6 +170,7 @@ class MainActivity : AppCompatActivity()  {
                     // Search Option
                     R.id.Search ->
                     {
+                        Delete_Btn.visibility = View.GONE
                         fab.visibility = View.INVISIBLE
                         fab_list.visibility = View.INVISIBLE
                         Manual_fab.visibility = View.INVISIBLE
@@ -178,6 +183,7 @@ class MainActivity : AppCompatActivity()  {
                     // Settings Option
                     R.id.Settings ->
                     {
+                        Delete_Btn.visibility = View.GONE
                         fab.visibility = View.INVISIBLE
                         fab_list.visibility = View.INVISIBLE
                         Manual_fab.visibility = View.INVISIBLE

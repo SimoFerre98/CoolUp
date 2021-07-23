@@ -19,7 +19,6 @@ void setup() {
   delay(1000);
   lcd.clear();
 }
-
 void loop() {
   if(GM.available())
   {

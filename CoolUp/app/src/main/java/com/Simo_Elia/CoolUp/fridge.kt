@@ -291,3 +291,4 @@ fun barCode() :String{
     println("************************* SOCKET CONNESSO? :"+btSocket.isConnected)
     return Barcode
 }
+

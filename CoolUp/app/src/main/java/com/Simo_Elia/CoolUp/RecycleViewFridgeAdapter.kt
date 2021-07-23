@@ -91,7 +91,6 @@ class RecycleViewFridgeAdapter(
             Row_Product_Recycle = itemView.findViewById(R.id.RecycleRow)
             Row_Product_Freezable = itemView.findViewById(R.id.FreezableRow)
 
-
             LinearLayout_Item = itemView.findViewById(R.id.LinearLayout_Item)
             Menu_Product = itemView.findViewById(R.id.Menu_Product)
             Menu_Product.setOnClickListener()
@@ -221,7 +220,6 @@ class RecycleViewFridgeAdapter(
                     else-> true
                 }
 
-
             }
             popupMenus.show()
             val popup = PopupMenu::class.java.getDeclaredField("mPopup")
@@ -231,9 +229,7 @@ class RecycleViewFridgeAdapter(
                 .invoke(menu,true)
         }
 
-
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -262,8 +258,6 @@ class RecycleViewFridgeAdapter(
         else{
             holder.Item_Product_Freezable.text = "Non Congelabile"
         }
-
-
 
 
         //  currentDate è un oggetto contenente la data corrente

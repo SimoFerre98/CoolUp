@@ -165,7 +165,7 @@ class dbhandler(context: Context?) {
             val list = dblist()
             list.SetId(cursor.getInt(SHOPLIST_ID_COL))
             list.SetName(cursor.getString(SHOPLIST_NAME_COL))
-            list.SetEAN(cursor.getString(SHOPLIST_EAN_COL))
+            list.SetUnit(cursor.getString(SHOPLIST_UNIT_COL))
             lists.add(list)
         }
         CloseCursor(cursor)
@@ -296,8 +296,8 @@ class dbhandler(context: Context?) {
     //  Metodo che inserisce dentro il database download una tupla
     fun InsertShopList(ShopList: dblist): Long {
         val cv = ContentValues()
-        cv.put(SHOPLIST_ID, ShopList.GetId())
-        cv.put(SHOPLIST_EAN, ShopList.GetEAN())
+        //cv.put(SHOPLIST_ID, ShopList.GetId())
+        cv.put(SHOPLIST_UNIT, ShopList.GetUnit())
         cv.put(SHOPLIST_NAME, ShopList.GetName())
         openWriteableDB()
 
@@ -339,6 +339,36 @@ class dbhandler(context: Context?) {
         return rowCount
     }
 
+    fun DeleteShoplist(id: Int): Int {
+        val where = SHOPLIST_ID + "= ?"
+        val whereArgs = arrayOf(id.toString())
+        openWriteableDB()
+        val rowCount = db!!.delete(SHOPLIST_TABLE, where, whereArgs)
+        //closeDB()
+        return rowCount
+    }
+
+    fun DeleteDownload(id: Int): Int {
+        val where = DOWNLOAD_ID + "= ?"
+        val whereArgs = arrayOf(id.toString())
+        openWriteableDB()
+        val rowCount = db!!.delete(DOWNLOAD_TABLE, where, whereArgs)
+        //closeDB()
+        return rowCount
+    }
+
+    fun DeleteAllShoplist()
+    {
+        db?.delete(SHOPLIST_TABLE, null, null);
+    }
+    fun DeleteAllFridge()
+    {
+        db?.delete(FRIDGE_TABLE, null, null);
+    }
+    fun DeleteAllDownload()
+    {
+        db?.delete(DOWNLOAD_TABLE, null, null);
+    }
     private fun getFridgeFromCursor(cursor: Cursor?): dbfridge? {
         if (cursor == null || cursor.count == 0) {
             return null
@@ -390,7 +420,7 @@ class dbhandler(context: Context?) {
         } else {
             try {
                 val list = dblist(
-                    cursor.getString(SHOPLIST_EAN_COL),
+                    cursor.getString(SHOPLIST_UNIT_COL),
                     cursor.getString(SHOPLIST_NAME_COL)
                 )
                 return list
@@ -457,8 +487,8 @@ class dbhandler(context: Context?) {
         //  Variabili per la tabbella SHOPLIST
         private const val SHOPLIST_ID = "Id"
         private const val SHOPLIST_ID_COL = 0
-        private const val SHOPLIST_EAN = "EAN"
-        private const val SHOPLIST_EAN_COL = 1
+        private const val SHOPLIST_UNIT = "EAN"
+        private const val SHOPLIST_UNIT_COL = 1
         private const val SHOPLIST_NAME = "Name"
         private const val SHOPLIST_NAME_COL = 2
 
@@ -489,7 +519,7 @@ class dbhandler(context: Context?) {
 
         private const val CREATE_SHOPLIST_TABLE = "CREATE TABLE " + SHOPLIST_TABLE + " (" +
                 SHOPLIST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                SHOPLIST_EAN + " TEXT NOT NULL, " +
+                SHOPLIST_UNIT + " TEXT NOT NULL, " +
                 SHOPLIST_NAME + " TEXT)"
 
         private const val DROP_FRIDGE_TABLE = "DROP TABLE IF EXISTS " + FRIDGE_TABLE

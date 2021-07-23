@@ -77,6 +77,12 @@ class SearchRecyclerView(
         return Handler.DimDownloadTable()
     }
 
+    fun filteredList(resultList:ArrayList<String>)
+    {
+        countryFilterList = resultList
+        notifyDataSetChanged()
+    }
+
     override fun getFilter(): Filter? {
         return object : Filter(){
             override fun performFiltering(constraint: CharSequence?): FilterResults {

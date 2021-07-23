@@ -1,18 +1,20 @@
 package com.Simo_Elia.CoolUp.Search
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.Simo_Elia.CoolUp.R
-import com.Simo_Elia.CoolUp.RecycleViewFridgeAdapter
 import com.Simo_Elia.CoolUp.dbhandler
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class search : Fragment()  {
 
@@ -26,7 +28,7 @@ class search : Fragment()  {
     val Download_Freezable: MutableList<String> = ArrayList()
     var LayoutManager : RecyclerView.LayoutManager ? = null
     var adapter : RecyclerView.Adapter<SearchRecyclerView.ViewHolder>?= null
-
+    lateinit var SearchEditTextView: EditText
 
 
     lateinit var Search_RecyclerView : RecyclerView
@@ -35,12 +37,9 @@ class search : Fragment()  {
     {
         val view:View = inflater.inflate(R.layout.fragment_search,container,false)
 
-
         var Handler = dbhandler(context)
         var DownloadList = Handler.DownloadLists
-        Log.d("Lista download",DownloadList.toString())
-        Log.d("Dimensione download",Handler?.DimDownloadTable().toString())
-        Log.d("Dimensione download",Handler?.DimShopListTable().toString())
+
         for(i in DownloadList.iterator())
         {
             Download_Name.add(i.GetName())
@@ -51,10 +50,12 @@ class search : Fragment()  {
             Download_Recyclable.add(i.GetRecyclable())
             Download_Freezable.add(i.GetFreezable())
         }
+
         Search_RecyclerView=view.findViewById<RecyclerView>(R.id.SearchRecycleView)
         Search_RecyclerView.setHasFixedSize(true)
         LayoutManager = LinearLayoutManager(context)
         Search_RecyclerView.layoutManager = LayoutManager
+
         adapter = SearchRecyclerView(
             context,
             Download_Name,
@@ -67,25 +68,39 @@ class search : Fragment()  {
         )
         Search_RecyclerView.adapter = adapter
 
+        SearchEditTextView = view.findViewById(R.id.SearchEditTextView)
+
+        SearchEditTextView.addTextChangedListener(object : TextWatcher
+        {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int)
+            {
+
+            }
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int)
+            {
+
+            }
+            override fun afterTextChanged(s: Editable)
+            {
+                filter(s.toString())
+            }
+        })
+
 
         return  view
     }
-/*
-    @SuppressLint("ResourceType")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.id.SearchView,menu)
 
-        SearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
+    fun filter(text:String) {
+        val resultList = ArrayList<String>()
+        for (row in Download_Name)
+        {
+            if (row.lowercase(Locale.ROOT).contains(text.lowercase(Locale.ROOT)))
+            {
+                resultList.add(row)
             }
+        }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("Not yet implemented")
-            }
+    }
 
-        })
-        super.onCreateOptionsMenu(menu, inflater)
-    }*/
 }
 

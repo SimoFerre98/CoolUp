@@ -34,6 +34,7 @@
 
             </RelativeLayout>
 
+
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
@@ -97,6 +98,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/ShoplistDeleteAll"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="@+id/myToolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/myToolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.bottomappbar.BottomAppBar
