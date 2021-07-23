@@ -3,6 +3,7 @@ package com.Simo_Elia.CoolUp
 import android.app.*
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
+import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -33,8 +34,8 @@ private const val ARG_PARAM2 = "param2"
 // Bluetooth constant
 val mUUID : UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
 val CHANNEL_ID = "CoolUp"
-val CHANNEL_NAME = "channelName"
 val NOTIFICATION_ID = 0
+
 
 class settings : Fragment(R.layout.fragment_settings)   {
 
@@ -46,6 +47,9 @@ class settings : Fragment(R.layout.fragment_settings)   {
     lateinit var ButtonLight:Button
     lateinit var ButtonNotification: Button
     var NotificationEnabled = false
+    lateinit var alarmManager: AlarmManager
+    lateinit var pendingIntent: PendingIntent
+    lateinit var calendar: Calendar
 
     fun createNotificationChannel(){
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
@@ -53,20 +57,49 @@ class settings : Fragment(R.layout.fragment_settings)   {
             val name : CharSequence = "CoolUpReminderChannel"
             val description = "Channel For Alarm Manager"
             val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT).apply {
-                lightColor = Color.GREEN
-                enableLights(true)
-            }
-            val manager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            manager.createNotificationChannel(channel)
+            val channel = NotificationChannel(CHANNEL_ID, name,importance)
+            channel.description =description
+
+            val notificationManager = requireActivity().getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+
+
+            /*val manager = requireActivity().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)*/
         }
     }
+
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View?
     {
         val view:View = inflater.inflate(R.layout.fragment_settings,container,false)
+
+        fun setAlarm(){
+            alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
+
+            val intent = Intent ( context, AlarmReceiver::class.java)
+
+            pendingIntent = PendingIntent.getBroadcast(context,0,intent,0)
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,calendar.timeInMillis,
+                AlarmManager.INTERVAL_DAY,pendingIntent
+            )
+
+            Toast.makeText(context,"Notifiche attivate",Toast.LENGTH_LONG).show()
+        }
+
+        fun cancelAlarm(){
+            alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
+
+            val intent = Intent ( context, AlarmReceiver::class.java)
+
+            pendingIntent = PendingIntent.getBroadcast(context,0,intent,0)
+
+            alarmManager.cancel(pendingIntent)
+            Toast.makeText(context,"Notifiche disattivate",Toast.LENGTH_LONG).show()
+        }
 
         buttonBlue = view.findViewById(R.id.btnBlue)
         ButtonSite = view.findViewById(R.id.Visit_Site_Btn)
@@ -106,32 +139,25 @@ class settings : Fragment(R.layout.fragment_settings)   {
 
         createNotificationChannel()
 
-        val intent = Intent(context, MainActivity::class.java)
-        val pendingIntent = TaskStackBuilder.create(context).run{
-            addNextIntentWithParentStack(intent)
-            getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT)
-        }
-
-        val notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
-            .setContentTitle("COOL UP")
-            .setContentText("Controlla il tuo frigo!")
-            .setSmallIcon(R.mipmap.ic_blue_on_white_round)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
-            .build()
-
-        val notificationManager = NotificationManagerCompat.from(requireContext())
-
 
         ButtonNotification.setOnClickListener(object :View.OnClickListener{
             override fun onClick(v: View?) {
 
                 if(NotificationEnabled== false){
-                    notificationManager.notify(NOTIFICATION_ID, notification)
+                    calendar = Calendar.getInstance()
+                    calendar[Calendar.HOUR_OF_DAY]=0
+                    calendar[Calendar.MINUTE]=45
+                    calendar[Calendar.SECOND] = 0
+                    calendar[Calendar.MILLISECOND] = 0
+
+                    println("****************Orario impostato "+calendar.time)
+                    //notificationManager.notify(NOTIFICATION_ID, notification)
+                    setAlarm()
                     ButtonNotification.setBackgroundColor(resources.getColor(R.color.green))
                     ButtonNotification.setText("ON")
                 }
                 else{
+                    cancelAlarm()
                     ButtonNotification.setBackgroundColor(resources.getColor(R.color.red))
                     ButtonNotification.setText("OFF")
                 }
@@ -152,6 +178,12 @@ class settings : Fragment(R.layout.fragment_settings)   {
                 changeFragment()
             }
         })
+
+
+
+
+
+
         return  view
     }
 
