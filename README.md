@@ -15,7 +15,7 @@ Nel progetto è presente anche un sensore (GM65) che collegato ad un arduino leg
 /**************************************************************************/
 <br><b>SERVER COOL-UP</b>
 
-Come server, l'applicaione cool-up sfrutto una piattaforma chiamata firebase. Attraverso questa piattaforma ( resa disponibile dalla google),
+Come server, l'applicaione cool-up sfrutta una piattaforma chiamata firebase. Attraverso questa piattaforma ( resa disponibile dalla google),
 l'app potra memorizzare i dati su un cloud, e fare registrazione e accesso di un utente. 
 
 /**************************************************************************/
